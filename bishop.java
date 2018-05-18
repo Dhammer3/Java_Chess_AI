@@ -194,6 +194,10 @@ public class bishop extends Piece
 								checkY--;
 							
 							}
+							else
+							{
+								return false;
+							}
 							
 						}
 					}
@@ -239,9 +243,13 @@ public class bishop extends Piece
 
 						else {
 
-							if ((checkX >= 0) && (checkY >= 0)) {
+							if (checkX >movePosX) {
 								checkX--;
 								checkY--;
+							}
+							else
+							{
+								return false;
 							}
 						}
 					}
@@ -287,9 +295,13 @@ public class bishop extends Piece
 
 						else {
 
-							if ((checkX >= 0) && (checkY < 8)) {
+							if (checkX >movePosX) {
 								checkX--;
 								checkY++;
+							}
+							else
+							{
+								return false;
 							}
 						}
 					}
@@ -346,6 +358,10 @@ public class bishop extends Piece
 								checkX++;
 								checkY++;
 							
+							}
+							else
+							{
+								return false;
 							}
 							
 						}

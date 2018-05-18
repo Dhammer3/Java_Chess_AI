@@ -8,7 +8,7 @@ public class chess
 	Player white;
 	Player black;
 	moveList ml;
-	
+	//
 
 	//local history
 	//research generics 
