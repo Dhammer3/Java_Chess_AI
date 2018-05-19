@@ -373,7 +373,6 @@ public  class  board
 					if(board[i][j].toString().equals("[*K*]"))
 					{
 						wkXPos=j;
-						System.out.println(wkXPos);
 						wkYPos=i;
 					}
 					wq.offer(board[i][j]);
@@ -385,8 +384,9 @@ public  class  board
 						bkXPos=j;
 						bkYPos=i;
 					}
-					}
 					bq.offer(board[i][j]);
+				}
+					
 				}
 			}
 		}

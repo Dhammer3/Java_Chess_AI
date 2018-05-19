@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class king extends Piece 
 {
 	Player play;
@@ -47,12 +50,8 @@ public class king extends Piece
 		
 
 		
-			//if the white king is currently in check
-			if(kingInCheck(gameBoard)==0)
-			{
-				System.out.println("You must move the white king out of check first!");
-				return false;
-			}		
+		
+				
 		
 			//quadrant 2 and 3 
 			//if the current xPos is greater than the movePosX then the player is trying to go to either quad 2 or 3
@@ -63,7 +62,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(2,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 					
@@ -75,7 +81,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(3,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 				}
@@ -89,11 +102,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(1,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						
-				
-						
-						System.out.println("we made it here");
-						
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 					
@@ -104,7 +120,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(4,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 				}
@@ -117,10 +140,17 @@ public class king extends Piece
 				//quad 3
 				if(this.getY(this, board)>movePosY)
 				{
-					System.out.println("there");
+					
 					if(piecesInWay(5,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						System.out.println("there");
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 					
@@ -130,10 +160,17 @@ public class king extends Piece
 				//quad 3
 				if(this.getY(this, board)<movePosY)
 				{
-					System.out.println("there");
+					
 					if(piecesInWay(7,  gameBoard,  movePosY,  movePosX)==false)
 					{
-						System.out.println("there");
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 				}
@@ -148,6 +185,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(6,  gameBoard,  movePosY,  movePosX)==false)
 					{
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 					
@@ -158,6 +203,14 @@ public class king extends Piece
 				{
 					if(piecesInWay(8,  gameBoard,  movePosY,  movePosX)==false)
 					{
+						if((this.getPlayer().toString().equals("White"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==1))
+						{
+							return false;
+						}
+						if((this.getPlayer().toString().equals("Black"))&&(enemyPieceCanMove( gameBoard,  movePosY,  movePosX)==-1))
+						{
+							return false;
+						}
 						return true;
 					}
 				}
@@ -607,14 +660,78 @@ public class king extends Piece
 
 	}
 	
+	public int enemyPieceCanMove(board gameBoard, int movePosY, int movePosX)
+	{
+		Piece[][] board = new Piece[8][8];
+		gameBoard.copyBoard(board);
+		Queue <Piece> bq = new LinkedList<Piece>();
+		Queue <Piece> wq = new LinkedList<Piece>();
+		
+		int bkXPos=0;
+		int bkYPos=0;
+		
+		int wkXPos=0;
+		int wkYPos=0;
+		
+		for(int i=0; i<8; i++)
+		{
+			for (int j=0; j<8; j++)
+			{
+				if(board[i][j]!=null)
+				{
+					if(board[i][j].getPlayer().toString().equals("White"))
+					{
+						if(board[i][j].toString().equals("[*K*]"))
+						{
+							wkXPos=j;
+							wkYPos=i;
+						}
+						wq.offer(board[i][j]);
+					}
+					if(board[i][j].getPlayer().toString().equals("Black"))
+					{
+						if(board[i][j].toString().equals("[!K!]"))
+						{
+							bkXPos=j;
+							bkYPos=i;
+						}
+						bq.offer(board[i][j]);
+					}
+						
+					}
+				}
+			}
+		
+		while(wq.peek()!=null)
+		{
+			wq.peek().getX(wq.peek(), board);
+			if(wq.peek().move(gameBoard, movePosY, movePosX)==true)
+			{
+			
+			
+				System.out.println(wq.peek().toString());
+				System.out.println("The Black King is in Check!");
+				
+				return-1; 
+			
+			}
+			wq.remove();
+		}
+		while(bq.peek()!=null)
+		{
+			
+			if(bq.peek().move(gameBoard, movePosY, movePosX)==true)
+			{
+				System.out.println(bq.peek().toString());
+				System.out.println("The White King is in Check!");
+				
+				return 1;
+			}
+			bq.remove();
+		}
+		return 0;
+	}
 	
-	public int kingInCheck(board gameBoard)
-	{
-		return -1;
-	}
-	public boolean canMove(board gameBoard)
-	{
-		return false;
-	}
+	
 	
 }

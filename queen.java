@@ -59,6 +59,8 @@ public class queen extends Piece
 		System.out.println("ypos:"+yPos);
 		System.out.println("movePosx:"+movePosX);
 		System.out.println("movePosy:"+movePosY);
+		int check1=(Math.abs(xPos-movePosX));
+		int check2=(Math.abs(yPos-movePosY));
 		
 		int checkX=0;
 		int checkY=0;
@@ -76,6 +78,12 @@ public class queen extends Piece
 				//quad 2
 				if(this.getY(this, board)>movePosY)
 				{
+					if(check1!=check2)
+					{
+						System.out.println("We have a problem...");
+						return false;
+					}
+					
 					if(piecesInWay(2,  gameBoard,  movePosY,  movePosX)==false)
 					{
 					
@@ -88,6 +96,12 @@ public class queen extends Piece
 				//quad 3
 				if(this.getY(this, board)<movePosY)
 				{
+					if(check1!=check2)
+					{
+						System.out.println("We have a problem...");
+						return false;
+					}
+					
 					if(piecesInWay(3,  gameBoard,  movePosY,  movePosX)==false)
 					{
 						
@@ -102,6 +116,11 @@ public class queen extends Piece
 				//quad 1
 				if(this.getY(this, board)>movePosY)
 				{
+					if(check1!=check2)
+					{
+						System.out.println("We have a problem...");
+						return false;
+					}
 					if(piecesInWay(1,  gameBoard,  movePosY,  movePosX)==false)
 					{
 						
@@ -117,6 +136,11 @@ public class queen extends Piece
 				//quad 4
 				if(this.getY(this, board)<movePosY)
 				{
+					if(check1!=check2)
+					{
+						System.out.println("We have a problem...");
+						return false;
+					}
 					if(piecesInWay(4,  gameBoard,  movePosY,  movePosX)==false)
 					{
 					
@@ -212,241 +236,233 @@ public class queen extends Piece
 
 				int yPos = getY(this, board);
 
-				if (quadrant == 1) {
+				int check1=(Math.abs(xPos-movePosX));
+				int check2=(Math.abs(yPos-movePosY));
 
-					checkX = this.getX(this, board) + 1;
-					checkY = this.getY(this, board) - 1;
-					
-					if((xPos+yPos)!=(movePosY+movePosX))
-					{
-						return true;
-					}
-					if((movePosY+movePosX)%2!=0)
-					{
-						return true;
-					}
+				
+					if (quadrant == 1) {
 
-					// finish the other quadrants
+						checkX = this.getX(this, board) + 1;
+						checkY = this.getY(this, board) - 1;
 
-					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
+						// finish the other quadrants
 
-						// if there is a piece in the way and we have not reached move position
+						// if in quad 1, checkX will always equal checkY
+						for (int i = 0; i < check1; i++) {
 
-						System.out.println(checkX);
-						System.out.println(checkY);
-						if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
-							
-							
-							System.out.println("HHHHHHHHH");
-							return true;
-						
-						}
+							// if there is a piece in the way and we have not reached move position
 
-						// if the move spot is null and every spot has been checked.
-						if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							return false;
-
-						}
-						// if we reached the move Spot and trying to capture a enemy piece
-						if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							// if trying to capture a king
-						
-							// trying to capture any other enemy piece
-							if (board[checkY][checkX]!=null) {
-
-								return false;
-							}
-						}
-						// increment and check the next spot
-
-						else {
-
-							if (checkX < movePosX) 
-							{
+							System.out.println(checkX);
+							System.out.println(checkY);
+							if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
 								
-								checkX++;
-								checkY--;
-							
-							}
-							
-						}
-					}
-				}
-				if (quadrant == 2) {
-
-					checkX = this.getX(this, board) - 1;
-					checkY = this.getY(this, board) - 1;
-
-					if((movePosY+movePosX)%2!=0)
-					{
-						return true;
-					}
-					// finish the other quadrants
-
-					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
-
-						// if there is a piece in the way and we have not reached move position
-
-						if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
-
-							return true;
-						}
-
-						// if the move spot is null and every spot has been checked.
-						if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-
-							return false;
-
-						}
-						// if we reached the move Spot and trying to capture a enemy piece
-						if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							// if trying to capture a king
-							if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
-									&& (board[checkY][checkX].toString().equals("[K]"))) {
-								return true;
-							}
-							// trying to capture any other enemy piece
-							if (board[checkY][checkX]!=null) {
-								return false;
-							}
-						}
-						// increment and check the next spot
-
-						else {
-
-							if ((checkX >= 0) && (checkY >= 0)) {
-								checkX--;
-								checkY--;
-							}
-						}
-					}
-				}
-
-				if (quadrant == 3) {
-					
-
-					checkX = this.getX(this, board) - 1;
-					checkY = this.getY(this, board) + 1;
-
-					if((xPos+yPos)!=(movePosY+movePosX))
-					{
-						return true;
-					}
-					if((movePosY+movePosX)%2!=0)
-					{
-						return true;
-					}
-					// finish the other quadrants
-
-					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
-
-						// if there is a piece in the way and we have not reached move position
-
-						if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
-
-							return true;
-						}
-
-						// if the move spot is null and every spot has been checked.
-						if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
-							return false;
-
-						}
-						// if we reached the move Spot and trying to capture a enemy piece
-						if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							// if trying to capture a king
-							if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
-									&& (board[checkY][checkX].toString().equals("[K]"))) {
-								return true;
-							}
-							// trying to capture any other enemy piece
-							if (board[checkY][checkX]!=null) {
-								return false;
-							}
-						}
-						// increment and check the next spot
-
-						else {
-
-							if ((checkX >= 0) && (checkY < 8)) {
-								checkX--;
-								checkY++;
-							}
-						}
-					}
-				}
-				if (quadrant == 4) {
-
-					checkX = this.getX(this, board) + 1;
-					checkY = this.getY(this, board) + 1;
-
-					if((movePosY+movePosX)%2!=0)
-					{
-						return true;
-					}
-					// finish the other quadrants
-
-					for (int i = 0; i < 8; i++) {
-
-						System.out.println(checkX);
-						System.out.println(checkY);
-						System.out.println(movePosX);
-						System.out.println(movePosY);
-						System.out.println();
-						
-						// if there is a piece in the way and we have not reached move position
-
-						if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
-
-							System.out.println("YYYaaaaaYY");
-							return true;
-						}
-
-						// if the move spot is null and every spot has been checked.
-						if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							return false;
-
-						}
-						// if we reached the move Spot and trying to capture a enemy piece
-						if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
-
-							// if trying to capture a king
-							if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
-									&& (board[checkY][checkX].toString().equals("[K]"))) {
-								System.out.println("JJJJ");
-								return true;
-							}
-							// trying to capture any other enemy piece
-							if (board[checkY][checkX]!=null) {
-								return false;
-							}
-						}
-						// increment and check the next spot
-
-						else {
-
-							if (checkX < movePosX) 
-							{
 								
-								checkX++;
+								System.out.println("HHHHHHHHH");
+								return true;
 							
 							}
-							if (checkY < movePosY)
-							{
-								checkY++;
+
+							// if the move spot is null and every spot has been checked.
+							if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								return false;
+
+							}
+							// if we reached the move Spot and trying to capture a enemy piece
+							if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								// if trying to capture a king
+							
+								// trying to capture any other enemy piece
+								if (board[checkY][checkX]!=null) {
+
+									return false;
+								}
+							}
+							// increment and check the next spot
+
+							else {
+
+								if (checkX < movePosX) 
+								{
+									
+									checkX++;
+									checkY--;
+								
+								}
+								else
+								{
+									return false;
+								}
+								
 							}
 						}
 					}
-				}
+					if (quadrant == 2) {
+
+						checkX = this.getX(this, board) - 1;
+						checkY = this.getY(this, board) - 1;
+
+						// finish the other quadrants
+
+						// if in quad 1, checkX will always equal checkY
+						for (int i = 0; i < check1; i++) {
+
+							// if there is a piece in the way and we have not reached move position
+
+							if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
+
+								return true;
+							}
+
+							// if the move spot is null and every spot has been checked.
+							if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+
+								return false;
+
+							}
+							// if we reached the move Spot and trying to capture a enemy piece
+							if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								// if trying to capture a king
+								if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
+										&& (board[checkY][checkX].toString().equals("[K]"))) {
+									return true;
+								}
+								// trying to capture any other enemy piece
+								if (board[checkY][checkX]!=null) {
+									return false;
+								}
+							}
+							// increment and check the next spot
+
+							else {
+
+								if (checkX >movePosX) {
+									checkX--;
+									checkY--;
+								}
+								else
+								{
+									return false;
+								}
+							}
+						}
+					}
+
+					if (quadrant == 3) {
+						
+
+						checkX = this.getX(this, board) - 1;
+						checkY = this.getY(this, board) + 1;
+
+						// finish the other quadrants
+
+						// if in quad 1, checkX will always equal checkY
+						for (int i = 0; i < check1; i++) {
+
+							// if there is a piece in the way and we have not reached move position
+
+							if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
+
+								return true;
+							}
+
+							// if the move spot is null and every spot has been checked.
+							if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
+								return false;
+
+							}
+							// if we reached the move Spot and trying to capture a enemy piece
+							if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								// if trying to capture a king
+								if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
+										&& (board[checkY][checkX].toString().equals("[K]"))) {
+									return true;
+								}
+								// trying to capture any other enemy piece
+								if (board[checkY][checkX]!=null) {
+									return false;
+								}
+							}
+							// increment and check the next spot
+
+							else {
+
+								if (checkX >movePosX) {
+									checkX--;
+									checkY++;
+								}
+								else
+								{
+									return false;
+								}
+							}
+						}
+					}
+					if (quadrant == 4) {
+
+						checkX = this.getX(this, board) + 1;
+						checkY = this.getY(this, board) + 1;
+
+						// finish the other quadrants
+
+						for (int i = 0; i < check1; i++) {
+
+							System.out.println(checkX);
+							System.out.println(checkY);
+							System.out.println(movePosX);
+							System.out.println(movePosY);
+							System.out.println();
+							// if there is a piece in the way and we have not reached move position
+
+							if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
+
+								System.out.println("YYYaaaaaYY");
+								return true;
+							}
+
+							// if the move spot is null and every spot has been checked.
+							if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								return false;
+
+							}
+							// if we reached the move Spot and trying to capture a enemy piece
+							if (((board[checkY][checkX] != null) && (checkX == movePosX) && (checkY == movePosY))) {
+
+								// if trying to capture a king
+								if ((board[checkY][checkX].getPlayer().toString().equals("Black"))
+										&& (board[checkY][checkX].toString().equals("[K]"))) {
+									System.out.println("JJJJ");
+									return true;
+								}
+								// trying to capture any other enemy piece
+								if (board[checkY][checkX]!=null) {
+									return false;
+								}
+							}
+							// increment and check the next spot
+
+							else {
+
+								if (checkX < movePosX) 
+								{
+									
+									checkX++;
+									checkY++;
+								
+								}
+								else
+								{
+									return false;
+								}
+								
+							}
+						}
+					}
 					
 				if (quadrant == 5) {
 

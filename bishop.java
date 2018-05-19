@@ -47,7 +47,13 @@ public class bishop extends Piece
 			System.out.println("ypos:"+yPos);
 			System.out.println("movePosx:"+movePosX);
 			System.out.println("movePosy:"+movePosY);
-			
+			int check1=(Math.abs(xPos-movePosX));
+			int check2=(Math.abs(yPos-movePosY));
+			if(check1!=check2)
+			{
+				System.out.println("We have a problem...");
+				return false;
+			}
 			int checkX=0;
 			int checkY=0;
 			
@@ -55,11 +61,7 @@ public class bishop extends Piece
 			
 			
 				//if the white king is currently in check
-				if(kingInCheck(gameBoard)==0)
-				{
-					System.out.println("You must move the white king out of check first!");
-					return false;
-				}		
+					
 			
 				//quadrant 2 and 3 
 				//if the current xPos is greater than the movePosX then the player is trying to go to either quad 2 or 3
@@ -142,6 +144,9 @@ public class bishop extends Piece
 			int xPos = getX(this, board);
 
 			int yPos = getY(this, board);
+			
+			int check1=(Math.abs(xPos-movePosX));
+			int check2=(Math.abs(yPos-movePosY));
 
 			
 				if (quadrant == 1) {
@@ -152,7 +157,7 @@ public class bishop extends Piece
 					// finish the other quadrants
 
 					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
+					for (int i = 0; i < check1; i++) {
 
 						// if there is a piece in the way and we have not reached move position
 
@@ -210,7 +215,7 @@ public class bishop extends Piece
 					// finish the other quadrants
 
 					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
+					for (int i = 0; i < check1; i++) {
 
 						// if there is a piece in the way and we have not reached move position
 
@@ -264,7 +269,7 @@ public class bishop extends Piece
 					// finish the other quadrants
 
 					// if in quad 1, checkX will always equal checkY
-					for (int i = 0; i < 8; i++) {
+					for (int i = 0; i < check1; i++) {
 
 						// if there is a piece in the way and we have not reached move position
 
@@ -313,7 +318,7 @@ public class bishop extends Piece
 
 					// finish the other quadrants
 
-					for (int i = 0; i < 8; i++) {
+					for (int i = 0; i < check1; i++) {
 
 						System.out.println(checkX);
 						System.out.println(checkY);
