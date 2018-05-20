@@ -10,6 +10,7 @@ public  class  board
 
 
 	Piece [][] board;
+	Piece [][] prev;
 	
 	int count;
 	Player white;
@@ -338,11 +339,18 @@ public  class  board
 		
 	}
 	
-	public void updateBoard(Piece [][] arr)
-	{
-			this.board=arr;	
+	public void updateBoard( Piece [][] arr)
+	{	
 			kingInCheck();
-		
+			this.board=arr;	
+	}
+	public void setPrev( Piece [][] arr)
+	{	
+			this.prev=arr;	
+	}
+	public Piece[][] getPrev()
+	{
+		return prev;
 	}
 	//FINISH CHECKMATE CONDITION
 	//returns 0 if neither king is in check
@@ -351,6 +359,324 @@ public  class  board
 	//returns 1 if white king is in check
 	//returns 2 if the white king is in checkmate
 	public int kingInCheck()
+	{
+		boolean one=false;
+		boolean two=false;
+		boolean three=false;
+		boolean four=false;
+		boolean five=false;
+		boolean six=false;
+		boolean seven=false;
+		boolean eight=false;
+	//these queues look for the in check condition.	
+	Queue <Piece> bq = new LinkedList<Piece>();
+	Queue <Piece> wq = new LinkedList<Piece>();
+	
+	//these queues look for the checkmate condition.
+	Queue <Piece> bq2 = new LinkedList<Piece>();
+	Queue <Piece> wq2 = new LinkedList<Piece>();
+	
+	int bkXPos=0;
+	int bkYPos=0;
+	
+	int wkXPos=0;
+	int wkYPos=0;
+	
+	for(int i=0; i<8; i++)
+	{
+		for (int j=0; j<8; j++)
+		{
+			if(board[i][j]!=null)
+			{
+				if(board[i][j].getPlayer().toString().equals("White"))
+				{
+					if(board[i][j].toString().equals("[*K*]"))
+					{
+						wkXPos=j;
+						wkYPos=i;
+					}
+					wq.offer(board[i][j]);
+					wq2.offer(board[i][j]);
+				}
+				if(board[i][j].getPlayer().toString().equals("Black"))
+				{
+					if(board[i][j].toString().equals("[!K!]"))
+					{
+						bkXPos=j;
+						bkYPos=i;
+					}
+					bq.offer(board[i][j]);
+					bq2.offer(board[i][j]);
+				}
+					
+				}
+			}
+		}
+	
+	while(wq.peek()!=null)
+	{
+	
+		wq.peek().getX(wq.peek(), board);
+		
+		if(wq.peek().move(this, bkXPos, bkYPos)==true)
+		{
+			System.out.println(wq.peek().toString());
+			System.out.println("The Black King is in Check!");
+			
+			wq.clear();
+			
+		while(wq2.peek()!=null)
+		{
+					if (one == false) {
+						if (bk.move(this, bkXPos + 1, bkYPos + 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								one = true;
+							}
+						}
+						else
+						{
+							one = true;
+						}
+					}
+					if (two == false) {
+						if (bk.move(this, bkXPos + 1, bkYPos - 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								
+								two = true;
+							}
+
+						}
+						else
+						{
+							two = true;
+						}
+					}
+					if (three == false) {
+						if (bk.move(this, bkXPos - 1, bkYPos + 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								three = true;
+							}
+						}
+						else
+						{
+							three = true;
+						}
+					}
+					if (four == false) {
+						if (bk.move(this, bkXPos - 1, bkYPos - 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								four = true;
+							}
+						}
+						else
+						{
+							four = true;
+						}
+					}
+					if (five == false) {
+						if (bk.move(this, bkXPos + 1, bkYPos) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								five = true;
+							}
+						}
+						else
+						{
+							five = true;
+						}
+					}
+					if (six == false) {
+						if (bk.move(this, bkXPos, bkYPos + 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								six = true;
+							}
+						}
+						else
+						{
+							six = true;
+						}
+					}
+					if (seven == false) {
+						if (bk.move(this, bkXPos - 1, bkYPos) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								seven = true;
+							}
+						}
+						else
+						{
+							seven = true;
+						}
+					}
+					if (eight == false) {
+						if (bk.move(this, bkXPos, bkYPos - 1) == true) {
+							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true) {
+								eight = true;
+							}
+						}
+						else
+						{
+							eight = true;
+						}
+					}
+			wq2.remove();
+			
+		}
+		
+		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
+		{
+			System.out.println("checkmate!");
+			return 2;
+		}
+		else
+		{
+			return 1;
+		}
+		
+	}
+		wq.remove();
+}
+	
+	
+	while(bq.peek()!=null)
+	{
+	
+		bq.peek().getX(bq.peek(), board);
+		
+		if(bq.peek().move(this, wkXPos, wkYPos)==true)
+		{
+			System.out.println(bq.peek().toString());
+			System.out.println("The White King is in Check!");
+			
+			bq.clear();
+			
+		while(bq2.peek()!=null)
+		{
+					if (one == false) {
+						if (wk.move(this, wkXPos + 1, wkYPos + 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								one = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							one = true;
+							System.out.println("True");
+						}
+					}
+					if (two == false) {
+						if (wk.move(this, wkXPos + 1, wkYPos - 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								two = true;
+								System.out.println("True");
+							}
+
+						}
+						else
+						{
+							two = true;
+							System.out.println("True");
+						}
+					}
+					if (three == false) {
+						if (wk.move(this, wkXPos - 1, wkYPos + 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								three = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							three = true;
+							System.out.println("True");
+						}
+					}
+					if (four == false) {
+						if (wk.move(this, wkXPos - 1, wkYPos - 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								four = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							four = true;
+							System.out.println("True");
+						}
+					}
+					if (five == false) {
+						if (wk.move(this, wkXPos + 1, wkYPos) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								five = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							five = true;
+							System.out.println("True");
+						}
+					}
+					if (six == false) {
+						if (wk.move(this, wkXPos, wkYPos + 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								six = true;
+							}
+						}
+						else
+						{
+							six = true;
+						}
+					}
+					if (seven == false) {
+						if (wk.move(this, wkXPos - 1, wkYPos) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								seven = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							seven = true;
+							System.out.println("True");
+						}
+					}
+					if (eight == false) {
+						if (wk.move(this, wkXPos, wkYPos - 1) == true) {
+							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+								eight = true;
+								System.out.println("True");
+							}
+						}
+						else
+						{
+							eight = true;
+							System.out.println("True");
+						}
+					}
+			bq2.remove();
+			
+		}
+		
+		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
+		{
+			System.out.println("checkmate!");
+			return -2;
+		}
+		else
+		{
+			return -1;
+		}
+		
+	}
+		bq.remove();
+}
+	return 0;
+	}
+	
+
+
+
+	public int kingInCheck(int movePosX, int movePosY)
 	{
 		
 	Queue <Piece> bq = new LinkedList<Piece>();
@@ -395,12 +721,13 @@ public  class  board
 	{
 	
 		wq.peek().getX(wq.peek(), board);
-		if(wq.peek().move(this, bkXPos, bkYPos)==true)
+		if(wq.peek().move(this, movePosX, movePosY)==true)
 		{
 		
 		
 			System.out.println(wq.peek().toString());
-			System.out.println("The Black King is in Check!");
+			System.out.println("Cannot put your own king in Check!");
+			return 1;
 		
 		}
 		wq.remove();
@@ -408,10 +735,11 @@ public  class  board
 	while(bq.peek()!=null)
 	{
 		
-		if(bq.peek().move(this, wkXPos, wkYPos)==true)
+		if(bq.peek().move(this, movePosX, movePosY)==true)
 		{
 			System.out.println(bq.peek().toString());
-			System.out.println("The White King is in Check!");
+			System.out.println("Cannot put your own king in Check!");
+			return -1;
 			
 		}
 		bq.remove();

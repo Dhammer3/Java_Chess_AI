@@ -1,6 +1,5 @@
 package chess;
 
-import java.util.ArrayList;
 import java.util.*;
 public class chess 
 {
@@ -27,6 +26,7 @@ public class chess
 		
 		while(true)
 		{
+			gameBoard.setPrev(board);
 		String temp="";
 		System.out.println("Enter the coordinates for the piece to select ");
 		temp=scan.next();
@@ -56,16 +56,62 @@ public class chess
 		 
 		 int xMove=locParserX(xPos1);
 		 int yMove=locParserY(yPos1);
+		
+		 
 
 	    if(gameBoard.getPiece(xPos, yPos).move(gameBoard, xMove, yMove)==true)
 	    {
+	    	Queue<Piece> prevPiece = new LinkedList<Piece>();
+	    	
+	    	if(board[yMove][xMove]!=null)
+	    	{
+	    		prevPiece.add(board[yMove][xMove]);
+	    	}
+	    	
 	    	board[yMove][xMove] = gameBoard.getPiece(xPos, yPos);
+	    	if(gameBoard.getPiece(xPos, yPos).getPlayer().toString().equals("White"))
+	    	{
+	    		board[yPos][xPos]=null;
+	    		gameBoard.updateBoard(board);
+	    		
+	    		if(gameBoard.kingInCheck()!=0)
+	    		{
+	    			board[yPos][xPos]=gameBoard.getPiece(xMove, yMove);
+	    			if(prevPiece.peek()!=null)
+	    			{
+	    				board[yMove][xMove]=prevPiece.remove();
+	    			}
+	    			else
+	    			{
+
+	    				board[yMove][xMove]=null;
+	    			gameBoard.updateBoard(board);
+	    			System.out.println("Cannot put your own king in check!");
+	    			prevPiece.clear();
+	    		}
+	    		}
+	    	}
+	    	else if(gameBoard.getPiece(xPos, yPos).getPlayer().toString().equals("Black"))
+	    	{
+	    		board[yPos][xPos]=null;
+	    		gameBoard.updateBoard(board);
+	    		
+	    		if(gameBoard.kingInCheck()!=0)
+	    		{
+	    			board[yPos][xPos]=gameBoard.getPiece(xMove, yMove);
+	    			board[yMove][xMove]=prevPiece.remove();
+	    			gameBoard.updateBoard(board);
+	    			System.out.println("Cannot put your own king in check!");
+	    			prevPiece.clear();
+	    		}
+	    	}
+	    	else
+	    	{
 			board[yPos][xPos]=null;
 			gameBoard.updateBoard(board);
+	    	}
 	    }
-	   
-	    
-	
+
 	    gameBoard.printBoard();
 		}
 

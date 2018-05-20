@@ -27,166 +27,64 @@ public class king extends Piece {
 	public boolean move(board gameBoard, int movePosX, int movePosY) {
 		Piece[][] board = new Piece[8][8];
 		gameBoard.copyBoard(board);
+		
+		if((movePosX<0)||(movePosX>7))
+		{
+			return false;
+		}
+		if((movePosY<0)||(movePosY>7))
+		{
+			return false;
+		}
+		System.out.println(movePosX);
+		System.out.println(movePosY);
+		
 
 		int xPos = getX(this, board);
 
 		int yPos = getY(this, board);
 
-		System.out.println("xpos:" + xPos);
-		System.out.println("ypos:" + yPos);
-		System.out.println("movePosx:" + movePosX);
-		System.out.println("movePosy:" + movePosY);
+		int check1 = (Math.abs(xPos - movePosX));
+		int check2 = (Math.abs(yPos - movePosY));
+		
+		if ((check1 > 1)||(check2 > 1)) {
 
-		int checkX = 0;
-		int checkY = 0;
-
-		// quadrant 2 and 3
-		// if the current xPos is greater than the movePosX then the player is trying to
-		// go to either quad 2 or 3
-		if (this.getX(this, board) > movePosX) {
-			// quad 2
-			if (this.getY(this, board) > movePosY) {
-				if (piecesInWay(2, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-
-			}
-
-			// quad 3
-			if (this.getY(this, board) < movePosY) {
-				if (piecesInWay(3, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-			}
-		}
-		// quadrant 1 and 4
-		// if the current xPos is greater than the movePosX then the player is trying to
-		// go to either quad 1 or 4
-		if (this.getX(this, board) < movePosX) {
-			// quad 1
-			if (this.getY(this, board) > movePosY) {
-				if (piecesInWay(1, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-
-			}
-
-			// quad 4
-			if (this.getY(this, board) < movePosY) {
-				if (piecesInWay(4, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-			}
-		}
-		// quadrant 5 and 7
-		// if the current xPos minus the movePosX equals 0 the player is trying to go to
-		// either quad 5 or 7
-		if (this.getX(this, board) - movePosX == 0) {
-			System.out.println("there");
-			// quad 3
-			if (this.getY(this, board) > movePosY) {
-
-				if (piecesInWay(5, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-
-			}
-
-			// quad 3
-			if (this.getY(this, board) < movePosY) {
-
-				if (piecesInWay(7, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-			}
-		}
-		// quadrant 6 and 8
-		// if the current yPos minus the movePosY then the player is trying to go to
-		// either quad 6 or 8
-		if (this.getY(this, board) - movePosY == 0) {
-			System.out.println("here");
-			// quad 2
-			if (this.getX(this, board) > movePosX) {
-				if (piecesInWay(6, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-
-			}
-
-			// quad 4
-			if (this.getX(this, board) < movePosX) {
-				if (piecesInWay(8, gameBoard, movePosY, movePosX) == false) {
-					if ((this.getPlayer().toString().equals("White"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == 1)) {
-						return false;
-					}
-					if ((this.getPlayer().toString().equals("Black"))
-							&& (enemyPieceCanMove(gameBoard, movePosY, movePosX) == -1)) {
-						return false;
-					}
-					return true;
-				}
-			}
-
+			
+			return false;
 		}
 	
-		return false;
+		
+		
+		
+		if(board[movePosY][movePosX]!=null)
+		{
+			if(this.getPlayer().toString().equals("White"))
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
+				{
+					return false;
+				}
+				if(board[movePosY][movePosX].toString().equals("[!K!]"))
+				{
+					return false;
+				}
+			}
+		
+		else
+		{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
+				{
+					return false;
+				}
+				if(board[movePosY][movePosX].toString().equals("[*K*]"))
+				{
+					return false;
+				}
+		}	
+		}
+		
+		
+		return true;
 	}
 
 	public boolean piecesInWay(int quadrant, board gameBoard, int movePosY, int movePosX) {
@@ -603,33 +501,21 @@ public class king extends Piece {
 
 	}
 
-	public int enemyPieceCanMove(board gameBoard, int movePosY, int movePosX) {
+	public int enemyPieceCanMove(board gameBoard, int movePosX, int movePosY) {
 		Piece[][] board = new Piece[8][8];
 		gameBoard.copyBoard(board);
 		Queue<Piece> bq = new LinkedList<Piece>();
 		Queue<Piece> wq = new LinkedList<Piece>();
-
-		int bkXPos = 0;
-		int bkYPos = 0;
-
-		int wkXPos = 0;
-		int wkYPos = 0;
-
+		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if (board[i][j] != null) {
 					if (board[i][j].getPlayer().toString().equals("White")) {
-						if (board[i][j].toString().equals("[*K*]")) {
-							wkXPos = j;
-							wkYPos = i;
-						}
+					
 						wq.offer(board[i][j]);
 					}
 					if (board[i][j].getPlayer().toString().equals("Black")) {
-						if (board[i][j].toString().equals("[!K!]")) {
-							bkXPos = j;
-							bkYPos = i;
-						}
+						
 						bq.offer(board[i][j]);
 					}
 
@@ -639,22 +525,19 @@ public class king extends Piece {
 
 		while (wq.peek() != null) {
 			wq.peek().getX(wq.peek(), board);
-			if (wq.peek().move(gameBoard, movePosY, movePosX) == true) {
-
+			if (wq.peek().move(gameBoard, movePosX, movePosY) == true) {
+				
 				System.out.println(wq.peek().toString());
-				System.out.println("The Black King is in Check!");
-
+				wq.remove();
 				return -1;
-
 			}
 			wq.remove();
 		}
 		while (bq.peek() != null) {
 
-			if (bq.peek().move(gameBoard, movePosY, movePosX) == true) {
+			if (bq.peek().move(gameBoard, movePosX, movePosY) == true) {
 				System.out.println(bq.peek().toString());
-				System.out.println("The White King is in Check!");
-
+				bq.remove();
 				return 1;
 			}
 			bq.remove();

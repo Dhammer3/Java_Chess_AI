@@ -44,6 +44,15 @@ public class pawn extends Piece {
 		int xPos = getX(this, board);
 
 		int yPos = getY(this, board);
+		
+		if((movePosX<0)||(movePosX>7))
+		{
+			return false;
+		}
+		if((movePosY<0)||(movePosY>7))
+		{
+			return false;
+		}
 
 		// start off with some error handling
 
