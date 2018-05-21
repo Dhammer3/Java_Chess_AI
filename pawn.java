@@ -186,19 +186,19 @@ public class pawn extends Piece {
 
 			}
 
-			if ((isInSpawn(board) == true) && (movePosY - yPos == -2)) {
+			if ((isInSpawn(board) == true) && (movePosY - yPos == 2)) {
 				if ((board[movePosY][movePosX] == null) && (board[movePosY - 1][movePosX] == null)) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(board) == true) && (movePosY - yPos == -1)) {
+			if ((isInSpawn(board) == true) && (movePosY - yPos == 1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(board) == false) && (movePosY - yPos == -1)) {
+			if ((isInSpawn(board) == false) && (movePosY - yPos == 1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
