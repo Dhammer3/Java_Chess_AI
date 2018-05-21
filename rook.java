@@ -46,6 +46,30 @@ public class rook extends Piece
 		
 		int yPos=getY(this, board);
 		
+		if(this.getPlayer().toString().equals("White"))
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
+				{
+					return false;
+				}
+			}
+		}
+		if((xPos==movePosX)&&(yPos==movePosY))
+		{
+			return false;
+		}
 		
 
 		
@@ -282,7 +306,7 @@ public class rook extends Piece
 
 					else {
 
-						if (checkX >= 0)  {
+						if (checkY < 7)  {
 							//checkX--;
 							checkY++;
 						}

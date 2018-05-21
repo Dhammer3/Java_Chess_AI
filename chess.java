@@ -15,7 +15,7 @@ public class chess
 	public static void main (String[] args)
 	{
 		Scanner scan = new Scanner(System.in);
-		Piece [][] board= new Piece[8][8];
+		 Piece [][] board= new Piece[8][8];
 	
 		board gameBoard=new board();
 		gameBoard.copyBoard(board);
@@ -74,7 +74,7 @@ public class chess
 	    		board[yPos][xPos]=null;
 	    		gameBoard.updateBoard(board);
 	    		
-	    		if(gameBoard.kingInCheck()!=0)
+	    		if((gameBoard.kingInCheck()==-1)||(gameBoard.kingInCheck()==-2))
 	    		{
 	    			board[yPos][xPos]=gameBoard.getPiece(xMove, yMove);
 	    			if(prevPiece.peek()!=null)
@@ -96,13 +96,21 @@ public class chess
 	    		board[yPos][xPos]=null;
 	    		gameBoard.updateBoard(board);
 	    		
-	    		if(gameBoard.kingInCheck()!=0)
+	    		if((gameBoard.kingInCheck()==1)||(gameBoard.kingInCheck()==2))
 	    		{
 	    			board[yPos][xPos]=gameBoard.getPiece(xMove, yMove);
-	    			board[yMove][xMove]=prevPiece.remove();
+	    			if(prevPiece.peek()!=null)
+	    			{
+	    				board[yMove][xMove]=prevPiece.remove();
+	    			}
+	    			else
+	    			{
+
+	    				board[yMove][xMove]=null;
 	    			gameBoard.updateBoard(board);
 	    			System.out.println("Cannot put your own king in check!");
 	    			prevPiece.clear();
+	    		}
 	    		}
 	    	}
 	    	else
@@ -115,6 +123,11 @@ public class chess
 	    gameBoard.printBoard();
 		}
 
+	}
+	public static boolean checkmate()
+	{
+		
+		return false;
 	}
 	public static Piece[][] getpieceLoc( Piece [][] board, Piece p)
 	{

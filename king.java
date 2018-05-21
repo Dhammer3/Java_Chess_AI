@@ -52,6 +52,12 @@ public class king extends Piece {
 			
 			return false;
 		}
+		if(enemyPieceCanMove( gameBoard,  movePosX,  movePosY)==true)
+		{
+			System.out.println("An enemy can move there.");
+			return false;
+			
+		}
 	
 		
 		
@@ -66,7 +72,7 @@ public class king extends Piece {
 				}
 				if(board[movePosY][movePosX].toString().equals("[!K!]"))
 				{
-					return false;
+					return true;
 				}
 			}
 		
@@ -78,7 +84,7 @@ public class king extends Piece {
 				}
 				if(board[movePosY][movePosX].toString().equals("[*K*]"))
 				{
-					return false;
+					return true;
 				}
 		}	
 		}
@@ -501,7 +507,7 @@ public class king extends Piece {
 
 	}
 
-	public int enemyPieceCanMove(board gameBoard, int movePosX, int movePosY) {
+	public boolean enemyPieceCanMove(board gameBoard, int movePosX, int movePosY) {
 		Piece[][] board = new Piece[8][8];
 		gameBoard.copyBoard(board);
 		Queue<Piece> bq = new LinkedList<Piece>();
@@ -523,26 +529,34 @@ public class king extends Piece {
 			}
 		}
 
+		if(this.getPlayer().toString().equals("Black"))
+		{
 		while (wq.peek() != null) {
 			wq.peek().getX(wq.peek(), board);
-			if (wq.peek().move(gameBoard, movePosX, movePosY) == true) {
+			if (wq.peek().move(gameBoard, movePosX, movePosY) == true) 
+			{
 				
 				System.out.println(wq.peek().toString());
-				wq.remove();
-				return -1;
+				
+			
+				return true;
 			}
 			wq.remove();
 		}
+		}
+		else
+		{
 		while (bq.peek() != null) {
 
 			if (bq.peek().move(gameBoard, movePosX, movePosY) == true) {
 				System.out.println(bq.peek().toString());
-				bq.remove();
-				return 1;
+			
+				return true;
 			}
 			bq.remove();
 		}
-		return 0;
+		}
+		return false;
 	}
 
 }

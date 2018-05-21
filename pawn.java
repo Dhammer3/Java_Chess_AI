@@ -47,10 +47,12 @@ public class pawn extends Piece {
 		
 		if((movePosX<0)||(movePosX>7))
 		{
+		
 			return false;
 		}
 		if((movePosY<0)||(movePosY>7))
 		{
+			
 			return false;
 		}
 
@@ -65,9 +67,11 @@ public class pawn extends Piece {
 		// if its not in the spawn but trying to move 2 space in y-direction.
 		if (movePosX - xPos > 1) {
 
+	
 			return false;
 		}
 		if (movePosX - xPos < -1) {
+		
 
 			return false;
 		}

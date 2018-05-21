@@ -528,7 +528,7 @@ public class queen extends Piece {
 
 				else {
 
-					if (checkX >= 0) {
+					if (checkY < 7) {
 						// checkX--;
 						checkY++;
 					}
@@ -543,7 +543,7 @@ public class queen extends Piece {
 
 			// finish the other quadrants
 
-			for (int i = 0; i < 8; i++) {
+			for (int i = 0; i < movePosX; i++) {
 
 				// if there is a piece in the way and we have not reached move position
 
