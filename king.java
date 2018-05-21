@@ -24,9 +24,18 @@ public class king extends Piece {
 		return play;
 	}
 
-	public boolean move(board gameBoard, int movePosX, int movePosY) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean move(Piece[][] board, int movePosX, int movePosY) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
+		Piece[][] temp = new Piece[8][8];
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0; j<8; j++)
+			{
+				temp[i][j]=board[i][j];
+			}
+		}
+		Queue<Piece> aq = new LinkedList<Piece>();
 		
 		if((movePosX<0)||(movePosX>7))
 		{
@@ -52,12 +61,38 @@ public class king extends Piece {
 			
 			return false;
 		}
-		if(enemyPieceCanMove( gameBoard,  movePosX,  movePosY)==true)
+		if(enemyPieceCanMove( board,  movePosX,  movePosY)==true)
 		{
 			System.out.println("An enemy can move there.");
 			return false;
 			
 		}
+
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(this.getPlayer().toString().equals("Black"))
+				{
+					if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
+					{
+						aq.add(board[movePosY][movePosX]);
+					}
+				}
+				if(this.getPlayer().toString().equals("White"))
+				{
+					if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
+					{
+						aq.add(board[movePosY][movePosX]);
+					}
+				}
+				
+			}
+			temp[movePosY][movePosX]=this;
+			if(enemyPieceCanMove( temp,  movePosX,  movePosY)==true)
+			{
+				temp=board;
+				return false;
+			}
+		
 	
 		
 		
@@ -93,9 +128,9 @@ public class king extends Piece {
 		return true;
 	}
 
-	public boolean piecesInWay(int quadrant, board gameBoard, int movePosY, int movePosX) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosY, int movePosX) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 		int checkX = 0;
 		int checkY = 0;
 
@@ -507,9 +542,9 @@ public class king extends Piece {
 
 	}
 
-	public boolean enemyPieceCanMove(board gameBoard, int movePosX, int movePosY) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean enemyPieceCanMove(Piece[][] board, int movePosX, int movePosY) {
+		//Piece[][] board = new Piece[8][8];
+	//	gameBoard.copyBoard(board);
 		Queue<Piece> bq = new LinkedList<Piece>();
 		Queue<Piece> wq = new LinkedList<Piece>();
 		
@@ -533,7 +568,7 @@ public class king extends Piece {
 		{
 		while (wq.peek() != null) {
 			wq.peek().getX(wq.peek(), board);
-			if (wq.peek().move(gameBoard, movePosX, movePosY) == true) 
+			if (wq.peek().move(board, movePosX, movePosY) == true) 
 			{
 				
 				System.out.println(wq.peek().toString());
@@ -548,7 +583,7 @@ public class king extends Piece {
 		{
 		while (bq.peek() != null) {
 
-			if (bq.peek().move(gameBoard, movePosX, movePosY) == true) {
+			if (bq.peek().move(board, movePosX, movePosY) == true) {
 				System.out.println(bq.peek().toString());
 			
 				return true;

@@ -35,9 +35,9 @@ public class queen extends Piece {
 	 * 
 	 */
 
-	public boolean move(board gameBoard, int movePosX, int movePosY) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean move(Piece[][] board, int movePosX, int movePosY) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 
 		int xPos = getX(this, board);
 
@@ -62,7 +62,7 @@ public class queen extends Piece {
 					return false;
 				}
 
-				if (piecesInWay(2, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(2, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -76,7 +76,7 @@ public class queen extends Piece {
 					return false;
 				}
 
-				if (piecesInWay(3, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(3, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -92,7 +92,7 @@ public class queen extends Piece {
 
 					return false;
 				}
-				if (piecesInWay(1, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(1, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -105,7 +105,7 @@ public class queen extends Piece {
 
 					return false;
 				}
-				if (piecesInWay(4, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(4, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -119,7 +119,7 @@ public class queen extends Piece {
 			// quad 3
 			if (this.getY(this, board) > movePosY) {
 
-				if (piecesInWay(5, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(5, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -129,7 +129,7 @@ public class queen extends Piece {
 			// quad 3
 			if (this.getY(this, board) < movePosY) {
 
-				if (piecesInWay(7, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(7, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -142,7 +142,7 @@ public class queen extends Piece {
 
 			// quad 2
 			if (this.getX(this, board) > movePosX) {
-				if (piecesInWay(6, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(6, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -151,7 +151,7 @@ public class queen extends Piece {
 
 			// quad 4
 			if (this.getX(this, board) < movePosX) {
-				if (piecesInWay(8, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(8, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -170,9 +170,9 @@ public class queen extends Piece {
 	 * Quadrant Diagram -,- +,- [2][5][1] [7][Q][8] [3][6][4] -,+ +,+
 	 * 
 	 */
-	public boolean piecesInWay(int quadrant, board gameBoard, int movePosY, int movePosX) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosY, int movePosX) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 		int checkX = 0;
 		int checkY = 0;
 
@@ -184,6 +184,31 @@ public class queen extends Piece {
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));
+		
+		if(this.getPlayer().toString().equals("White"))
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
+				{
+					return false;
+				}
+			}
+		}
+		if((xPos==movePosX)&&(yPos==movePosY))
+		{
+			return false;
+		}
 
 		if (quadrant == 1) {
 

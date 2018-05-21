@@ -51,7 +51,7 @@ public abstract class Piece
 	
 	//public abstract boolean isValueTrue(board gameBoard, Piece p , int movePos, int movePosX );
 	
-	public abstract boolean  move(board gameBoard, int movePos, int movePosX );
+	public abstract boolean  move(Piece[][] board, int movePos, int movePosX );
 
 
 	

@@ -418,7 +418,7 @@ public  class  board
 	
 		wq.peek().getX(wq.peek(), board);
 		
-		if(wq.peek().move(this, bkXPos, bkYPos)==true)
+		if(wq.peek().move(board, bkXPos, bkYPos)==true)
 		{
 			System.out.println(wq.peek().toString());
 			System.out.println("The Black King is in Check!");
@@ -518,9 +518,9 @@ public  class  board
 			}
 					if (one == false) 
 					{
-						if (bk.move(this, bkXPos + 1, bkYPos + 1) == true) 
+						if (bk.move(board, bkXPos + 1, bkYPos + 1) == true) 
 						{
-							if (wq2.peek().move(this, bkXPos + 1, bkYPos + 1) == true)
+							if (wq2.peek().move(board, bkXPos + 1, bkYPos + 1) == true)
 							{
 								one = true;
 							}
@@ -531,8 +531,8 @@ public  class  board
 						}
 					}
 					if (two == false) {
-						if (bk.move(this, bkXPos + 1, bkYPos - 1) == true) {
-							if (wq2.peek().move(this, bkXPos + 1, bkYPos - 1) == true) {
+						if (bk.move(board, bkXPos + 1, bkYPos - 1) == true) {
+							if (wq2.peek().move(board, bkXPos + 1, bkYPos - 1) == true) {
 								
 								two = true;
 							}
@@ -544,8 +544,8 @@ public  class  board
 						}
 					}
 					if (three == false) {
-						if (bk.move(this, bkXPos - 1, bkYPos + 1) == true) {
-							if (wq2.peek().move(this, bkXPos - 1, bkYPos + 1) == true) {
+						if (bk.move(board, bkXPos - 1, bkYPos + 1) == true) {
+							if (wq2.peek().move(board, bkXPos - 1, bkYPos + 1) == true) {
 								three = true;
 							}
 						}
@@ -555,8 +555,8 @@ public  class  board
 						}
 					}
 					if (four == false) {
-						if (bk.move(this, bkXPos - 1, bkYPos - 1) == true) {
-							if (wq2.peek().move(this, bkXPos - 1, bkYPos - 1) == true) {
+						if (bk.move(board, bkXPos - 1, bkYPos - 1) == true) {
+							if (wq2.peek().move(board, bkXPos - 1, bkYPos - 1) == true) {
 								four = true;
 							}
 						}
@@ -566,8 +566,8 @@ public  class  board
 						}
 					}
 					if (five == false) {
-						if (bk.move(this, bkXPos + 1, bkYPos) == true) {
-							if (wq2.peek().move(this, bkXPos + 1, bkYPos) == true) {
+						if (bk.move(board, bkXPos + 1, bkYPos) == true) {
+							if (wq2.peek().move(board, bkXPos + 1, bkYPos) == true) {
 								five = true;
 							}
 						}
@@ -577,9 +577,9 @@ public  class  board
 						}
 					}
 					if (six == false) {
-						if (bk.move(this, bkXPos, bkYPos + 1) == true)
+						if (bk.move(board, bkXPos, bkYPos + 1) == true)
 						{
-							if (wq2.peek().move(this, bkXPos, bkYPos + 1) == true)
+							if (wq2.peek().move(board, bkXPos, bkYPos + 1) == true)
 							{
 								six = true;
 							}
@@ -590,8 +590,8 @@ public  class  board
 						}
 					}
 					if (seven == false) {
-						if (bk.move(this, bkXPos - 1, bkYPos) == true) {
-							if (wq2.peek().move(this, bkXPos - 1, bkYPos ) == true) {
+						if (bk.move(board, bkXPos - 1, bkYPos) == true) {
+							if (wq2.peek().move(board, bkXPos - 1, bkYPos ) == true) {
 								seven = true;
 							}
 						}
@@ -601,9 +601,9 @@ public  class  board
 						}
 					}
 					if (eight == false) {
-						if (bk.move(this, bkXPos, bkYPos - 1) == true)
+						if (bk.move(board, bkXPos, bkYPos - 1) == true)
 						{
-							if (wq2.peek().move(this, bkXPos, bkYPos - 1) == true) {
+							if (wq2.peek().move(board, bkXPos, bkYPos - 1) == true) {
 								eight = true;
 							}
 						}
@@ -618,10 +618,7 @@ public  class  board
 		
 		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
 		{
-			if(bk.move(this, wq.peek().getX(wq.peek(), board), wq.peek().getY(wq.peek(), board))==true)
-			{
-				return 1;
-			}
+			
 			
 			System.out.println("checkmate!");
 			return 2;
@@ -641,18 +638,106 @@ public  class  board
 	
 		bq.peek().getX(bq.peek(), board);
 		
-		if(bq.peek().move(this, wkXPos, wkYPos)==true)
+		if(bq.peek().move(board, wkXPos, wkYPos)==true)
 		{
 			System.out.println(bq.peek().toString());
 			System.out.println("The White King is in Check!");
 			
-			bq.clear();
 			
+			
+			boolean switch2=false;
 		while(bq2.peek()!=null)
 		{
+			if(switch2 ==false)
+			{
+				if(bq.peek().toString().equals("[!r!]"))
+				{
+					if(bq.peek().getX(bq.peek(), board)==bkXPos)
+					{
+						six=true;
+						eight=true;
+					}
+					else if(bq.peek().getY(bq.peek(), board)==bkYPos)
+					{
+						five=true;
+						seven=true;
+					}
+				}
+				else if(bq.peek().toString().equals("[!b!]"))
+				{
+					if(bq.peek().getX(bq.peek(), board)<bkXPos)
+					{
+						if(bq.peek().getY(bq.peek(), board)<bkYPos)
+						{
+							two=true;
+							four=true;
+						}
+						else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+						{
+							one=true;
+							two=true;
+						}
+					}
+					else if(bq.peek().getX(bq.peek(), board)>bkXPos)
+					{
+						if(bq.peek().getY(bq.peek(), board)<bkYPos)
+						{
+							one=true;
+							three=true;
+						}
+						else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+						{
+							four=true;
+							two=true;
+						}
+					}
+				}
+				else if(bq.peek().toString().equals("[!q!]"))
+			{
+				if(bq.peek().getX(bq.peek(), board)==bkXPos)
+				{
+					six=true;
+					eight=true;
+				}
+				else if(bq.peek().getY(bq.peek(), board)==bkYPos)
+				{
+					five=true;
+					seven=true;
+				}
+				
+				else if(bq.peek().getX(bq.peek(), board)<bkXPos)
+				{
+					if(bq.peek().getY(bq.peek(), board)<bkYPos)
+					{
+						two=true;
+						four=true;
+					}
+					else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+					{
+						one=true;
+						two=true;
+					}
+				}
+				else if(bq.peek().getX(bq.peek(), board)>bkXPos)
+				{
+					if(bq.peek().getY(bq.peek(), board)<bkYPos)
+					{
+						one=true;
+						three=true;
+					}
+					else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+					{
+						four=true;
+						two=true;
+					}
+				}
+			}
+			switch2=true;
+			}
+		
 					if (one == false) {
-						if (wk.move(this, wkXPos + 1, wkYPos + 1) == true) {
-							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+						if (wk.move(board, wkXPos + 1, wkYPos + 1) == true) {
+							if (bq2.peek().move(board, wkXPos + 1, wkYPos + 1) == true) {
 								one = true;
 								System.out.println("True");
 							}
@@ -664,8 +749,8 @@ public  class  board
 						}
 					}
 					if (two == false) {
-						if (wk.move(this, wkXPos + 1, wkYPos - 1) == true) {
-							if (bq2.peek().move(this, wkXPos + 1, wkYPos - 1) == true) {
+						if (wk.move(board, wkXPos + 1, wkYPos - 1) == true) {
+							if (bq2.peek().move(board, wkXPos + 1, wkYPos - 1) == true) {
 								two = true;
 								System.out.println("True");
 							}
@@ -678,8 +763,8 @@ public  class  board
 						}
 					}
 					if (three == false) {
-						if (wk.move(this, wkXPos - 1, wkYPos + 1) == true) {
-							if (bq2.peek().move(this, wkXPos + 1, wkYPos + 1) == true) {
+						if (wk.move(board, wkXPos - 1, wkYPos + 1) == true) {
+							if (bq2.peek().move(board, wkXPos + 1, wkYPos + 1) == true) {
 								three = true;
 								System.out.println("True");
 							}
@@ -691,8 +776,8 @@ public  class  board
 						}
 					}
 					if (four == false) {
-						if (wk.move(this, wkXPos - 1, wkYPos - 1) == true) {
-							if (bq2.peek().move(this, wkXPos - 1, wkYPos - 1) == true) {
+						if (wk.move(board, wkXPos - 1, wkYPos - 1) == true) {
+							if (bq2.peek().move(board, wkXPos - 1, wkYPos - 1) == true) {
 								four = true;
 								System.out.println("True");
 							}
@@ -704,8 +789,8 @@ public  class  board
 						}
 					}
 					if (five == false) {
-						if (wk.move(this, wkXPos + 1, wkYPos) == true) {
-							if (bq2.peek().move(this, wkXPos + 1, wkYPos) == true) {
+						if (wk.move(board, wkXPos + 1, wkYPos) == true) {
+							if (bq2.peek().move(board, wkXPos + 1, wkYPos) == true) {
 								five = true;
 								System.out.println("True");
 							}
@@ -717,8 +802,8 @@ public  class  board
 						}
 					}
 					if (six == false) {
-						if (wk.move(this, wkXPos, wkYPos + 1) == true) {
-							if (bq2.peek().move(this, wkXPos, wkYPos + 1) == true) {
+						if (wk.move(board, wkXPos, wkYPos + 1) == true) {
+							if (bq2.peek().move(board, wkXPos, wkYPos + 1) == true) {
 								six = true;
 							}
 						}
@@ -728,8 +813,8 @@ public  class  board
 						}
 					}
 					if (seven == false) {
-						if (wk.move(this, wkXPos - 1, wkYPos) == true) {
-							if (bq2.peek().move(this, wkXPos - 1, wkYPos) == true) {
+						if (wk.move(board, wkXPos - 1, wkYPos) == true) {
+							if (bq2.peek().move(board, wkXPos - 1, wkYPos) == true) {
 								seven = true;
 								System.out.println("True");
 							}
@@ -741,8 +826,8 @@ public  class  board
 						}
 					}
 					if (eight == false) {
-						if (wk.move(this, wkXPos, wkYPos - 1) == true) {
-							if (bq2.peek().move(this, wkXPos, wkYPos - 1) == true) {
+						if (wk.move(board, wkXPos, wkYPos - 1) == true) {
+							if (bq2.peek().move(board, wkXPos, wkYPos - 1) == true) {
 								eight = true;
 								System.out.println("True");
 							}
@@ -759,6 +844,7 @@ public  class  board
 		
 		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
 		{
+			
 			System.out.println("checkmate!");
 			return -2;
 		}
@@ -821,7 +907,7 @@ public  class  board
 	{
 	
 		wq.peek().getX(wq.peek(), board);
-		if(wq.peek().move(this, movePosX, movePosY)==true)
+		if(wq.peek().move(board, movePosX, movePosY)==true)
 		{
 		
 		
@@ -835,7 +921,7 @@ public  class  board
 	while(bq.peek()!=null)
 	{
 		
-		if(bq.peek().move(this, movePosX, movePosY)==true)
+		if(bq.peek().move(board, movePosX, movePosY)==true)
 		{
 			System.out.println(bq.peek().toString());
 			System.out.println("Cannot put your own king in Check!");
@@ -847,6 +933,10 @@ public  class  board
 		return 0;
 }
 
+public Piece [][] getBoard()
+{
+	return board;
+}
 public Piece [][] getBoard()
 {
 	return board;

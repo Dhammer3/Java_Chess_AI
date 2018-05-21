@@ -25,9 +25,9 @@ public class bishop extends Piece {
 	// 4. determine if there are any pieces in the way
 	// 5. if passes all checks, piece should be moved.
 
-	public boolean move(board gameBoard, int movePosX, int movePosY) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean move(Piece[][] board, int movePosX, int movePosY) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 
 		int xPos = getX(this, board);
 
@@ -41,6 +41,31 @@ public class bishop extends Piece {
 		}
 		int checkX = 0;
 		int checkY = 0;
+		
+		if(this.getPlayer().toString().equals("White"))
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
+				{
+					return false;
+				}
+			}
+		}
+		else
+		{
+			if(board[movePosY][movePosX]!=null)
+			{
+				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
+				{
+					return false;
+				}
+			}
+		}
+		if((xPos==movePosX)&&(yPos==movePosY))
+		{
+			return false;
+		}
 
 		// if the white king is currently in check
 
@@ -50,7 +75,7 @@ public class bishop extends Piece {
 		if (this.getX(this, board) > movePosX) {
 			// quad 2
 			if (this.getY(this, board) > movePosY) {
-				if (piecesInWay(2, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(2, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -59,7 +84,7 @@ public class bishop extends Piece {
 
 			// quad 3
 			if (this.getY(this, board) < movePosY) {
-				if (piecesInWay(3, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(3, board, movePosY, movePosX) == false) {
 
 					return true;
 				}
@@ -71,7 +96,7 @@ public class bishop extends Piece {
 		if (this.getX(this, board) < movePosX) {
 			// quad 1
 			if (this.getY(this, board) > movePosY) {
-				if (piecesInWay(1, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(1, board, movePosY, movePosX) == false) {
 					return true;
 				}
 
@@ -80,7 +105,7 @@ public class bishop extends Piece {
 			// quad 4
 			if (this.getY(this, board) < movePosY) {
 
-				if (piecesInWay(4, gameBoard, movePosY, movePosX) == false) {
+				if (piecesInWay(4, board, movePosY, movePosX) == false) {
 					System.out.println("lll");
 					return true;
 				}
@@ -99,9 +124,9 @@ public class bishop extends Piece {
 	 * Quadrant Diagram -,- +,- [2][ ][1] [ ][b][ ] [3][ ][4] -,+ +,+
 	 * 
 	 */
-	public boolean piecesInWay(int quadrant, board gameBoard, int movePosY, int movePosX) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosY, int movePosX) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 		int checkX = 0;
 		int checkY = 0;
 

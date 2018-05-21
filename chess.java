@@ -59,7 +59,7 @@ public class chess
 		
 		 
 
-	    if(gameBoard.getPiece(xPos, yPos).move(gameBoard, xMove, yMove)==true)
+	    if(gameBoard.getPiece(xPos, yPos).move(gameBoard.getBoard(), xMove, yMove)==true)
 	    {
 	    	Queue<Piece> prevPiece = new LinkedList<Piece>();
 	    	

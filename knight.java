@@ -42,10 +42,10 @@ public class knight extends Piece
 	 *      0,+
 	 */  
 	
-	public  boolean  move(board gameBoard, int movePosX, int movePosY )
+	public  boolean  move(Piece[][] board, int movePosX, int movePosY )
 	{
-		Piece [][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+		//Piece [][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 	
 		int xPos=getX(this, board);
 		

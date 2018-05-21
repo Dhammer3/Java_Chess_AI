@@ -36,10 +36,11 @@ public class pawn extends Piece {
 	}
 
 	// fix, can move pawn backword, //can move two spaces when not in spawn.
-	public boolean move(board gameBoard, int movePosX, int movePosY) {
+	public boolean move(Piece[][] board, int movePosX, int movePosY) {
 		// cant move backward
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
+		//board[movePosY][movePosX]=this;
 
 		int xPos = getX(this, board);
 
@@ -123,19 +124,19 @@ public class pawn extends Piece {
 
 			}
 
-			if ((isInSpawn(gameBoard) == true) && (yPos - movePosY == 2)) {
+			if ((isInSpawn(board) == true) && (yPos - movePosY == 2)) {
 				if ((board[movePosY][movePosX] == null) && (board[movePosY + 1][movePosX] == null)) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(gameBoard) == true) && (yPos - movePosY == 1)) {
+			if ((isInSpawn(board) == true) && (yPos - movePosY == 1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(gameBoard) == false) && (yPos - movePosY == 1)) {
+			if ((isInSpawn(board) == false) && (yPos - movePosY == 1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
@@ -185,19 +186,19 @@ public class pawn extends Piece {
 
 			}
 
-			if ((isInSpawn(gameBoard) == true) && (movePosY - yPos == -2)) {
+			if ((isInSpawn(board) == true) && (movePosY - yPos == -2)) {
 				if ((board[movePosY][movePosX] == null) && (board[movePosY - 1][movePosX] == null)) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(gameBoard) == true) && (movePosY - yPos == -1)) {
+			if ((isInSpawn(board) == true) && (movePosY - yPos == -1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
 				}
 			}
-			if ((isInSpawn(gameBoard) == false) && (movePosY - yPos == -1)) {
+			if ((isInSpawn(board) == false) && (movePosY - yPos == -1)) {
 				if (board[movePosY][movePosX] == null) {
 
 					return true;
@@ -211,9 +212,9 @@ public class pawn extends Piece {
 	// check
 
 	// works
-	public boolean isInSpawn(board gameBoard) {
-		Piece[][] board = new Piece[8][8];
-		gameBoard.copyBoard(board);
+	public boolean isInSpawn(Piece[][] board) {
+		//Piece[][] board = new Piece[8][8];
+		//gameBoard.copyBoard(board);
 
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
