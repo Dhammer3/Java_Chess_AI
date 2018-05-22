@@ -139,7 +139,7 @@ public  class  board
 				if ((i==1)&&(j==0))
 				{
 					
-						board[5][5]=bp;
+						board[i][j]=bp;
 						j++;
 						board[i][j]=bp2;
 						j++;
@@ -167,13 +167,13 @@ public  class  board
 					j++;
 					board[i][j]=wk;
 					j++;
-					board[i][j]=null;//wq;
+					board[i][j]=wq;
 					j++;
 					board[i][j]=wb2;
 					j++;
 					board[i][j]=wkn2;
 					j++;
-					board[3][3]=wr2;
+					board[i][j]=wr2;
 					j++;
 					
 				}

@@ -254,9 +254,7 @@ public class queen extends Piece {
 						checkX++;
 						checkY--;
 
-					} else {
-						return false;
-					}
+					} 
 
 				}
 			}
@@ -304,9 +302,7 @@ public class queen extends Piece {
 					if (checkX > movePosX) {
 						checkX--;
 						checkY--;
-					} else {
-						return false;
-					}
+					} 
 				}
 			}
 		}
@@ -452,7 +448,7 @@ public class queen extends Piece {
 
 				else {
 
-					if ((checkX < 8) && (checkY > 0)) {
+					if (checkY > movePosY) {
 						// checkX++;
 						checkY--;
 					}
@@ -505,7 +501,7 @@ public class queen extends Piece {
 
 				else {
 
-					if (checkX > 0) {
+					if (checkX >movePosY) {
 						checkX--;
 						// checkY--;
 					}

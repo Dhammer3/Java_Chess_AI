@@ -148,7 +148,7 @@ public class chess
 		//parsing the string
 				String currentLocation=movePos.toUpperCase();
 				int moveLocationY=0;
-				String a="A";
+				//String a="A";
 				String [] move = { "A", "B", "C", "D", "E", "F", "G" ,"H"};
 				for(int i=0; i<8; i++)
 				{
@@ -156,7 +156,7 @@ public class chess
 					{
 						System.out.println(i);
 						moveLocationY=i;
-						return i;
+						return moveLocationY;
 					}
 				}
 				return -1;
