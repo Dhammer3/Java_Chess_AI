@@ -937,10 +937,6 @@ public Piece [][] getBoard()
 {
 	return board;
 }
-public Piece [][] getBoard()
-{
-	return board;
-}
 
 
 public Piece getPiece(int x, int y)

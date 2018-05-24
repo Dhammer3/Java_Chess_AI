@@ -148,7 +148,7 @@ public class rook extends Piece
 	 *   [ ][7][ ]
 	 *      0,+
 	 */  
-	public boolean piecesInWay(int quadrant, Piece [][] board, int movePosY, int movePosX)
+	public boolean piecesInWay(int quadrant, Piece [][] board, int movePosX, int movePosY)
 
 	{
 		//Piece[][] board = new Piece[8][8];

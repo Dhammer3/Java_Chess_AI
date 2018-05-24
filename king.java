@@ -128,7 +128,7 @@ public class king extends Piece {
 		return true;
 	}
 
-	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosY, int movePosX) {
+	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 		int checkX = 0;

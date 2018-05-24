@@ -62,7 +62,7 @@ public class queen extends Piece {
 					return false;
 				}
 
-				if (piecesInWay(2, board, movePosY, movePosX) == false) {
+				if (piecesInWay(2, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -76,7 +76,7 @@ public class queen extends Piece {
 					return false;
 				}
 
-				if (piecesInWay(3, board, movePosY, movePosX) == false) {
+				if (piecesInWay(3, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -92,7 +92,7 @@ public class queen extends Piece {
 
 					return false;
 				}
-				if (piecesInWay(1, board, movePosY, movePosX) == false) {
+				if (piecesInWay(1, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -105,7 +105,7 @@ public class queen extends Piece {
 
 					return false;
 				}
-				if (piecesInWay(4, board, movePosY, movePosX) == false) {
+				if (piecesInWay(4, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -119,7 +119,7 @@ public class queen extends Piece {
 			// quad 3
 			if (this.getY(this, board) > movePosY) {
 
-				if (piecesInWay(5, board, movePosY, movePosX) == false) {
+				if (piecesInWay(5, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -129,7 +129,7 @@ public class queen extends Piece {
 			// quad 3
 			if (this.getY(this, board) < movePosY) {
 
-				if (piecesInWay(7, board, movePosY, movePosX) == false) {
+				if (piecesInWay(7, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -142,7 +142,7 @@ public class queen extends Piece {
 
 			// quad 2
 			if (this.getX(this, board) > movePosX) {
-				if (piecesInWay(6, board, movePosY, movePosX) == false) {
+				if (piecesInWay(6, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -151,7 +151,7 @@ public class queen extends Piece {
 
 			// quad 4
 			if (this.getX(this, board) < movePosX) {
-				if (piecesInWay(8, board, movePosY, movePosX) == false) {
+				if (piecesInWay(8, board, movePosX, movePosY) == false) {
 
 					return true;
 				}
@@ -170,7 +170,7 @@ public class queen extends Piece {
 	 * Quadrant Diagram -,- +,- [2][5][1] [7][Q][8] [3][6][4] -,+ +,+
 	 * 
 	 */
-	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosY, int movePosX) {
+	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 		int checkX = 0;
@@ -214,7 +214,7 @@ public class queen extends Piece {
 
 			checkX = this.getX(this, board) + 1;
 			checkY = this.getY(this, board) - 1;
-
+System.out.println("quadrant"+quadrant);
 			// finish the other quadrants
 
 			// if in quad 1, checkX will always equal checkY
@@ -261,6 +261,7 @@ public class queen extends Piece {
 		}
 		if (quadrant == 2) {
 
+			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board) - 1;
 			checkY = this.getY(this, board) - 1;
 
@@ -309,6 +310,7 @@ public class queen extends Piece {
 
 		if (quadrant == 3) {
 
+			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board) - 1;
 			checkY = this.getY(this, board) + 1;
 
@@ -357,6 +359,7 @@ public class queen extends Piece {
 		}
 		if (quadrant == 4) {
 
+			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board) + 1;
 			checkY = this.getY(this, board) + 1;
 
@@ -408,6 +411,7 @@ public class queen extends Piece {
 			}
 		}
 
+		//moving up
 		if (quadrant == 5) {
 
 			checkX = this.getX(this, board);
@@ -418,6 +422,8 @@ public class queen extends Piece {
 			// if in quad 1, checkX will always equal checkY
 			for (int i = 0; i < 8; i++) {
 
+				System.out.println(movePosY);
+				System.out.println(checkY);
 				// if there is a piece in the way and we have not reached move position
 
 				if ((board[checkY][checkX] != null) && (checkY != movePosY)) {
@@ -425,7 +431,7 @@ public class queen extends Piece {
 				}
 
 				// if the move spot is null and every spot has been checked.
-				if (((board[checkY][checkX] == null) && (checkX == movePosX) && (checkY == movePosY))) {
+				if (((board[checkY][checkX] == null) &&  (checkY == movePosY))) {
 
 					return false;
 
@@ -439,7 +445,7 @@ public class queen extends Piece {
 						return true;
 					}
 					// trying to capture any other enemy piece
-					if (board[checkY][checkX] != null) {
+					if (board[checkY][checkX]!=null) {
 
 						return false;
 					}
@@ -448,16 +454,18 @@ public class queen extends Piece {
 
 				else {
 
-					if (checkY > movePosY) {
-						// checkX++;
+					if ((checkY > movePosY)) {
+						//checkX++;
 						checkY--;
 					}
 				}
 			}
 		}
+	
 		// moving left
 		if (quadrant == 6) {
 
+			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board) - 1;
 			checkY = this.getY(this, board);
 
@@ -501,7 +509,7 @@ public class queen extends Piece {
 
 				else {
 
-					if (checkX >movePosY) {
+					if (checkX >movePosX) {
 						checkX--;
 						// checkY--;
 					}
@@ -512,6 +520,7 @@ public class queen extends Piece {
 		// moving down
 		if (quadrant == 7) {
 
+			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board);
 			checkY = this.getY(this, board) + 1;
 
@@ -549,7 +558,7 @@ public class queen extends Piece {
 
 				else {
 
-					if (checkY < 7) {
+					if (checkY < movePosY) {
 						// checkX--;
 						checkY++;
 					}
@@ -558,6 +567,7 @@ public class queen extends Piece {
 		}
 		// moving right
 		if (quadrant == 8) {
+			System.out.println("quadrant"+quadrant);
 
 			checkX = this.getX(this, board) + 1;
 			checkY = this.getY(this, board);
