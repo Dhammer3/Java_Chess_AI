@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.ArrayList;
+
 public class Black extends Player
 {
 	pawn p;
@@ -8,7 +10,19 @@ public class Black extends Player
 	knight kn;
 	bishop b;
 	rook r; 
+	ArrayList <Piece> blackPieces;
+	boolean isPerson;
 	
+	public Black()
+	{
+	isPerson=true;
+	blackPieces=new ArrayList<Piece>();
+	}
+	
+	public void setPerson(boolean isPerson)
+	{
+		this.isPerson=isPerson;
+	}
 	public  String toString()
 	{
 		return "Black";
@@ -45,5 +59,14 @@ public class Black extends Player
 	{
 		q=new queen(black);
 		return p;
+	}
+	public  void addPieces(ArrayList<Piece> playerPieces)
+	{
+		this.blackPieces=playerPieces;
+	
+	}
+	public Piece getPiece(int i)
+	{
+		return blackPieces.get(i);
 	}
 }

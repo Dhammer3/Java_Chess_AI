@@ -20,9 +20,12 @@ public class chess
 		board gameBoard=new board();
 		gameBoard.copyBoard(board);
 		Player white=new White();
+		white.addPieces(gameBoard.getWhitePieces());
 		Player black=new Black();
+		black.addPieces(gameBoard.getBlackPieces());
 		gameBoard.printBoard();
 		
+	
 		
 		while(true)
 		{

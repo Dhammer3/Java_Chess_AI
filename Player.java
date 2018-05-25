@@ -28,6 +28,7 @@ public abstract class Player
 	public abstract Piece setKing();
 	
 	public abstract  Piece setQueen();
+	public abstract Piece getPiece(int a);
 	
 
 	
@@ -68,6 +69,7 @@ public abstract class Player
 	}
 	
 	public abstract String toString();
+	public abstract void addPieces(ArrayList<Piece> playerPieces);
 	
 }
 

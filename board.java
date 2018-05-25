@@ -9,6 +9,8 @@ public  class  board
 
 
 
+	ArrayList <Piece> whitePieces;
+	ArrayList <Piece> blackPieces;
 	Piece [][] board;
 	Piece [][] prev;
 	
@@ -66,49 +68,82 @@ public  class  board
 	
 	public board()
 	{
-		
+		whitePieces=new ArrayList<Piece>();
+		blackPieces=new ArrayList<Piece>();
 		white=new White();
 		black=new Black();
 		board=new Piece[8][8];
 		
-		wp=new pawn(white);
-		wp2=new pawn(white);
-		wp3=new pawn(white);
+		wp=new pawn(white);  
+		whitePieces.add(wp);
+		wp2=new pawn(white); 
+		whitePieces.add(wp2);
+		wp3=new pawn(white); 
+		whitePieces.add(wp3);
 		wp4=new pawn(white);
+		whitePieces.add(wp4);
 		wp5=new pawn(white);
+		whitePieces.add(wp5);
 		wp6=new pawn(white);
+		whitePieces.add(wp6);
 		wp7=new pawn(white);
+		whitePieces.add(wp7);
 		wp8=new pawn(white);
+		whitePieces.add(wp8);
 		
 		wr=new rook(white);
+		whitePieces.add(wr);
 		wr2=new rook(white);
+		whitePieces.add(wr2);
 		wkn=new knight(white);
+		whitePieces.add(wkn);
 		wkn2=new knight(white);
+		whitePieces.add(wkn2);
 		wb=new bishop(white);
+		whitePieces.add(wb);
 		wb2=new bishop(white);
+		whitePieces.add(wb2);
 		wk=new king(white);
-		wk2=new king(white);
+		whitePieces.add(wk);
 		wq=new queen(white);
+		whitePieces.add(wq);
+		
 		
 		
 		bp=new pawn(black);
+		blackPieces.add(bp);
 		bp2=new pawn(black);
+		blackPieces.add(bp2);
 		bp3=new pawn(black);
+		blackPieces.add(bp3);
 		bp4=new pawn(black);
+		blackPieces.add(bp4);
 		bp5=new pawn(black);
+		blackPieces.add(bp5);
 		bp6=new pawn(black);
+		blackPieces.add(bp6);
 		bp7=new pawn(black);
+		blackPieces.add(bp7);
 		bp8=new pawn(black);
+		blackPieces.add(bp8);
 		
 		br=new rook(black);
+		blackPieces.add(br);
 		br2=new rook(black);
+		blackPieces.add(br2);
 		bkn=new knight(black);
+		blackPieces.add(bkn);
 		bkn2=new knight(black);
+		blackPieces.add(bkn2);
 		bb=new bishop(black);
+		blackPieces.add(bb);
 		bb2=new bishop(black);
+		blackPieces.add(bb2);
 		bk=new king(black);
-		bk2=new king(black);
+		blackPieces.add(bk);
 		bq=new queen(black);
+		blackPieces.add(bq);
+		
 		for(int i=0; i<8; i++)
 		{
 			//y
@@ -159,8 +194,8 @@ public  class  board
 				if ((i==7)&&(j==0))
 				{
 					board[i][j]=wr;
+					
 					j++;
-				
 					board[i][j]=wkn;
 					j++;
 					board[i][j]=wb;
@@ -618,9 +653,17 @@ public  class  board
 		
 		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
 		{
-			
-			
-			System.out.println("checkmate!");
+			//if any black pieces can capture the piece that is putting the king in check
+			while(bq.peek()!=null)
+			{
+				if(bq.peek().move(board, wq.peek().getX(wq.peek(), board), wq.peek().getY(wq.peek(), board))==true)
+				{
+					System.out.println("The Black King is in Check!");
+					return 1;
+				}
+				bq.remove();
+			}
+			System.out.println("Checkmate!");
 			return 2;
 		}
 		else
@@ -641,7 +684,7 @@ public  class  board
 		if(bq.peek().move(board, wkXPos, wkYPos)==true)
 		{
 			System.out.println(bq.peek().toString());
-			System.out.println("The White King is in Check!");
+			
 			
 			
 			
@@ -844,12 +887,21 @@ public  class  board
 		
 		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
 		{
-			
-			System.out.println("checkmate!");
-			return -2;
+			while(wq.peek()!=null)
+			{
+				if(wq.peek().move(board, bq.peek().getX(bq.peek(), board), bq.peek().getY(bq.peek(), board))==true)
+				{
+					System.out.println("The White King is in Check!");
+					return -1;
+				}
+				wq.remove();
+			}
+			System.out.println("The White King is in CheckMate!");
+			return -2;		
 		}
 		else
 		{
+			System.out.println("The White King is in Check!");
 			return -1;
 		}
 		
@@ -960,6 +1012,15 @@ public void copyBoard(Piece[][] arr)
 			arr[i][j]=board[i][j];
 		}
 	}
+}
+
+public ArrayList<Piece> getWhitePieces()
+{
+	return whitePieces;
+}
+public ArrayList<Piece> getBlackPieces()
+{
+	return blackPieces;
 }
 }
 	
