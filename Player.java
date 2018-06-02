@@ -17,17 +17,7 @@ public abstract class Player
 		
 	count=1;
 	}
-	public abstract Piece setPawn();
-	
-	public abstract  Piece setRook();
-	
-	public abstract Piece setKnight();
 
-	public abstract Piece setBishop();
-
-	public abstract Piece setKing();
-	
-	public abstract  Piece setQueen();
 	public abstract Piece getPiece(int a);
 	
 

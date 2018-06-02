@@ -4,10 +4,12 @@ public class rook extends Piece
 {
 
 	Player play;
+	int moveCount;
 	
 	public rook(Player play)
 	{
 	this.play=play;
+	moveCount=0;
 	}
 	public  Player getPlayer()
 	{
@@ -170,17 +172,9 @@ public class rook extends Piece
 			
 					for (int i = this.getY(this, board)-1; i >movePosY ; i--) 
 					{
-					
-						
-						if(board[i][checkX]==null)
-						{
-							//System.out.println(board[i][checkX].toString());
-							System.out.println("that spot is null"+i);
-						}
-						
 						if(board[i][checkX]!=null)
 						{
-							System.out.println("that spot is not null"+i);
+					
 							return true;
 						}
 						
@@ -193,7 +187,7 @@ public class rook extends Piece
 				// moving left
 				if (quadrant == 6) {
 
-					System.out.println("quadrant"+quadrant);
+				
 					checkX = this.getX(this, board);
 					checkY = this.getY(this, board);
 					
@@ -201,7 +195,7 @@ public class rook extends Piece
 					{
 						if (board[checkY][i] != null)
 						{
-							System.out.println("that spot is not null"+i);
+		
 							return true;
 						}
 						
@@ -212,7 +206,7 @@ public class rook extends Piece
 				// moving down
 				if (quadrant == 7) {
 
-					System.out.println("quadrant"+quadrant);
+	
 					checkX = this.getX(this, board);
 					checkY = this.getY(this, board);
 					
@@ -230,7 +224,7 @@ public class rook extends Piece
 				// moving right
 				if (quadrant == 8) {
 
-					System.out.println("quadrant"+quadrant);
+		
 					checkX = this.getX(this, board);
 					checkY = this.getY(this, board);
 					
@@ -251,4 +245,12 @@ public class rook extends Piece
 
 	}
 
+	public void moveCounter()
+	{
+		this.moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return this.moveCount;
+	}
 }

@@ -4,11 +4,13 @@ import java.util.NoSuchElementException;
 
 public class pawn extends Piece {
 
-	int moveCount = 0;
+	int moveCount;
+	//Queue<int> pos=new Queue<int>();
 	Player play;
 
 	public pawn(Player play) {
 		this.play = play;
+		moveCount=0;
 	}
 
 	public pawn() {
@@ -34,6 +36,7 @@ public class pawn extends Piece {
 	public int getCount() {
 		return moveCount;
 	}
+	
 
 	// fix, can move pawn backword, //can move two spaces when not in spawn.
 	public boolean move(Piece[][] board, int movePosX, int movePosY) {
@@ -248,4 +251,12 @@ public class pawn extends Piece {
 		return false;
 	}
 
+	public void moveCounter()
+	{
+		this.moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return this.moveCount;
+	}
 }

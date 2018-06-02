@@ -2,12 +2,13 @@ package chess;
 
 public class queen extends Piece {
 
-	Player white;
-	Player black;
+	Player play;
+	int moveCount;
 
 	public queen(Player play) {
 
 		this.play = play;
+		moveCount=0;
 	}
 
 	public String toString() {
@@ -226,7 +227,7 @@ public class queen extends Piece {
 
 			checkX = this.getX(this, board) + 1;
 			checkY = this.getY(this, board) - 1;
-System.out.println("quadrant"+quadrant);
+
 			// finish the other quadrants
 
 			// if in quad 1, checkX will always equal checkY
@@ -273,7 +274,7 @@ System.out.println("quadrant"+quadrant);
 		}
 		if (quadrant == 2) {
 
-			System.out.println("quadrant"+quadrant);
+	
 			checkX = this.getX(this, board) - 1;
 			checkY = this.getY(this, board) - 1;
 
@@ -322,7 +323,7 @@ System.out.println("quadrant"+quadrant);
 
 		if (quadrant == 3) {
 
-			System.out.println("quadrant"+quadrant);
+		
 			checkX = this.getX(this, board) - 1;
 			checkY = this.getY(this, board) + 1;
 
@@ -371,7 +372,6 @@ System.out.println("quadrant"+quadrant);
 		}
 		if (quadrant == 4) {
 
-			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board) + 1;
 			checkY = this.getY(this, board) + 1;
 
@@ -428,18 +428,10 @@ System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board);
 	
 			for (int i = this.getY(this, board)-1; i >movePosY ; i--) 
-			{
-			
-				
-				if(board[i][checkX]==null)
-				{
-					//System.out.println(board[i][checkX].toString());
-					System.out.println("that spot is null"+i);
-				}
-				
+			{	
 				if(board[i][checkX]!=null)
 				{
-					System.out.println("that spot is not null"+i);
+			
 					return true;
 				}
 				
@@ -452,7 +444,6 @@ System.out.println("quadrant"+quadrant);
 		// moving left
 		if (quadrant == 6) {
 
-			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board);
 			checkY = this.getY(this, board);
 			
@@ -460,7 +451,7 @@ System.out.println("quadrant"+quadrant);
 			{
 				if (board[checkY][i] != null)
 				{
-					System.out.println("that spot is not null"+i);
+
 					return true;
 				}
 				
@@ -471,7 +462,7 @@ System.out.println("quadrant"+quadrant);
 		// moving down
 		if (quadrant == 7) {
 
-			System.out.println("quadrant"+quadrant);
+	
 			checkX = this.getX(this, board);
 			checkY = this.getY(this, board);
 			
@@ -489,7 +480,6 @@ System.out.println("quadrant"+quadrant);
 		// moving right
 		if (quadrant == 8) {
 
-			System.out.println("quadrant"+quadrant);
 			checkX = this.getX(this, board);
 			checkY = this.getY(this, board);
 			
@@ -509,4 +499,12 @@ System.out.println("quadrant"+quadrant);
 
 	}
 
+	public void moveCounter()
+	{
+		this.moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return this.moveCount;
+	}
 }

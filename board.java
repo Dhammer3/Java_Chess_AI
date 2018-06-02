@@ -782,66 +782,66 @@ public  class  board
 						if (wk.move(board, wkXPos + 1, wkYPos + 1) == true) {
 							if (bq2.peek().move(board, wkXPos + 1, wkYPos + 1) == true) {
 								one = true;
-								System.out.println("True");
+							
 							}
 						}
 						else
 						{
 							one = true;
-							System.out.println("True");
+					
 						}
 					}
 					if (two == false) {
 						if (wk.move(board, wkXPos + 1, wkYPos - 1) == true) {
 							if (bq2.peek().move(board, wkXPos + 1, wkYPos - 1) == true) {
 								two = true;
-								System.out.println("True");
+							
 							}
 
 						}
 						else
 						{
 							two = true;
-							System.out.println("True");
+							
 						}
 					}
 					if (three == false) {
 						if (wk.move(board, wkXPos - 1, wkYPos + 1) == true) {
 							if (bq2.peek().move(board, wkXPos + 1, wkYPos + 1) == true) {
 								three = true;
-								System.out.println("True");
+								
 							}
 						}
 						else
 						{
 							three = true;
-							System.out.println("True");
+						
 						}
 					}
 					if (four == false) {
 						if (wk.move(board, wkXPos - 1, wkYPos - 1) == true) {
 							if (bq2.peek().move(board, wkXPos - 1, wkYPos - 1) == true) {
 								four = true;
-								System.out.println("True");
+								
 							}
 						}
 						else
 						{
 							four = true;
-							System.out.println("True");
+							
 						}
 					}
 					if (five == false) {
 						if (wk.move(board, wkXPos + 1, wkYPos) == true) {
 							if (bq2.peek().move(board, wkXPos + 1, wkYPos) == true) {
 								five = true;
-								System.out.println("True");
+						
 							}
 						}
 						else
 						{
 							five = true;
-							System.out.println("True");
+						
 						}
 					}
 					if (six == false) {
@@ -859,26 +859,26 @@ public  class  board
 						if (wk.move(board, wkXPos - 1, wkYPos) == true) {
 							if (bq2.peek().move(board, wkXPos - 1, wkYPos) == true) {
 								seven = true;
-								System.out.println("True");
+								
 							}
 						}
 						else
 						{
 							seven = true;
-							System.out.println("True");
+						
 						}
 					}
 					if (eight == false) {
 						if (wk.move(board, wkXPos, wkYPos - 1) == true) {
 							if (bq2.peek().move(board, wkXPos, wkYPos - 1) == true) {
 								eight = true;
-								System.out.println("True");
+							
 							}
 						}
 						else
 						{
 							eight = true;
-							System.out.println("True");
+						
 						}
 					}
 			bq2.remove();

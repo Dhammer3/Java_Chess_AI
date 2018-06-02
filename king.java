@@ -5,9 +5,11 @@ import java.util.Queue;
 
 public class king extends Piece {
 	Player play;
+	int moveCount;
 
 	public king(Player play) {
 		this.play = play;
+		moveCount=0;
 	}
 
 	public String toString() {
@@ -27,6 +29,7 @@ public class king extends Piece {
 	public boolean move(Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
+	
 		Piece[][] temp = new Piece[8][8];
 		for(int i=0; i<8; i++)
 		{
@@ -45,8 +48,6 @@ public class king extends Piece {
 		{
 			return false;
 		}
-		System.out.println(movePosX);
-		System.out.println(movePosY);
 		
 
 		int xPos = getX(this, board);
@@ -58,7 +59,6 @@ public class king extends Piece {
 		
 		if ((check1 > 1)||(check2 > 1)) {
 
-			
 			return false;
 		}
 		if(enemyPieceCanMove( board,  movePosX,  movePosY)==true)
@@ -103,8 +103,10 @@ public class king extends Piece {
 			{
 				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
 				{
+					
 					return false;
 				}
+				//check
 				if(board[movePosY][movePosX].toString().equals("[!K!]"))
 				{
 					return true;
@@ -115,8 +117,10 @@ public class king extends Piece {
 		{
 				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
 				{
+					
 					return false;
 				}
+				//check
 				if(board[movePosY][movePosX].toString().equals("[*K*]"))
 				{
 					return true;
@@ -542,6 +546,14 @@ public class king extends Piece {
 
 	}
 
+	public void moveCounter()
+	{
+		moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return moveCount;
+	}
 	public boolean enemyPieceCanMove(Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 	//	gameBoard.copyBoard(board);
@@ -594,4 +606,45 @@ public class king extends Piece {
 		return false;
 	}
 
+	
+	public boolean canCastle(Piece[][] board, int movePosX, int movePosY)
+	{
+		if((this.getMoveCount()!=0)||(board[movePosY][movePosX].getMoveCount()!=0))
+		{
+			System.out.println("the movecount");
+			return false;
+		}
+	
+		
+		if(board[movePosY][movePosX].move(board, movePosX, movePosY)!=true)
+		{
+			System.out.println("not valid");
+			return false;
+		}
+		int i=this.getX(this, board);
+		if(i-movePosX>0)
+		{
+			for(int x=i; x<movePosX; x--)
+			{
+				if(enemyPieceCanMove( board,  x,  movePosY)==true)
+				{
+					System.out.println("enemy piece ");
+					return false;
+				}
+			}
+		}
+		else
+		{
+			for(int x=i; x<movePosX; x++)
+			{
+				if(enemyPieceCanMove( board,  x,  movePosY)==true)
+				{
+					System.out.println("enemy piece ");
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
 }

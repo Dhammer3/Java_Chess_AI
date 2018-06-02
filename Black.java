@@ -69,4 +69,8 @@ public class Black extends Player
 	{
 		return blackPieces.get(i);
 	}
+	public ArrayList<Piece> getPieceList()
+	{
+		return blackPieces;
+	}
 }

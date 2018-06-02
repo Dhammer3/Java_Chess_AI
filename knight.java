@@ -2,7 +2,14 @@ package chess;
 
 public class knight extends Piece 
 {
+	Player play;
+	int moveCount;
 
+	public knight(Player play)
+	{
+	this.play=play;
+	moveCount=0;
+	}
 
 	public  String toString()
 	{
@@ -17,10 +24,7 @@ public class knight extends Piece
 		}
 		return k;
 	}
-	public knight(Player play)
-	{
-	this.play=play;
-	}
+	
 	public  Player getPlayer()
 	{
 		return play;
@@ -240,4 +244,12 @@ public class knight extends Piece
 		 return false;
 }
 
+	public void moveCounter()
+	{
+		this.moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return this.moveCount;
+	}
 }

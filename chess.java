@@ -4,9 +4,8 @@ import java.util.*;
 public class chess 
 {
 
-	Player white;
-	Player black;
 	moveList ml;
+	static board gameBoard;
 	//
 
 	//local history
@@ -17,7 +16,7 @@ public class chess
 		Scanner scan = new Scanner(System.in);
 		 Piece [][] board= new Piece[8][8];
 	
-		board gameBoard=new board();
+		gameBoard=new board();
 		gameBoard.copyBoard(board);
 		Player white=new White();
 		white.addPieces(gameBoard.getWhitePieces());
@@ -29,7 +28,10 @@ public class chess
 		
 		while(true)
 		{
-			gameBoard.setPrev(board);
+		boolean whiteTurn=true;
+	
+	
+		gameBoard.setPrev(board);
 		String temp="";
 		System.out.println("Enter the coordinates for the piece to select ");
 		temp=scan.next();
@@ -119,6 +121,7 @@ public class chess
 	    	else
 	    	{
 			board[yPos][xPos]=null;
+			board[yMove][xMove].moveCounter();
 			gameBoard.updateBoard(board);
 	    	}
 	    }
@@ -132,6 +135,8 @@ public class chess
 		
 		return false;
 	}
+
+
 	public static Piece[][] getpieceLoc( Piece [][] board, Piece p)
 	{
 		for(int i=0; i<8; i++)

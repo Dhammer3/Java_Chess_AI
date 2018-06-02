@@ -6,9 +6,12 @@ public abstract class Piece
 {
 	Player play;
 	Piece p;
+	int xPos;
+	int yPos;
+	int moveCount;
+	int value;
 	public Piece()
 	{
-	
 		
 	}
 	public abstract Player getPlayer();
@@ -53,6 +56,39 @@ public abstract class Piece
 	
 	public abstract boolean  move(Piece[][] board, int movePos, int movePosX );
 
+	//public abstract int[][] currentLocation(int xPos, int yPos);
+
+	
+	public void updatePos(int x, int y)
+	{
+		this.xPos=x;
+		this.yPos=y;
+	}
+	public int getX()
+	{
+		return this.xPos;
+	}
+	public int getY()
+	{
+		return this.yPos;
+	}
+	public void moveCounter()
+	{
+		this.moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return this.moveCount;
+	}
+	public void setValue(int a)
+	{
+		this.value=a;
+	}
+	public int getValue()
+	{
+		return value;
+	}
+	
 
 	
 	

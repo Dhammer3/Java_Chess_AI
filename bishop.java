@@ -1,8 +1,11 @@
 package chess;
 
 public class bishop extends Piece {
+	Player play;
+	int moveCount;
 	public bishop(Player play) {
 		this.play = play;
+		moveCount=0;
 	}
 
 	public String toString() {
@@ -106,7 +109,7 @@ public class bishop extends Piece {
 			if (this.getY(this, board) < movePosY) {
 
 				if (piecesInWay(4, board, movePosY, movePosX) == false) {
-					System.out.println("lll");
+				
 					return true;
 				}
 			}
@@ -347,7 +350,12 @@ public class bishop extends Piece {
 
 	}
 
-	public int kingInCheck(board gameBoard) {
-		return -1;
+	public void moveCounter()
+	{
+		moveCount++;
+	}
+	public  int getMoveCount()
+	{
+		return moveCount;
 	}
 }
