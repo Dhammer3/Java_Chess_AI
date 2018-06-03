@@ -9,6 +9,7 @@ public class queen extends Piece {
 
 		this.play = play;
 		moveCount=0;
+		
 	}
 
 	public String toString() {
@@ -466,7 +467,7 @@ public class queen extends Piece {
 			checkX = this.getX(this, board);
 			checkY = this.getY(this, board);
 			
-			for (int i = checkY+1; i == movePosY; i++) 
+			for (int i = checkY+1; i < movePosY; i++) 
 			{
 				if (board[i][checkX] != null) 
 				{
@@ -499,12 +500,5 @@ public class queen extends Piece {
 
 	}
 
-	public void moveCounter()
-	{
-		this.moveCount++;
-	}
-	public  int getMoveCount()
-	{
-		return this.moveCount;
-	}
+	
 }

@@ -54,7 +54,7 @@ public class rook extends Piece
 			{
 				if(board[movePosY][movePosX].getPlayer().toString().equals("White"))
 				{
-					return true;
+					return false;
 				}
 			}
 		}
@@ -64,7 +64,7 @@ public class rook extends Piece
 			{
 				if(board[movePosY][movePosX].getPlayer().toString().equals("Black"))
 				{
-					return true;
+					return false;
 				}
 			}
 		}

@@ -555,13 +555,14 @@ public class king extends Piece {
 		return moveCount;
 	}
 	public boolean enemyPieceCanMove(Piece[][] board, int movePosX, int movePosY) {
-		//Piece[][] board = new Piece[8][8];
+		//Piece[][] temp = new Piece[8][8];
 	//	gameBoard.copyBoard(board);
 		Queue<Piece> bq = new LinkedList<Piece>();
 		Queue<Piece> wq = new LinkedList<Piece>();
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
+				//board[i][j]=temp[i][j];
 				if (board[i][j] != null) {
 					if (board[i][j].getPlayer().toString().equals("White")) {
 					
@@ -575,11 +576,13 @@ public class king extends Piece {
 				}
 			}
 		}
+		//temp[movePosY][movePosX]=null;
 
 		if(this.getPlayer().toString().equals("Black"))
 		{
 		while (wq.peek() != null) {
 			wq.peek().getX(wq.peek(), board);
+			
 			if (wq.peek().move(board, movePosX, movePosY) == true) 
 			{
 				

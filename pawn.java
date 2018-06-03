@@ -4,18 +4,19 @@ import java.util.NoSuchElementException;
 
 public class pawn extends Piece {
 
-	int moveCount;
+	int moveCount=0;
 	//Queue<int> pos=new Queue<int>();
 	Player play;
 
+
 	public pawn(Player play) {
 		this.play = play;
-		moveCount=0;
+		//moveCount=0;
 	}
 
 	public pawn() {
 		play = null;
-		moveCount = 0;
+		//moveCount = 0;
 
 	}
 
@@ -37,6 +38,12 @@ public class pawn extends Piece {
 		return moveCount;
 	}
 	
+	public void updatePos(int x, int y)
+	{
+		this.xPos=x;
+		this.yPos=y;
+	}
+
 
 	// fix, can move pawn backword, //can move two spaces when not in spawn.
 	public boolean move(Piece[][] board, int movePosX, int movePosY) {
@@ -44,6 +51,7 @@ public class pawn extends Piece {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 		//board[movePosY][movePosX]=this;
+		//System.out.println(moveCount);
 
 		int xPos = getX(this, board);
 
@@ -216,40 +224,36 @@ public class pawn extends Piece {
 
 	// works
 	public boolean isInSpawn(Piece[][] board) {
-		//Piece[][] board = new Piece[8][8];
-		//gameBoard.copyBoard(board);
+		// Piece[][] board = new Piece[8][8];
+		// gameBoard.copyBoard(board);
 
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				// if the pawn is white
-				if (this.getPlayer().toString().equals("White")) {
+		// if the pawn is white
+		if (this.getPlayer().toString().equals("White")) {
 
-					// white piece in the white spawn
-					if (board[x][y] == this) {
-						//
-						if (x == 6) {
+			// white piece in the white spawn
+			if (this.getY() == 6) {
+				//
 
-							return true;
-						}
-
-					}
-				}
-				// if the pawn is black
-				if (this.getPlayer().toString().equals("Black")) {
-
-					// black pawn in the black spawn
-					if (board[x][y] == this) {
-						if (x == 1) {
-
-							return true;
-						}
-
-					}
-				}
+				return true;
 			}
+
+		}
+
+		// if the pawn is black
+		if (this.getPlayer().toString().equals("Black")) {
+
+			// black pawn in the black spawn
+			if (this.getY() == 1) {
+
+				return true;
+			}
+
 		}
 		return false;
 	}
+		
+		
+	
 
 	public void moveCounter()
 	{

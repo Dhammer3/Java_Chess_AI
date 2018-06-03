@@ -153,21 +153,29 @@ public  class  board
 				if ((j==0)&&(i==0))
 				{
 					board[i][j]=br;
+					board[i][j].updatePos(j, i);
 					j++;
 					
 					board[i][j]=bkn;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bb;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bk;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bq;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bb2;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bkn2;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=br2;
+					board[i][j].updatePos(j, i);
 					j++;
 					
 				}
@@ -175,40 +183,56 @@ public  class  board
 				{
 					
 						board[i][j]=bp;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp2;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp3;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp4;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp5;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp6;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp7;
+						board[i][j].updatePos(j, i);
 						j++;
 						board[i][j]=bp8;
+						board[i][j].updatePos(j, i);
 						j++;
 				}
 				if ((i==7)&&(j==0))
 				{
 					board[i][j]=wr;
+					board[i][j].updatePos(j, i);
 					
 					j++;
 					board[i][j]=wkn;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wb;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wk;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wq;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wb2;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wkn2;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wr2;
+					board[i][j].updatePos(j, i);
 					j++;
 					
 				}
@@ -216,20 +240,28 @@ public  class  board
 				{
 					
 					board[i][j]=wp;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp2;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp3;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp4;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp5;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp6;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp7;
+					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wp8;
+					board[i][j].updatePos(j, i);
 					j++;
 				}
 				//board[6][1]=wr;
@@ -403,6 +435,7 @@ public  class  board
 		boolean six=false;
 		boolean seven=false;
 		boolean eight=false;
+		int piecesPuttingInCheck=0;
 	//these queues look for the in check condition.	
 	Queue <Piece> bq = new LinkedList<Piece>();
 	Queue <Piece> wq = new LinkedList<Piece>();
@@ -410,6 +443,7 @@ public  class  board
 	//these queues look for the checkmate condition.
 	Queue <Piece> bq2 = new LinkedList<Piece>();
 	Queue <Piece> wq2 = new LinkedList<Piece>();
+	Queue <Piece> wq3 = new LinkedList<Piece>();
 	
 	int bkXPos=0;
 	int bkYPos=0;
@@ -432,6 +466,7 @@ public  class  board
 					}
 					wq.offer(board[i][j]);
 					wq2.offer(board[i][j]);
+					wq3.offer(board[i][j]);
 				}
 				if(board[i][j].getPlayer().toString().equals("Black"))
 				{
@@ -451,12 +486,14 @@ public  class  board
 	while(wq.peek()!=null)
 	{
 	
-		wq.peek().getX(wq.peek(), board);
+		//wq.peek().getX();
 		
 		if(wq.peek().move(board, bkXPos, bkYPos)==true)
 		{
 			System.out.println(wq.peek().toString());
 			System.out.println("The Black King is in Check!");
+			piecesPuttingInCheck++;
+			
 		
 		
 		 
@@ -469,12 +506,12 @@ public  class  board
 			{
 				if(wq.peek().toString().equals("[*r*]"))
 				{
-					if(wq.peek().getX(wq.peek(), board)==bkXPos)
+					if(wq.peek().getX()==bkXPos)
 					{
 						six=true;
 						eight=true;
 					}
-					else if(wq.peek().getY(wq.peek(), board)==bkYPos)
+					else if(wq.peek().getY()==bkYPos)
 					{
 						five=true;
 						seven=true;
@@ -482,27 +519,27 @@ public  class  board
 				}
 				else if(wq.peek().toString().equals("[*b*]"))
 				{
-					if(wq.peek().getX(wq.peek(), board)<bkXPos)
+					if(wq.peek().getX()<bkXPos)
 					{
-						if(wq.peek().getY(wq.peek(), board)<bkYPos)
+						if(wq.peek().getY()<bkYPos)
 						{
 							two=true;
 							four=true;
 						}
-						else if(wq.peek().getY(wq.peek(), board)>bkYPos)
+						else if(wq.peek().getY()>bkYPos)
 						{
 							one=true;
 							two=true;
 						}
 					}
-					else if(wq.peek().getX(wq.peek(), board)>bkXPos)
+					else if(wq.peek().getX()>bkXPos)
 					{
-						if(wq.peek().getY(wq.peek(), board)<bkYPos)
+						if(wq.peek().getY()<bkYPos)
 						{
 							one=true;
 							three=true;
 						}
-						else if(wq.peek().getY(wq.peek(), board)>bkYPos)
+						else if(wq.peek().getY()>bkYPos)
 						{
 							four=true;
 							two=true;
@@ -511,38 +548,38 @@ public  class  board
 				}
 				else if(wq.peek().toString().equals("[*q*]"))
 			{
-				if(wq.peek().getX(wq.peek(), board)==bkXPos)
+				if(wq.peek().getX()==bkXPos)
 				{
 					six=true;
 					eight=true;
 				}
-				else if(wq.peek().getY(wq.peek(), board)==bkYPos)
+				else if(wq.peek().getY()==bkYPos)
 				{
 					five=true;
 					seven=true;
 				}
 				
-				else if(wq.peek().getX(wq.peek(), board)<bkXPos)
+				else if(wq.peek().getX()<bkXPos)
 				{
-					if(wq.peek().getY(wq.peek(), board)<bkYPos)
+					if(wq.peek().getY()<bkYPos)
 					{
 						two=true;
 						four=true;
 					}
-					else if(wq.peek().getY(wq.peek(), board)>bkYPos)
+					else if(wq.peek().getY()>bkYPos)
 					{
 						one=true;
 						two=true;
 					}
 				}
-				else if(wq.peek().getX(wq.peek(), board)>bkXPos)
+				else if(wq.peek().getX()>bkXPos)
 				{
-					if(wq.peek().getY(wq.peek(), board)<bkYPos)
+					if(wq.peek().getY()<bkYPos)
 					{
 						one=true;
 						three=true;
 					}
-					else if(wq.peek().getY(wq.peek(), board)>bkYPos)
+					else if(wq.peek().getY()>bkYPos)
 					{
 						four=true;
 						two=true;
@@ -656,15 +693,16 @@ public  class  board
 			//if any black pieces can capture the piece that is putting the king in check
 			while(bq.peek()!=null)
 			{
-				if(bq.peek().move(board, wq.peek().getX(wq.peek(), board), wq.peek().getY(wq.peek(), board))==true)
+				if(bq.peek().move(board, wq.peek().getX(), wq.peek().getY())==true)
 				{
-					System.out.println("The Black King is in Check!");
+					
+					System.out.println("The Black King is in Check!!!!!!!!!!");
 					return 1;
 				}
 				bq.remove();
 			}
-			System.out.println("Checkmate!");
-			return 2;
+			System.out.println("CheckMate");
+			
 		}
 		else
 		{
@@ -679,7 +717,7 @@ public  class  board
 	while(bq.peek()!=null)
 	{
 	
-		bq.peek().getX(bq.peek(), board);
+		bq.peek().getX();
 		
 		if(bq.peek().move(board, wkXPos, wkYPos)==true)
 		{
@@ -695,12 +733,12 @@ public  class  board
 			{
 				if(bq.peek().toString().equals("[!r!]"))
 				{
-					if(bq.peek().getX(bq.peek(), board)==bkXPos)
+					if(bq.peek().getX()==bkXPos)
 					{
 						six=true;
 						eight=true;
 					}
-					else if(bq.peek().getY(bq.peek(), board)==bkYPos)
+					else if(bq.peek().getY()==bkYPos)
 					{
 						five=true;
 						seven=true;
@@ -708,27 +746,27 @@ public  class  board
 				}
 				else if(bq.peek().toString().equals("[!b!]"))
 				{
-					if(bq.peek().getX(bq.peek(), board)<bkXPos)
+					if(bq.peek().getX()<bkXPos)
 					{
-						if(bq.peek().getY(bq.peek(), board)<bkYPos)
+						if(bq.peek().getY()<bkYPos)
 						{
 							two=true;
 							four=true;
 						}
-						else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+						else if(bq.peek().getY()>bkYPos)
 						{
 							one=true;
 							two=true;
 						}
 					}
-					else if(bq.peek().getX(bq.peek(), board)>bkXPos)
+					else if(bq.peek().getX()>bkXPos)
 					{
-						if(bq.peek().getY(bq.peek(), board)<bkYPos)
+						if(bq.peek().getY()<bkYPos)
 						{
 							one=true;
 							three=true;
 						}
-						else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+						else if(bq.peek().getY()>bkYPos)
 						{
 							four=true;
 							two=true;
@@ -737,38 +775,38 @@ public  class  board
 				}
 				else if(bq.peek().toString().equals("[!q!]"))
 			{
-				if(bq.peek().getX(bq.peek(), board)==bkXPos)
+				if(bq.peek().getX()==bkXPos)
 				{
 					six=true;
 					eight=true;
 				}
-				else if(bq.peek().getY(bq.peek(), board)==bkYPos)
+				else if(bq.peek().getY()==bkYPos)
 				{
 					five=true;
 					seven=true;
 				}
 				
-				else if(bq.peek().getX(bq.peek(), board)<bkXPos)
+				else if(bq.peek().getX()<bkXPos)
 				{
-					if(bq.peek().getY(bq.peek(), board)<bkYPos)
+					if(bq.peek().getY()<bkYPos)
 					{
 						two=true;
 						four=true;
 					}
-					else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+					else if(bq.peek().getY()>bkYPos)
 					{
 						one=true;
 						two=true;
 					}
 				}
-				else if(bq.peek().getX(bq.peek(), board)>bkXPos)
+				else if(bq.peek().getX()>bkXPos)
 				{
-					if(bq.peek().getY(bq.peek(), board)<bkYPos)
+					if(bq.peek().getY()<bkYPos)
 					{
 						one=true;
 						three=true;
 					}
-					else if(bq.peek().getY(bq.peek(), board)>bkYPos)
+					else if(bq.peek().getY()>bkYPos)
 					{
 						four=true;
 						two=true;
@@ -871,6 +909,7 @@ public  class  board
 					if (eight == false) {
 						if (wk.move(board, wkXPos, wkYPos - 1) == true) {
 							if (bq2.peek().move(board, wkXPos, wkYPos - 1) == true) {
+								
 								eight = true;
 							
 							}
@@ -887,15 +926,16 @@ public  class  board
 		
 		if((one==true)&&(two==true)&&(three==true)&&(four==true)&&(five==true)&&(six==true)&&(seven==true)&&(eight==true))
 		{
-			while(wq.peek()!=null)
+			while(wq3.peek()!=null)
 			{
-				if(wq.peek().move(board, bq.peek().getX(bq.peek(), board), bq.peek().getY(bq.peek(), board))==true)
+				if(wq3.peek().move(board, bq.peek().getX(), bq.peek().getY())==true)
 				{
-					System.out.println("The White King is in Check!");
+					
 					return -1;
 				}
-				wq.remove();
+				wq3.remove();
 			}
+		
 			System.out.println("The White King is in CheckMate!");
 			return -2;		
 		}
@@ -958,7 +998,7 @@ public  class  board
 	while(wq.peek()!=null)
 	{
 	
-		wq.peek().getX(wq.peek(), board);
+		wq.peek().getX();
 		if(wq.peek().move(board, movePosX, movePosY)==true)
 		{
 		

@@ -121,11 +121,21 @@ public class chess
 	    	else
 	    	{
 			board[yPos][xPos]=null;
-			board[yMove][xMove].moveCounter();
+			
 			gameBoard.updateBoard(board);
 	    	}
+	    	 board[yMove][xMove].moveCounter();
 	    }
 
+	   
+		
+		System.out.println("moveCount"+board[yMove][xMove].getMoveCount());
+		board[yMove][xMove].updatePos(xMove, yMove);
+		System.out.println(xMove);
+		System.out.println("xPos"+board[yMove][xMove].getX());
+		System.out.println("yPos"+board[yMove][xMove].getY());
+		System.out.println("xPos"+board[yMove][xMove].getX(board[yMove][xMove], board));
+		System.out.println("yPos"+board[yMove][xMove].getY(board[yMove][xMove], board));
 	    gameBoard.printBoard();
 		}
 
