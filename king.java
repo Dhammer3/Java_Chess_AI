@@ -6,10 +6,16 @@ import java.util.Queue;
 public class king extends Piece {
 	Player play;
 	int moveCount;
+	int value;
 
 	public king(Player play) {
 		this.play = play;
 		moveCount=0;
+		value=20;
+	}
+	public  int getValue()
+	{
+		return value;
 	}
 
 	public String toString() {
@@ -609,7 +615,7 @@ public class king extends Piece {
 		return false;
 	}
 
-	
+	//finish
 	public boolean canCastle(Piece[][] board, int movePosX, int movePosY)
 	{
 		if((this.getMoveCount()!=0)||(board[movePosY][movePosX].getMoveCount()!=0))
@@ -623,7 +629,7 @@ public class king extends Piece {
 		{
 			System.out.println("not valid");
 			return false;
-		}
+		} 
 		int i=this.getX(this, board);
 		if(i-movePosX>0)
 		{

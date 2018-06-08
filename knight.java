@@ -4,11 +4,13 @@ public class knight extends Piece
 {
 	Player play;
 	int moveCount;
+	int value;
 
 	public knight(Player play)
 	{
 	this.play=play;
 	moveCount=0;
+	value = 3;
 	}
 
 	public  String toString()
@@ -28,6 +30,10 @@ public class knight extends Piece
 	public  Player getPlayer()
 	{
 		return play;
+	}
+	public  int getValue()
+	{
+		return value;
 	}
 	public  int kingInCheck(board gameBoard)
 	{
@@ -51,9 +57,9 @@ public class knight extends Piece
 		//Piece [][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 	
-		int xPos=getX(this, board);
+		int xPos=getX();
 		
-		int yPos=getY(this, board);
+		int yPos=getY();
 		int checkX=0;
 		int checkY=0;
 		
@@ -252,4 +258,5 @@ public class knight extends Piece
 	{
 		return this.moveCount;
 	}
+	
 }

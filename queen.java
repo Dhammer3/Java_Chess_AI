@@ -4,12 +4,18 @@ public class queen extends Piece {
 
 	Player play;
 	int moveCount;
+	int value;
 
 	public queen(Player play) {
 
 		this.play = play;
 		moveCount=0;
+		value=9;
 		
+	}
+	public  int getValue()
+	{
+		return value;
 	}
 
 	public String toString() {

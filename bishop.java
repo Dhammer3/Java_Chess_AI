@@ -3,9 +3,12 @@ package chess;
 public class bishop extends Piece {
 	Player play;
 	int moveCount;
+	int value;
 	public bishop(Player play) {
 		this.play = play;
 		moveCount=0;
+		value=3;
+		
 	}
 
 	public String toString() {
@@ -21,6 +24,10 @@ public class bishop extends Piece {
 	public Player getPlayer() {
 		return play;
 	}
+	public  int getValue()
+	{
+		return value;
+	}
 	// 1. determine if the current Player's king is in check (they are only allowed
 	// to move king if that is true)
 	// 2. determine the direction that the player is trying to move
@@ -32,9 +39,9 @@ public class bishop extends Piece {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));
@@ -75,9 +82,9 @@ public class bishop extends Piece {
 		// quadrant 2 and 3
 		// if the current xPos is greater than the movePosX then the player is trying to
 		// go to either quad 2 or 3
-		if (this.getX(this, board) > movePosX) {
+		if (this.getX() > movePosX) {
 			// quad 2
-			if (this.getY(this, board) > movePosY) {
+			if (this.getY() > movePosY) {
 				if (piecesInWay(2, board, movePosY, movePosX) == false) {
 
 					return true;
@@ -86,7 +93,7 @@ public class bishop extends Piece {
 			}
 
 			// quad 3
-			if (this.getY(this, board) < movePosY) {
+			if (this.getY() < movePosY) {
 				if (piecesInWay(3, board, movePosY, movePosX) == false) {
 
 					return true;
@@ -96,9 +103,9 @@ public class bishop extends Piece {
 		// quadrant 1 and 4
 		// if the current xPos is greater than the movePosX then the player is trying to
 		// go to either quad 1 or 4
-		if (this.getX(this, board) < movePosX) {
+		if (this.getX() < movePosX) {
 			// quad 1
-			if (this.getY(this, board) > movePosY) {
+			if (this.getY() > movePosY) {
 				if (piecesInWay(1, board, movePosY, movePosX) == false) {
 					return true;
 				}
@@ -106,7 +113,7 @@ public class bishop extends Piece {
 			}
 
 			// quad 4
-			if (this.getY(this, board) < movePosY) {
+			if (this.getY() < movePosY) {
 
 				if (piecesInWay(4, board, movePosY, movePosX) == false) {
 				
@@ -135,9 +142,9 @@ public class bishop extends Piece {
 
 		int count = 0;
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));

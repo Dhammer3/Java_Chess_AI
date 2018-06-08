@@ -84,10 +84,8 @@ public abstract class Piece
 	{
 		this.value=a;
 	}
-	public int getValue()
-	{
-		return value;
-	}
+	public abstract int getValue();
+
 	
 
 	

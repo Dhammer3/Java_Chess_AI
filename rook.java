@@ -5,15 +5,21 @@ public class rook extends Piece
 
 	Player play;
 	int moveCount;
+	int value;
 	
 	public rook(Player play)
 	{
 	this.play=play;
 	moveCount=0;
+	value = 5;
 	}
 	public  Player getPlayer()
 	{
 		return play;
+	}
+	public  int getValue()
+	{
+		return value;
 	}
 
 	public  String toString()
@@ -155,7 +161,7 @@ public class rook extends Piece
 	{
 		//Piece[][] board = new Piece[8][8];
 	//	gameBoard.copyBoard(board);
-		System.out.println("movePosY "+ movePosY);
+		//System.out.println("movePosY "+ movePosY);
 		int checkX = this.getX(this, board);
 		int checkY = this.getY(this, board);
 

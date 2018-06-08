@@ -7,10 +7,12 @@ public class pawn extends Piece {
 	int moveCount=0;
 	//Queue<int> pos=new Queue<int>();
 	Player play;
+	int value;
 
 
 	public pawn(Player play) {
 		this.play = play;
+		value=1;
 		//moveCount=0;
 	}
 
@@ -18,6 +20,10 @@ public class pawn extends Piece {
 		play = null;
 		//moveCount = 0;
 
+	}
+	public  int getValue()
+	{
+		return value;
 	}
 
 	public Player getPlayer() {
@@ -38,11 +44,7 @@ public class pawn extends Piece {
 		return moveCount;
 	}
 	
-	public void updatePos(int x, int y)
-	{
-		this.xPos=x;
-		this.yPos=y;
-	}
+
 
 
 	// fix, can move pawn backword, //can move two spaces when not in spawn.
@@ -53,9 +55,9 @@ public class pawn extends Piece {
 		//board[movePosY][movePosX]=this;
 		//System.out.println(moveCount);
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 		
 		if((movePosX<0)||(movePosX>7))
 		{

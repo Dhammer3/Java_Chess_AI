@@ -31,10 +31,15 @@ public class chess
 		boolean whiteTurn=true;
 	
 	
+		 Stack<Integer> sugstMove=new Stack<Integer>();
+		sugstMove=white.move(board, black);
+	
+		 System.out.println("Suggested Move: "+"Piece "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop()+" "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop() );
 		gameBoard.setPrev(board);
 		String temp="";
 		System.out.println("Enter the coordinates for the piece to select ");
 		temp=scan.next();
+		
 		
 		String xPos1=temp.substring(0, 1);
 		String yPos1=temp.substring(1);
@@ -53,6 +58,8 @@ public class chess
 			yPos=scan.nextInt();
 		    System.out.println(gameBoard.getPiece(xPos, yPos)+gameBoard.getPiece(xPos, yPos).getPlayer().toString());
 	    }
+	   
+	
 	    
 	    System.out.println("Enter the coordinates for the move position");
 		temp=scan.next();
@@ -178,6 +185,13 @@ public class chess
 					}
 				}
 				return -1;
+	}
+	public static String revLocParserX(int x)
+	{
+		System.out.println(x);
+				String [] move = { "A", "B", "C", "D", "E", "F", "G" ,"H"};
+				return move[x];
+			
 	}
 	public static int locParserY(String movePos)
 	{	
