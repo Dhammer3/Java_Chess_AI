@@ -57,6 +57,7 @@ public class White extends Player {
 		return whitePieces;
 	}
 
+
 	
 	
 	

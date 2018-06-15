@@ -85,7 +85,7 @@ public class chess
 	    	{
 	    		board[yPos][xPos]=null;
 	    		gameBoard.updateBoard(board);
-	    		
+	    		//if the moving player's king is in check after the move is made
 	    		if((gameBoard.kingInCheck()==-1)||(gameBoard.kingInCheck()==-2))
 	    		{
 	    			board[yPos][xPos]=gameBoard.getPiece(xMove, yMove);
@@ -96,7 +96,7 @@ public class chess
 	    			else
 	    			{
 
-	    				board[yMove][xMove]=null;
+	    				board[yMove][xMove].getPlayer().removePiece(board[yMove][xMove]);//=null;
 	    			gameBoard.updateBoard(board);
 	    			System.out.println("Cannot put your own king in check!");
 	    			prevPiece.clear();

@@ -14,12 +14,83 @@ public abstract class Player
 	Player white;
 	Player black;
 	 int count;
+	 Queue<Piece> iOrder= new LinkedList<Piece>();
+	 Stack <Piece> pOrder= new Stack<Piece>();
 
+	 ArrayList<Piece> inOrder= new ArrayList<Piece>();
+	 ArrayList<Piece> postOrder= new ArrayList<Piece>();
+	 
 	
 	Player()
-	{
+	{/*
+		Queue<Piece> pawnQ= new LinkedList<Piece>();
+		Queue<Piece> knightQ= new LinkedList<Piece>();
+		Queue<Piece> rookQ= new LinkedList<Piece>();
+		Queue<Piece> queenQ= new LinkedList<Piece>();
+		Queue<Piece> kingQ= new LinkedList<Piece>();
+		
+		Stack<Piece> postOrder= new Stack<Piece>();
+		
+		
+		for (int i = 0; i < this.getPieceList().size(); i++)
+		{
+			if(this.getPiece(i).getValue()==1)
+			{
+				pawnQ.add(this.getPiece(i));
+			}
+			if(this.getPiece(i).getValue()==3)
+			{
+				knightQ.add(this.getPiece(i));
+			}
+			if(this.getPiece(i).getValue()==5)
+			{
+				rookQ.add(this.getPiece(i));
+			}
+			if(this.getPiece(i).getValue()==9)
+			{
+				queenQ.add(this.getPiece(i));
+			}
+			if(this.getPiece(i).getValue()==100)
+			{
+				kingQ.add(this.getPiece(i));
+			}
+			
+			
+		}
+		while(pawnQ.peek()!=null)
+		{
+			inOrder.add(pawnQ.peek());
+			postOrder.push(pawnQ.remove());
+			//this.postOrder.add(postOrder.pop());
+		}
+		while(knightQ.peek()!=null)
+		{
+			inOrder.add(knightQ.peek());
+			postOrder.push(knightQ.remove());
+			//this.postOrder.add(postOrder.pop());
+			
+		}
+		while(rookQ.peek()!=null)
+		{
+			inOrder.add(rookQ.remove());
+			postOrder.push(rookQ.remove());
+			//this.postOrder.add(postOrder.pop());
+		}
+	
+		inOrder.add(queenQ.peek());
+		postOrder.push(queenQ.remove());
+
+		inOrder.add(kingQ.peek());
+		postOrder.push(queenQ.remove());
+		
+		while(postOrder.peek()!=null)
+		{
+			this.postOrder.add(postOrder.pop());
+		}
+		
 		
 	count=1;
+	*/
 	}
 
 	
@@ -213,6 +284,7 @@ public abstract class Player
 	
 	}
 
+	
 	// if any white piece can move to put the king in check, do that move.
 	// else if
 	// find the most valuable black piece, if white can capture that piece do that
@@ -240,6 +312,17 @@ public abstract class Player
 	
 	
 	}
-	//public abstract void move
+	public void removePiece(Piece p)
+	{
+		for(int i=0; i<inOrder.size(); i++)
+		{
+			if(inOrder.get(i).equals(p))
+			{
+				inOrder.remove(i);
+			}
+		}
+	}
+	
+
 }
 
