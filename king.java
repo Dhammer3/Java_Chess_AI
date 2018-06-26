@@ -56,9 +56,9 @@ public class king extends Piece {
 		}
 		
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));

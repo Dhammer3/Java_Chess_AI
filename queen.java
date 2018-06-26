@@ -47,9 +47,9 @@ public class queen extends Piece {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));
@@ -69,9 +69,9 @@ public class queen extends Piece {
 		// quadrant 2 and 3
 		// if the current xPos is greater than the movePosX then the player is trying to
 		// go to either quad 2 or 3
-		if (this.getX(this, board) > movePosX) {
+		if (this.getX() > movePosX) {
 			// quad 2
-			if (this.getY(this, board) > movePosY) {
+			if (this.getY() > movePosY) {
 				if (check1 != check2) {
 
 					return false;
@@ -85,7 +85,7 @@ public class queen extends Piece {
 			}
 
 			// quad 3
-			if (this.getY(this, board) < movePosY) {
+			if (this.getY() < movePosY) {
 				if (check1 != check2) {
 
 					return false;
@@ -100,9 +100,9 @@ public class queen extends Piece {
 		// quadrant 1 and 4
 		// if the current xPos is greater than the movePosX then the player is trying to
 		// go to either quad 1 or 4
-		if (this.getX(this, board) < movePosX) {
+		if (this.getX() < movePosX) {
 			// quad 1
-			if (this.getY(this, board) > movePosY) {
+			if (this.getY() > movePosY) {
 				if (check1 != check2) {
 
 					return false;
@@ -115,7 +115,7 @@ public class queen extends Piece {
 			}
 
 			// quad 4
-			if (this.getY(this, board) < movePosY) {
+			if (this.getY() < movePosY) {
 				if (check1 != check2) {
 
 					return false;
@@ -129,10 +129,10 @@ public class queen extends Piece {
 		// quadrant 5 and 7
 		// if the current xPos minus the movePosX equals 0 the player is trying to go to
 		// either quad 5 or 7
-		if (this.getX(this, board) - movePosX == 0) {
+		if (this.getX() - movePosX == 0) {
 
 			// quad 3
-			if (this.getY(this, board) > movePosY) {
+			if (this.getY() > movePosY) {
 
 				if (piecesInWay(5, board, movePosX, movePosY) == false) {
 
@@ -142,7 +142,7 @@ public class queen extends Piece {
 			}
 
 			// quad 3
-			if (this.getY(this, board) < movePosY) {
+			if (this.getY() < movePosY) {
 
 				if (piecesInWay(7, board, movePosX, movePosY) == false) {
 
@@ -153,10 +153,10 @@ public class queen extends Piece {
 		// quadrant 6 and 8
 		// if the current yPos minus the movePosY then the player is trying to go to
 		// either quad 6 or 8
-		if (this.getY(this, board) - movePosY == 0) {
+		if (this.getY() - movePosY == 0) {
 
 			// quad 2
-			if (this.getX(this, board) > movePosX)
+			if (this.getX() > movePosX)
 			{
 				if(movePosY!=yPos)
 				{
@@ -170,7 +170,7 @@ public class queen extends Piece {
 			}
 
 			// quad 4
-			if (this.getX(this, board) < movePosX) {
+			if (this.getX() < movePosX) {
 				if (piecesInWay(8, board, movePosX, movePosY) == false) {
 
 					return true;
@@ -198,9 +198,9 @@ public class queen extends Piece {
 
 		int count = 0;
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 		int check1 = (Math.abs(xPos - movePosX));
 		int check2 = (Math.abs(yPos - movePosY));
@@ -232,8 +232,8 @@ public class queen extends Piece {
 
 		if (quadrant == 1) {
 
-			checkX = this.getX(this, board) + 1;
-			checkY = this.getY(this, board) - 1;
+			checkX = this.getX() + 1;
+			checkY = this.getY() - 1;
 
 			// finish the other quadrants
 
@@ -282,8 +282,8 @@ public class queen extends Piece {
 		if (quadrant == 2) {
 
 	
-			checkX = this.getX(this, board) - 1;
-			checkY = this.getY(this, board) - 1;
+			checkX = this.getX() - 1;
+			checkY = this.getY() - 1;
 
 			// finish the other quadrants
 
@@ -331,8 +331,8 @@ public class queen extends Piece {
 		if (quadrant == 3) {
 
 		
-			checkX = this.getX(this, board) - 1;
-			checkY = this.getY(this, board) + 1;
+			checkX = this.getX() - 1;
+			checkY = this.getY() + 1;
 
 			// finish the other quadrants
 
@@ -379,8 +379,8 @@ public class queen extends Piece {
 		}
 		if (quadrant == 4) {
 
-			checkX = this.getX(this, board) + 1;
-			checkY = this.getY(this, board) + 1;
+			checkX = this.getX() + 1;
+			checkY = this.getY() + 1;
 
 			// finish the other quadrants
 
@@ -432,9 +432,9 @@ public class queen extends Piece {
 
 		//moving up
 		if (quadrant == 5) {
-			checkX = this.getX(this, board);
+			checkX = this.getX();
 	
-			for (int i = this.getY(this, board)-1; i >movePosY ; i--) 
+			for (int i = this.getY()-1; i >movePosY ; i--) 
 			{	
 				if(board[i][checkX]!=null)
 				{
@@ -451,10 +451,10 @@ public class queen extends Piece {
 		// moving left
 		if (quadrant == 6) {
 
-			checkX = this.getX(this, board);
-			checkY = this.getY(this, board);
+			checkX = this.getX();
+			checkY = this.getY();
 			
-			for (int i = this.getX(this, board)-1; i > movePosX; i--) 
+			for (int i = this.getX()-1; i > movePosX; i--) 
 			{
 				if (board[checkY][i] != null)
 				{
@@ -470,8 +470,8 @@ public class queen extends Piece {
 		if (quadrant == 7) {
 
 	
-			checkX = this.getX(this, board);
-			checkY = this.getY(this, board);
+			checkX = this.getX();
+			checkY = this.getY();
 			
 			for (int i = checkY+1; i < movePosY; i++) 
 			{
@@ -487,8 +487,8 @@ public class queen extends Piece {
 		// moving right
 		if (quadrant == 8) {
 
-			checkX = this.getX(this, board);
-			checkY = this.getY(this, board);
+			checkX = this.getX();
+			checkY = this.getY();
 			
 			for (int i = checkX+1; i == movePosX; i++) 
 			{

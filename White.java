@@ -26,7 +26,7 @@ public class White extends Player {
 
 	public White() {
 
-		this.isPerson = isPerson;
+		//this.isPerson = isPerson;
 		whitePieces = new ArrayList<Piece>();
 	}
 

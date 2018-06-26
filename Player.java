@@ -90,7 +90,7 @@ public abstract class Player
 		
 		
 	count=1;
-	*/
+	/*/
 	}
 
 	
@@ -103,35 +103,13 @@ public abstract class Player
 	
 	
 
-	public  Piece getPiece(Piece [][] arr, int currentLocation1, int currentLocationX, Player play )
+	public  Piece getPiece(Piece [][] arr, int currentLocationX, int currentLocationY )
 	{
 		
 	
 
-		Piece pieceOnarr=arr[currentLocationX-1][currentLocation1];
-		if (pieceOnarr!=null)
-		{
-			if ((pieceOnarr.getPlayer().toString().equals("Black"))&&(play.toString().equals("White")))
-			{
-				System.out.println("you selected a black piece!");
-				System.out.println(pieceOnarr.getPlayer().toString());
-				return null;
-			}
-			if ((pieceOnarr.getPlayer().toString().equals("White"))&&(play.toString().equals("Black")))
-			{
-				System.out.println("you selected a white piece!");
-				System.out.println(pieceOnarr.getPlayer().toString());
-				return null;
-			}
-			else
-			{
-			System.out.println("The Piece you Selected was: " +pieceOnarr.getPlayer().toString()+pieceOnarr.toString());
-			}
-		}
-		else
-		{
-			System.out.println("There is no piece there");
-		}
+		Piece pieceOnarr=arr[currentLocationY][currentLocationX];
+	
 		return pieceOnarr;
 		
 			
@@ -240,7 +218,7 @@ public abstract class Player
 			orderedPieces.add(queenQ.remove());
 			
 			//checking if the worst white piece can capture the best black piece
-			
+			outerloop:
 			for(int j=0; j<orderedPieces.size(); j++)
 			{
 				for(int h=0; h<enemyOrderedPieces.size(); h++)
@@ -254,7 +232,7 @@ public abstract class Player
 								sgstMove.push(orderedPieces.get(j).getY()+1);
 								sgstMove.push(orderedPieces.get(j).getX());
 								System.out.println("here");
-								return sgstMove;
+								break outerloop;
 							}
 				}
 			}
@@ -277,11 +255,67 @@ public abstract class Player
 			sgstMove.push(this.getPiece(randomNum).getY()+1);
 			sgstMove.push(this.getPiece(randomNum).getX());
 			System.out.println("We are just guessing here..");
-			return sgstMove;
+			
+			break;
 				}
 	}
+	System.out.println("Player eval");
+	System.out.println(getBoardEvaluation( board,  this,  enemy));
+	System.out.println("enemy eval");
+	getBoardEvaluation( board,  enemy,  this);
 	return sgstMove;
 	
+	}
+
+	public int getBoardEvaluation(Piece[][] board, Player play, Player enemy) {
+		Piece[][] temp = new Piece[8][8];
+		temp = board;
+		int piecesThreatened = 0;
+		int piecesGuarded = 0;
+		int piecesVulnerable = 0;
+
+		for (int i = 0; i < play.getPieceList().size(); i++) {
+			for (int j = 0; j < enemy.getPieceList().size(); j++) {
+				
+	
+				if (play.getPiece(i).move(board, enemy.getPiece(j).getX(), enemy.getPiece(j).getY()) == true) {
+				
+					piecesThreatened += enemy.getPiece(j).getValue();
+					System.out.println(piecesThreatened);
+				}
+				if(i+1>=play.getPieceList().size())
+				{
+					break;
+				}
+				int guardedPieceY = play.getPiece(i+1).getY();
+				int guardedPieceX = play.getPiece(i+1).getX();
+				board[guardedPieceY][guardedPieceX]=null;
+
+				if (play.getPiece(i).move(board, guardedPieceX, guardedPieceY) == true)
+						 {
+					piecesGuarded += play.getPiece(i+1).getValue();
+				}
+				board[guardedPieceY][guardedPieceX]=play.getPiece(i+1);
+				
+
+			}
+		}
+		for (int y = 0; y < enemy.getPieceList().size(); y++) {
+			for (int c = 0; c < play.getPieceList().size(); c++) {
+				if (enemy.getPiece(y).move(board, play.getPiece(c).getX(), play.getPiece(c).getY()) == true) {
+					piecesVulnerable += play.getPiece(c).getValue();
+
+				}
+			}
+		}
+		System.out.println("piecesThreatened " + piecesThreatened);
+		System.out.println("piecesGuarded " + piecesGuarded);
+		System.out.println("piecesVulnerable " + piecesVulnerable);
+
+		return (piecesThreatened + piecesGuarded) - piecesVulnerable;
+			
+		
+		//return 0;
 	}
 
 	

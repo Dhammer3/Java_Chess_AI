@@ -108,6 +108,8 @@ public  class  board
 		wq=new queen(white);
 		whitePieces.add(wq);
 		
+	//	white.addPieces(whitePieces);
+		
 		
 		
 		bp=new pawn(black);

@@ -137,7 +137,7 @@ public class chess
 	   
 		
 		System.out.println("moveCount"+board[yMove][xMove].getMoveCount());
-		board[yMove][xMove].updatePos(xMove, yMove);
+	    board[yMove][xMove].updatePos(xMove, yMove);
 		System.out.println(xMove);
 		System.out.println("xPos"+board[yMove][xMove].getX());
 		System.out.println("yPos"+board[yMove][xMove].getY());

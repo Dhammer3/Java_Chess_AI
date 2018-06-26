@@ -50,9 +50,9 @@ public class rook extends Piece
 		//Piece [][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 	
-		int xPos=getX(this, board);
+		int xPos=getX();
 		
-		int yPos=getY(this, board);
+		int yPos=getY();
 		
 		if(this.getPlayer().toString().equals("White"))
 		{
@@ -90,11 +90,11 @@ public class rook extends Piece
 			
 			//quadrant 5 and 7 
 			//if the current xPos minus the movePosX equals 0 the player is trying to go to either quad 5 or 7
-			if(this.getX(this, board)-movePosX==0)
+			if(this.getX()-movePosX==0)
 			{
 				
 				//quad 3
-				if(this.getY(this, board)>movePosY)
+				if(this.getY()>movePosY)
 				{
 				
 					if(piecesInWay(5,  board,  movePosX,  movePosY)==false)
@@ -107,7 +107,7 @@ public class rook extends Piece
 				}
 				
 				//quad 3
-				if(this.getY(this, board)<movePosY)
+				if(this.getY()<movePosY)
 				{
 				
 					if(piecesInWay(7,  board,  movePosX,  movePosY)==false)
@@ -119,11 +119,11 @@ public class rook extends Piece
 			}
 			//quadrant 6 and 8 
 			//if the current yPos minus the movePosY then the player is trying to go to either quad 6 or 8
-			if(this.getY(this, board)-movePosY==0)
+			if(this.getY()-movePosY==0)
 			{
 				
 				//quad 2
-				if(this.getX(this, board)>movePosX)
+				if(this.getX()>movePosX)
 				{
 					if(piecesInWay(6,  board,  movePosX,  movePosY)==false)
 					{
@@ -133,7 +133,7 @@ public class rook extends Piece
 				}
 				
 				//quad 4
-				if(this.getX(this, board)<movePosX)
+				if(this.getX()<movePosX)
 				{
 					if(piecesInWay(8,  board,  movePosX,  movePosY)==false)
 					{
@@ -162,21 +162,21 @@ public class rook extends Piece
 		//Piece[][] board = new Piece[8][8];
 	//	gameBoard.copyBoard(board);
 		//System.out.println("movePosY "+ movePosY);
-		int checkX = this.getX(this, board);
-		int checkY = this.getY(this, board);
+		int checkX = this.getX();
+		int checkY = this.getY();
 
 		int count = 0;
 
-		int xPos = getX(this, board);
+		int xPos = getX();
 
-		int yPos = getY(this, board);
+		int yPos = getY();
 
 			
 		//moving up
 				if (quadrant == 5) {
-					checkX = this.getX(this, board);
+					checkX = this.getX();
 			
-					for (int i = this.getY(this, board)-1; i >movePosY ; i--) 
+					for (int i = this.getY()-1; i >movePosY ; i--) 
 					{
 						if(board[i][checkX]!=null)
 						{
@@ -194,10 +194,10 @@ public class rook extends Piece
 				if (quadrant == 6) {
 
 				
-					checkX = this.getX(this, board);
-					checkY = this.getY(this, board);
+					checkX = this.getX();
+					checkY = this.getY();
 					
-					for (int i = this.getX(this, board)-1; i > movePosX; i--) 
+					for (int i = this.getX()-1; i > movePosX; i--) 
 					{
 						if (board[checkY][i] != null)
 						{
@@ -213,16 +213,16 @@ public class rook extends Piece
 				if (quadrant == 7) {
 
 	
-					checkX = this.getX(this, board);
-					checkY = this.getY(this, board);
+					checkX = this.getX();
+					checkY = this.getY();
 					
-					for (int i = checkY+1; i == movePosY; i++) 
+					for (int i = checkY; i < movePosY; i++) 
 					{
 						if (board[i][checkX] != null) 
 						{
 							return true;
 						}
-						
+						System.out.println(board[i][checkX].toString());
 					}
 				
 						return false;
@@ -231,10 +231,10 @@ public class rook extends Piece
 				if (quadrant == 8) {
 
 		
-					checkX = this.getX(this, board);
-					checkY = this.getY(this, board);
+					checkX = this.getX();
+					checkY = this.getY();
 					
-					for (int i = checkX+1; i == movePosX; i++) 
+					for (int i = checkX+1; i < movePosX; i++) 
 					{
 						if (board[checkY][i] != null)
 						{
