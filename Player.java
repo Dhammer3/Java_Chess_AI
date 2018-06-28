@@ -13,12 +13,17 @@ public abstract class Player
 
 	Player white;
 	Player black;
+	int max; 
 	 int count;
 	 Queue<Piece> iOrder= new LinkedList<Piece>();
 	 Stack <Piece> pOrder= new Stack<Piece>();
 
 	 ArrayList<Piece> inOrder= new ArrayList<Piece>();
 	 ArrayList<Piece> postOrder= new ArrayList<Piece>();
+	 
+		Stack <Integer> moveList= new Stack<Integer>();
+		Stack <Integer> best= new Stack<Integer>();
+		Stack <Integer> scndbest= new Stack<Integer>();
 	 
 	
 	Player()
@@ -118,152 +123,16 @@ public abstract class Player
 	public abstract String toString();
 	public abstract void addPieces(ArrayList<Piece> playerPieces);
 	
-	public Stack<Integer> move(Piece[][] board, Player enemy) 
+	// this will call traverse tree and return best move
+	public /*Stack<Integer>*/ void  move(Piece[][] board, Player enemy) 
 	{
-	Queue<Piece> pawnQ= new LinkedList<Piece>();
-	Queue<Piece> knightQ= new LinkedList<Piece>();
-	Queue<Piece> rookQ= new LinkedList<Piece>();
-	Queue<Piece> queenQ= new LinkedList<Piece>();
-	ArrayList<Piece> orderedPieces= new ArrayList<Piece>();
-	
-	Stack<Piece> pawnS= new Stack<Piece>();
-	Stack<Piece> knightS= new Stack<Piece>();
-	Stack<Piece> rookS= new Stack<Piece>();
-	Stack<Piece> queenS= new Stack<Piece>();
-	ArrayList<Piece> enemyOrderedPieces= new ArrayList<Piece>();
-	
-
-	Stack<Integer> sgstMove= new Stack<Integer>();
 	
 	
-		for (int i = 0; i < enemy.getPieceList().size(); i++)
-		{
-			if(enemy.getPiece(i).getValue()==1)
-			{
-				pawnS.push(enemy.getPiece(i));
-			}
-			if(enemy.getPiece(i).getValue()==3)
-			{
-				knightS.push(enemy.getPiece(i));
-			}
-			if(enemy.getPiece(i).getValue()==5)
-			{
-				rookS.push(enemy.getPiece(i));
-			}
-			if(enemy.getPiece(i).getValue()==9)
-			{
-				queenS.push(enemy.getPiece(i));
-			}
-			
-		}
-		for(int u=0; u<pawnS.size(); u++)
-		{
-			
-			enemyOrderedPieces.add(pawnS.peek());
-			pawnS.pop();
-			
-		}
-		for(int u=0; u<knightS.size(); u++)
-		{
-		
-			enemyOrderedPieces.add(knightS.peek());
-			knightS.pop();
-		}
-		for(int u=0; u<rookS.size(); u++)
-		{
-			
-			enemyOrderedPieces.add(rookS.peek());
-			rookS.pop();
-		}
-		if(queenS.peek()!=null)
-		{
-		enemyOrderedPieces.add(queenS.pop());
-		}
-	
-		
-		for (int i = 0; i < this.getPieceList().size(); i++)
-		{
-			if(this.getPiece(i).getValue()==1)
-			{
-				pawnQ.add(this.getPiece(i));
-			}
-			if(this.getPiece(i).getValue()==3)
-			{
-				knightQ.add(this.getPiece(i));
-			}
-			if(this.getPiece(i).getValue()==5)
-			{
-				rookQ.add(this.getPiece(i));
-			}
-			if(this.getPiece(i).getValue()==9)
-			{
-				queenQ.add(this.getPiece(i));
-			}
-			
-			
-		}
-		while(pawnQ.peek()!=null)
-		{
-			orderedPieces.add(pawnQ.remove());
-		}
-		while(knightQ.peek()!=null)
-		{
-			orderedPieces.add(knightQ.remove());
-		}
-		while(rookQ.peek()!=null)
-		{
-			orderedPieces.add(rookQ.remove());
-		}
-	
-			orderedPieces.add(queenQ.remove());
-			
-			//checking if the worst white piece can capture the best black piece
-			outerloop:
-			for(int j=0; j<orderedPieces.size(); j++)
-			{
-				for(int h=0; h<enemyOrderedPieces.size(); h++)
-				{
-					int xPos=enemyOrderedPieces.get(h).getX();
-					int yPos=enemyOrderedPieces.get(h).getY();
-							if(orderedPieces.get(j).move(board,xPos ,yPos)==true)
-							{
-								sgstMove.push(yPos+1);
-								sgstMove.push(xPos);
-								sgstMove.push(orderedPieces.get(j).getY()+1);
-								sgstMove.push(orderedPieces.get(j).getX());
-								System.out.println("here");
-								break outerloop;
-							}
-				}
-			}
-
-	while(sgstMove.isEmpty())
-	{
-		int xMove=ThreadLocalRandom.current().nextInt(0, 7);
-		int yMove= ThreadLocalRandom.current().nextInt(0, 7);
-		int randomNum = ThreadLocalRandom.current().nextInt(0, this.getPieceList().size() );
-		//System.out.println(randomNum);
-		if(this.getPiece(randomNum).move(board,xMove ,yMove)==true)
-				{
-		//	System.out.println(this.getPiece(randomNum).toString());
-		//	System.out.println("xPos"+this.getPiece(randomNum).getX());
-		//	System.out.println("ypos"+this.getPiece(randomNum).getY());
-		//	System.out.println("xmove"+xMove);
-		//System.out.println("ymove"+yMove); 
-			sgstMove.push(yMove+1);
-			sgstMove.push(xMove);
-			sgstMove.push(this.getPiece(randomNum).getY()+1);
-			sgstMove.push(this.getPiece(randomNum).getX());
-			System.out.println("We are just guessing here..");
-			
-			break;
-				}
-	}
 	System.out.println("Player eval");
 	System.out.println(getBoardEvaluation( board,  this,  enemy));
 	System.out.println("enemy eval");
 	getBoardEvaluation( board,  enemy,  this);
-	return sgstMove;
+	//return sgstMove;
 	
 	}
 
@@ -318,6 +187,187 @@ public abstract class Player
 		//return 0;
 	}
 
+	public void fillMoveList(Player play, Player enemy, Piece[][] board)
+	{
+	
+		for(int i=0; i<play.getPieceList().size(); i++)
+		{
+			for(int j=0; j<enemy.getPieceList().size(); j++)
+			{
+				
+				//fill non attack moves first
+				if(j==0)
+				{
+					//a loop for each possible move direction starting at 12 o'clock position and moving clockwise
+					int iteratorX=play.getPiece(i).getX();
+					int iteratorY=0;
+					iteratorX=play.getPiece(i).getX();
+					iteratorY= play.getPiece(i).getY()-1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						//y then x
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						
+						iteratorY--;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					
+					}
+					iteratorX=play.getPiece(i).getX()-1;
+					iteratorY= play.getPiece(i).getY()-1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						iteratorX--;
+						iteratorY--;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					}
+					iteratorX=play.getPiece(i).getX()-1;
+					iteratorY= play.getPiece(i).getY();
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+					
+						iteratorX++;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					
+					}
+					iteratorX=play.getPiece(i).getX()+1;
+					iteratorY= play.getPiece(i).getY()+1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						iteratorX++;
+						iteratorY++;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					}
+					iteratorX=play.getPiece(i).getX();
+					iteratorY= play.getPiece(i).getY()+1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+					
+				
+						iteratorY++;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					}
+					iteratorX=play.getPiece(i).getX()-1;
+					iteratorY= play.getPiece(i).getY()+1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						iteratorX--;
+						iteratorY++;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					}
+					iteratorX=play.getPiece(i).getX()-1;
+					iteratorY= play.getPiece(i).getY();
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						iteratorX--;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					
+					}
+					iteratorX=play.getPiece(i).getX()-1;
+					iteratorY= play.getPiece(i).getY()-1;
+					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					{
+						moveList.push(iteratorX);
+						moveList.push(iteratorY);
+						moveList.push(play.getPiece(i).getX());
+						moveList.push(play.getPiece(i).getY());
+						
+						
+						
+						iteratorX--;
+						iteratorY--;
+						if((iteratorX>8)||(iteratorX<0)||(iteratorY>8)|(iteratorY<0))
+						{
+							break;
+						}
+					}
+					
+				
+					
+				}
+				//fix the list of pieces
+					if(play.inOrder.get(i).move(board, enemy.postOrder.get(j).getX(), enemy.postOrder.get(j).getY())==true)
+					{
+						//finding the best move
+						if(play.inOrder.get(i).getValue()>max)
+						{
+							this.setMax(play.getPiece(i).getValue());
+						}
+						
+							moveList.push(enemy.postOrder.get(i).getX());
+							moveList.push(enemy.postOrder.get(i).getY());
+							moveList.push(play.inOrder.get(i).getX());
+							moveList.push(play.inOrder.get(i).getY());	
+							
+					}
+					
+			}
+		}
+		
+	
+
+	}
+		public void setMax(int a)
+	{
+		max=a;
+		
+	}
+	public int getMax()
+	{
+		return max;
+	}
 	
 	// if any white piece can move to put the king in check, do that move.
 	// else if
@@ -346,7 +396,7 @@ public abstract class Player
 	
 	
 	}
-	public void removePiece(Piece p)
+	public void removePiece(Piece p) 
 	{
 		for(int i=0; i<inOrder.size(); i++)
 		{
