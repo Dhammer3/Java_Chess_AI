@@ -34,7 +34,9 @@ public class chess
 		 Stack<Integer> sugstMove=new Stack<Integer>();
 		//sugstMove=white.move(board, black);
 	
-		 System.out.println("Suggested Move: "+"Piece "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop()+" "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop() );
+		 miniMaxTree tree= new miniMaxTree(board, 3, white, black);
+		 tree.printPostorder(tree.getRoot());
+		 //System.out.println("Suggested Move: "+"Piece "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop()+" "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop() );
 		gameBoard.setPrev(board);
 		String temp="";
 		System.out.println("Enter the coordinates for the piece to select ");

@@ -38,6 +38,14 @@ public class bishop extends Piece {
 	public boolean move(Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
+		if((movePosX>7)||(movePosX<0))
+		{
+			return false;
+		}
+		if((movePosY>7)||(movePosY<0))
+		{
+			return false;
+		}
 
 		int xPos = getX();
 
@@ -151,8 +159,8 @@ public class bishop extends Piece {
 
 		if (quadrant == 1) {
 
-			checkX = this.getX(this, board) + 1;
-			checkY = this.getY(this, board) - 1;
+			checkX = this.getX() + 1;
+			checkY = this.getY() - 1;
 
 			// finish the other quadrants
 
@@ -204,8 +212,8 @@ public class bishop extends Piece {
 		}
 		if (quadrant == 2) {
 
-			checkX = this.getX(this, board) - 1;
-			checkY = this.getY(this, board) - 1;
+			checkX = this.getX() - 1;
+			checkY = this.getY() - 1;
 
 			// finish the other quadrants
 
@@ -254,8 +262,8 @@ public class bishop extends Piece {
 
 		if (quadrant == 3) {
 
-			checkX = this.getX(this, board) - 1;
-			checkY = this.getY(this, board) + 1;
+			checkX = this.getX() - 1;
+			checkY = this.getY() + 1;
 
 			// finish the other quadrants
 
@@ -302,8 +310,8 @@ public class bishop extends Piece {
 		}
 		if (quadrant == 4) {
 
-			checkX = this.getX(this, board) + 1;
-			checkY = this.getY(this, board) + 1;
+			checkX = this.getX() + 1;
+			checkY = this.getY() + 1;
 
 			// finish the other quadrants
 

@@ -50,6 +50,15 @@ public class rook extends Piece
 		//Piece [][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 	
+		if((movePosX>7)||(movePosX<0))
+		{
+			return false;
+		}
+		if((movePosY>7)||(movePosY<0))
+		{
+			return false;
+		}
+		
 		int xPos=getX();
 		
 		int yPos=getY();
@@ -222,7 +231,7 @@ public class rook extends Piece
 						{
 							return true;
 						}
-						System.out.println(board[i][checkX].toString());
+					//	System.out.println(board[i][checkX].toString());
 					}
 				
 						return false;

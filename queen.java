@@ -46,6 +46,14 @@ public class queen extends Piece {
 	public boolean move(Piece[][] board, int movePosX, int movePosY) {
 		//Piece[][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
+		if((movePosX>7)||(movePosX<0))
+		{
+			return false;
+		}
+		if((movePosY>7)||(movePosY<0))
+		{
+			return false;
+		}
 
 		int xPos = getX();
 

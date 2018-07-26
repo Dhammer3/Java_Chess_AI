@@ -86,6 +86,8 @@ public abstract class Piece
 	}
 	public abstract int getValue();
 
+	//public boolean errorHandling()
+	
 	
 
 	
