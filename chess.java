@@ -32,7 +32,7 @@ public class chess
 	
 	
 		 Stack<Integer> sugstMove=new Stack<Integer>();
-		sugstMove=white.move(board, black);
+		//sugstMove=white.move(board, black);
 	
 		 System.out.println("Suggested Move: "+"Piece "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop()+" "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop() );
 		gameBoard.setPrev(board);
