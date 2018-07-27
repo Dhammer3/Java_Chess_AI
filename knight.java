@@ -57,6 +57,7 @@ public class knight extends Piece
 		//Piece [][] board = new Piece[8][8];
 		//gameBoard.copyBoard(board);
 	
+		
 		if((movePosX>7)||(movePosX<0))
 		{
 			return false;
@@ -65,6 +66,7 @@ public class knight extends Piece
 		{
 			return false;
 		}
+	
 		int xPos=getX();
 		
 		int yPos=getY();

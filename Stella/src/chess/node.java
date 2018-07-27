@@ -10,6 +10,7 @@ public class node
 	int value;
 	node left; 
 	node right; 
+	int count =0;
 	
 	//root node constructor
 	public node(Piece[][] board, int value, node l, node r)
@@ -30,12 +31,13 @@ public class node
 		this.value=value;
 		this.right=null;
 		this.left=null;
+	
 	}
 	public node getLeftMost()
 	{
 		if(this.getLeft()==null)
 		{
-			return this.getLeft();
+			return this;
 		}
 		else
 		{
@@ -45,13 +47,17 @@ public class node
 	}
 	public node getRightMost()
 	{
+		
 		if(this.getRight()==null)
 		{
-			return this.getRight();
+			System.out.println("Count"+count);
+			return this;
+			
 		}
 		else
 		{
 			this.getRight().getRightMost();
+			count++;
 		}
 			return right;
 	}
