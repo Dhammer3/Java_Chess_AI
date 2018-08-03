@@ -411,19 +411,14 @@ public  class  board
 	public void updateBoard( Piece [][] arr)
 	{	
 			kingInCheck();
-			this.board=arr;	
-			/*
+			
 			for(int i=0; i<8; i++)
 			{
-				for(int j=0; j<8; j++)
+				for (int j=0; j<8; j++)
 				{
-					//board[i][j]=arr[i][j];
-					if(board[i][j]!=null)
-					{
-					board[i][j].updatePos(j, i);
-					}
+					board[i][j]=arr[i][j];
 				}
-			}*/
+			}
 	}
 	public void setPrev( Piece [][] arr)
 	{	

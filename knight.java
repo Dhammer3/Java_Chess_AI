@@ -72,9 +72,15 @@ public class knight extends Piece
 		int yPos=getY();
 		int checkX=0;
 		int checkY=0;
-		
-		
 	
+		if(board[movePosY][movePosX]!=null)
+		{
+		if(this.getPlayer().toString().equals(board[movePosY][movePosX].getPlayer().toString()))
+	
+		{
+			return false;
+		}
+		}
 		
 		 if(movePosX-xPos==2)
 		 {
