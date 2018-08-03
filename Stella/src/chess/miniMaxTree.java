@@ -22,6 +22,15 @@ public class miniMaxTree
 	int value;
 	int lValue;
 	int rValue;
+	int yPos;
+	int xPos;
+	int movePosY;
+	int movePosX;
+	int yPos2;
+	int xPos2;
+	int movePosY2;
+	int movePosX2;
+	int availMoveCount;
 	node root;
 	node left;
 	node right;
@@ -31,85 +40,105 @@ public class miniMaxTree
 	board gb3;
 	
 	
-	public miniMaxTree(board gb, int depth, Player play, Player enemy)
+	
+	public miniMaxTree(Piece[][] board, int depth, Player play, Player enemy)
 	{
-		gb2=gb;
-		gb.copyBoard(master);
-		//this.printmaster(master);
-		for(int j=0; j<8; j++)
+		
+		for(int w=0; w<8; w++)
 		{
-			for(int y=0; y<8; y++)
+			for(int j=0; j<8; j++)
 			{
-				master[j][y]=master[j][y];
+				master[w][j]=board[w][j];
+				
 			}
 		}
-	//	this.printmaster(master);
-		//this.printmaster(master);
-		//master=master;
+	
+		
 		//fill the moveList
-		fillMoveList( master, play,  enemy  );
+		fillMoveList( board, play,  enemy  );
+		System.out.println(availMoveCount);
 		//get the current master value
-		 int rootValue=getmasterEvaluation(  master, play,  enemy);
+		 int rootValue=getmasterEvaluation( board, play,  enemy);
 		// find best and second best move
-		getBestMoves( play,  enemy);
+		getBestMoves( board, play,  enemy);
 		//fill the root node
 	
-		//this.printmaster(master);
-		//fill left, right,  and root node
-		int yPos=bestMove.pop();
-		int xPos=bestMove.pop();
-		int movePosY=bestMove.pop();
-		int movePosX=bestMove.pop();
+	
+		this.printmaster(board);
+
 		
 		lValue=getmasterEvaluation( master, play,  enemy);
 		rValue=getmasterEvaluation(   master, play,  enemy);
 		
-		//this.printmaster(lmaster);
-		int yPos2=scndBestMove.pop();
-		int xPos2=scndBestMove.pop();
-		int movePosY2=scndBestMove.pop();
-		int movePosX2=scndBestMove.pop();
+	
 		
 		node left = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
-		node left4 = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
 		node right = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
-		left.setLeft(left4);
 		root = new node( play, master, rootValue, left, right);
-		root.inOrderTraverseTree(root);
-		//this.printmaster(lmaster);
-		//this.printmaster(rmaster);
-	
-	//	this.printmaster(master);
-		lmaster[yPos][xPos]=null;
-	//	this.printmaster(lmaster);
-	//	this.printmaster(rmaster);
+		System.out.println("HEERERERERe");
+		
 
+		
+
+		fillMoveList( root.left.getBoard(), enemy,  play);		
+		getBestMoves( root.left.getBoard(), enemy,  play);	
+		node eLeft = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
+		node eRight = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		left.setLeft(eLeft);
+		left.setRight(eRight);
+
+		
+		fillMoveList( root.right.getBoard(), enemy,  play);		
+		getBestMoves(root.right.getBoard(), enemy,  play);	
+		node eLeft2 = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
+		node eRight2 = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		root.right.setLeft(eLeft2);
+		root.right.setRight(eRight2);
+		this.printmaster(board);
+		this.printmaster(root.left.getBoard());
+
+		/*
+		fillMoveList( root.left.left.getBoard(), play,  enemy);		
+		getBestMoves( play,  enemy);	
+		node fLeft = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
+		node fRight = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		root.left.left.setLeft(eLeft);
+		root.left.left.setRight(eRight);
+		
+		fillMoveList( root.left.right.getBoard(), play,  enemy);		
+		getBestMoves( play,  enemy);	
+		node fLeft2 = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
+		node fRight2 = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		root.left.right.setLeft(eLeft);
+		root.left.left.setRight(eRight);
+
+		*/
+	//this.printLevelOrder();
+	
+
+		//lmaster[yPos][xPos]=null;
+
+
+		/*
 		//fill the moveList
-		for(int i=0; i<depth; i++)
+		for(int i=1; i<depth; i++)
 		{
 			//if the depth is even, then current player movelist is being evaluated
 			if(i%2==0)
 			{
-				System.out.println("depth"+i);
+				System.out.println("I"+i);
+				//while()
+				System.out.println("depth "+i);
 				
 				//fill the moveList starting at the leftMost node 
-				fillMoveList( root.inOrderTraverseTree(root).getBoard(), play,  enemy);		
+				fillMoveList( root.getLeftMost(root).getBoard(), play,  enemy);		
 				// find and fill best and second best move
 				getBestMoves( play,  enemy);
 				
-				 yPos=bestMove.pop();
-				 xPos=bestMove.pop();
-				 movePosY=bestMove.pop();
-				 movePosX=bestMove.pop();
-				 //set the respective values
-				
-				 yPos2=scndBestMove.pop();
-				 xPos2=scndBestMove.pop();
-				 movePosY2=scndBestMove.pop();
-				 movePosX2=scndBestMove.pop();
+			
 			
 				//initialize child nodes
-				node leftChild = new node(play,xPos, yPos, movePosX, movePosY, lmaster, currentBest);
+				node leftChild = new node(play, xPos, yPos, movePosX, movePosY, lmaster, currentBest);
 				
 				//this.printmaster(lmaster);
 				node rightChild = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, currentScndBest);
@@ -127,15 +156,7 @@ public class miniMaxTree
 				// find and fill best and second best move
 				getBestMoves( play,  enemy);
 				
-				 yPos=bestMove.pop();
-				 xPos=bestMove.pop();
-				 movePosY=bestMove.pop();
-				 movePosX=bestMove.pop();
-				 
-				 yPos2=scndBestMove.pop();
-				 xPos2=scndBestMove.pop();
-				 movePosY2=scndBestMove.pop();
-				 movePosX2=scndBestMove.pop();
+			
 		
 				//initialize child nodes
 				node leftChild2 = new node(play, xPos, yPos, movePosX, movePosY, lmaster, currentBest);
@@ -144,7 +165,7 @@ public class miniMaxTree
 				//find the lowest leaf node and set the child nodes
 				root.getRightMost(right).setLeft(leftChild2);
 				root.getRightMost(right).setRight(rightChild2);
-				root.inOrderTraverseTree(root);
+				//root.inOrderTraverseTree(root);
 				//rightMost child nodes are filled
 				
 			}
@@ -157,23 +178,14 @@ public class miniMaxTree
 				// find and fill best and second best move
 				getBestMoves( enemy,  play);
 				
-				 yPos=bestMove.pop();
-				 xPos=bestMove.pop();
-				 movePosY=bestMove.pop();
-				 movePosX=bestMove.pop();
-				 //set the respective values
-			
-				 yPos2=scndBestMove.pop();
-				 xPos2=scndBestMove.pop();
-				 movePosY2=scndBestMove.pop();
-				 movePosX2=scndBestMove.pop();
+				
 			
 				//initialize child nodes									//multiplying by neg 1 for summation purposes later
 				node leftChild = new node(enemy, xPos, yPos, movePosX, movePosY, lmaster, currentBest);
 				node rightChild = new node(enemy, xPos2, yPos2, movePosX2, movePosY2, rmaster, currentScndBest);
 				//find the lowest leaf node and set the child nodes
-			//	left.getLeftMost().setLeft(leftChild);
-				//left.getLeftMost().setRight(rightChild);
+				left.getLeftMost(left).setLeft(leftChild);
+				left.getLeftMost(left).setRight(rightChild);
 				//leftMost child nodes are filled
 				
 				
@@ -183,27 +195,22 @@ public class miniMaxTree
 				// find and fill best and second best move
 				getBestMoves( enemy,  play);
 				
-				 yPos=bestMove.pop();
-				 xPos=bestMove.pop();
-				 movePosY=bestMove.pop();
-				 movePosX=bestMove.pop();
-				 
-				 yPos2=scndBestMove.pop();
-				 xPos2=scndBestMove.pop();
-				 movePosY2=scndBestMove.pop();
-				 movePosX2=scndBestMove.pop();
+				
 		
 				//initialize child nodes									//multiplying by neg 1 for summation purposes later		
-				node leftChild2 = new node(enemy,xPos, yPos, movePosX, movePosY, lmaster, currentBest*-1);
+				node leftChild2 = new node(enemy,xPos,
+						yPos, movePosX, movePosY, lmaster, currentBest*-1);
 				node rightChild2 = new node(enemy,xPos2, yPos2, movePosX2, movePosY2, rmaster, currentScndBest*-1);
 				//find the lowest leaf node and set the child nodes
-				root.getRightMost(root).setLeft(leftChild2);
-				root.getRightMost(root).setRight(rightChild2);
+				root.getRightMost(right).setLeft(leftChild2);
+				root.getRightMost(right).setRight(rightChild2);
 			}
 			
 		}
-		root.inOrderTraverseTree(root);
+		this.printLevelOrder();
+		*/
 	}
+	/*
 	public Stack<Integer> getMoveList(Player play, Player enemy, Piece[][] master)
 	{
 	
@@ -380,7 +387,7 @@ public class miniMaxTree
 	 * This method does the work to evaluate a current master setup, used to calculate
 	 * the value of mock moves
 	 */
-	public int getmasterEvaluation( Piece[][] board, Player play, Player enemy) {
+  	public int getmasterEvaluation( Piece[][] board, Player play, Player enemy) {
 		Piece[][] temp = new Piece[8][8];
 		ArrayList<Piece> plays= new ArrayList<Piece>();
 		ArrayList<Piece> enemys= new ArrayList<Piece>();
@@ -464,29 +471,33 @@ public class miniMaxTree
 	 */
 	public void fillMoveList(Piece[][] board, Player play, Player enemy)
 	{
-	
-		for(int i=0; i<play.getPieceList().size(); i++)
+		availMoveCount=0;
+		for(int i=0; i<8; i++)
 		{
-			for(int j=0; j<enemy.getPieceList().size(); j++)
+			for(int j=0; j<8; j++)
 			{
 				//System.out.println("HHHHHHHHHHHHHHHHH");
 				//fill non attack moves first
 				
 					//a loop for each possible move direction starting at 12 o'clock position and moving clockwise
-					int iteratorX=play.getPiece(i).getX();
-					int iteratorY=0;
-					iteratorX=play.getPiece(i).getX();
-					iteratorY= play.getPiece(i).getY()-1;
+				
 					
-					if(j==0)
+					if(board[i][j]!=null)
 					{
-						if((play.getPiece(i).toString().equals("[*k*]"))||((play.getPiece(i).toString().equals("[!k!]"))))
+						
+					if(board[i][j].getPlayer().toString().equals(play.toString()))
+					{
+						int iteratorX=j;
+						int iteratorY=0;
+						iteratorX=j;
+						iteratorY=i-1;
+						if((board[i][j].toString().equals("[*k*]"))||((board[i][j].toString().equals("[!k!]"))))
 						{
 							
-							int x= play.getPiece(i).getX();
-							int y =play.getPiece(i).getY();
+							int x=j;
+							int y =i;
 							
-							if(play.getPiece(i).move(board, x-1, y-2)==true)
+							if(board[i][j].move(board, x-1, y-2)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -494,12 +505,12 @@ public class miniMaxTree
 								}
 								moveList.push(x-1);
 								moveList.push(y-2);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
-								
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 							}
 							
-							if(play.getPiece(i).move(board, x-1, y+2)==true)
+							if(board[i][j].move(board, x-1, y+2)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -507,12 +518,13 @@ public class miniMaxTree
 								}
 								moveList.push(x-1);
 								moveList.push(y+2);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 								
 							}
 							
-							if(play.getPiece(i).move(board, x+1, y-2)==true)
+							if(board[i][j].move(board, x+1, y-2)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -520,12 +532,13 @@ public class miniMaxTree
 								}
 								moveList.push(x+1);
 								moveList.push(y-2);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 								
 							}
 							
-							if(play.getPiece(i).move(board, x+1, y+2)==true)
+							if(board[i][j].move(board, x+1, y+2)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -533,12 +546,13 @@ public class miniMaxTree
 								}
 								moveList.push(x+1);
 								moveList.push(y+2);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 							
 							}
 							
-							if(play.getPiece(i).move(board, x-2, y-1)==true)
+							if(board[i][j].move(board, x-2, y-1)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -546,12 +560,13 @@ public class miniMaxTree
 								}
 								moveList.push(x-2);
 								moveList.push(y-1);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 							
 							}
 							
-							if(play.getPiece(i).move(board, x-2, y+1)==true)
+							if(board[i][j].move(board, x-2, y+1)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -559,12 +574,13 @@ public class miniMaxTree
 								}
 								moveList.push(x-2);
 								moveList.push(y+1);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 							
 							}
 							
-							if(play.getPiece(i).move(board, x+2, y-1)==true)
+							if(board[i][j].move(board, x+2, y-1)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -572,12 +588,13 @@ public class miniMaxTree
 								}
 								moveList.push(x+2);
 								moveList.push(y-1);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 								
 							}
 							
-							if(play.getPiece(i).move(board, x+2, y+1)==true)
+							if(board[i][j].move(board, x+2, y+1)==true)
 							{
 								if((x>7)||(x<0)||(y>7)|(y<0))
 								{
@@ -585,19 +602,21 @@ public class miniMaxTree
 								}
 								moveList.push(x+2);
 								moveList.push(y+1);
-								moveList.push(play.getPiece(i).getX());
-								moveList.push(play.getPiece(i).getY());
+								moveList.push(j);
+								moveList.push(i);
+								availMoveCount++;
 								
 								
 							}
 						}
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						//y then x
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 						
 						
 						iteratorY--;
@@ -607,14 +626,15 @@ public class miniMaxTree
 						}
 					
 					}
-					iteratorX=play.getPiece(i).getX()-1;
-					iteratorY= play.getPiece(i).getY()-1;
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j-1;
+					iteratorY= i-1;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 						
 						iteratorX--;
 						iteratorY--;
@@ -623,14 +643,15 @@ public class miniMaxTree
 							break;
 						}
 					}
-					iteratorX=play.getPiece(i).getX()-1;
-					iteratorY= play.getPiece(i).getY();
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j-1;
+					iteratorY=i;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 					
 						iteratorX++;
 						if((iteratorX>7)||(iteratorX<0)||(iteratorY>7)|(iteratorY<0))
@@ -639,14 +660,15 @@ public class miniMaxTree
 						}
 					
 					}
-					iteratorX=play.getPiece(i).getX()+1;
-					iteratorY= play.getPiece(i).getY()+1;
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j+1;
+					iteratorY= i+1;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 						
 						iteratorX++;
 						iteratorY++;
@@ -655,14 +677,15 @@ public class miniMaxTree
 							break;
 						}
 					}
-					iteratorX=play.getPiece(i).getX();
-					iteratorY= play.getPiece(i).getY()+1;
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j;
+					iteratorY= i+1;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 					
 				
 						iteratorY++;
@@ -671,15 +694,15 @@ public class miniMaxTree
 							break;
 						}
 					}
-					iteratorX=play.getPiece(i).getX()-1;
-					iteratorY= play.getPiece(i).getY()+1;
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j-1;
+					iteratorY= i+1;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
-						
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 						iteratorX--;
 						iteratorY++;
 						if((iteratorX>7)||(iteratorX<0)||(iteratorY>7)|(iteratorY<0))
@@ -687,14 +710,15 @@ public class miniMaxTree
 							break;
 						}
 					}
-					iteratorX=play.getPiece(i).getX()-1;
-					iteratorY= play.getPiece(i).getY();
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j-1;
+					iteratorY= i;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(j);
+						moveList.push(i);
+						availMoveCount++;
 						
 						iteratorX--;
 						if((iteratorX>7)||(iteratorX<0)||(iteratorY>7)|(iteratorY<0))
@@ -703,14 +727,15 @@ public class miniMaxTree
 						}
 					
 					}
-					iteratorX=play.getPiece(i).getX()-1;
-					iteratorY= play.getPiece(i).getY()-1;
-					while(play.getPiece(i).move(board, iteratorX, iteratorY)==true)
+					iteratorX=j-1;
+					iteratorY= i-1;
+					while(board[i][j].move(board, iteratorX, iteratorY)==true)
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(play.getPiece(i).getX());
-						moveList.push(play.getPiece(i).getY());
+						moveList.push(i);
+						moveList.push(j);
+						availMoveCount++;
 						
 						
 						
@@ -725,25 +750,26 @@ public class miniMaxTree
 				
 					
 				}
+					/*
 				//fix the list of pieces
-					if(play.getPiece(i).move(board, enemy.getPiece(j).getX(), enemy.getPiece(j).getY())==true)
+					if(board[i][j].move(board, enemy.getPiece(j).getX(), enemy.getPiece(j).getY())==true)
 					{
 						//finding the best move
-						if(play.getPiece(i).getValue()>max)
+						if(board[i][j].getValue()>max)
 						{
-							this.setMax(play.getPiece(i).getValue());
+							this.setMax(board[i][j].getValue());
 						}
 						
 							moveList.push(enemy.getPiece(j).getX());
 							moveList.push(enemy.getPiece(j).getY());
-							moveList.push(play.getPiece(i).getX());
-							moveList.push(play.getPiece(i).getY());	
-							
+							moveList.push(board[i][j].getX());
+							moveList.push(board[i][j].getY());	
+							availMoveCount++;
 					}
-					
+					*/
 			}
 		}
-		
+		}
 	
 
 	}
@@ -754,8 +780,9 @@ public class miniMaxTree
 	 * fills bestMove and scndBestMove Integer stacks, and lmaster and rmaster which hold the current mock move.
 	 * fills currentBest and currentScndBest ints which hold the values for those respective moves.
 	*/
-	public void getBestMoves(Player play, Player enemy)
+	public void getBestMoves(Piece[][] board, Player play, Player enemy)
 	{
+		//Piece[][] lmaster= new Piece[8][8];
 		//
 		int best=-100;
 		int scndBest=-100;
@@ -766,7 +793,8 @@ public class miniMaxTree
 		
 		for(int i=0; i<moveList.size(); i+=4)
 		{
-		gb2.copyBoard(master);
+		//gb2.copyBoard(master);
+		
 		//this.printmaster(master);
 		
 			//create mock move here
@@ -774,6 +802,8 @@ public class miniMaxTree
 			int xPos=moveList.pop();
 			int movePosY=moveList.pop();
 			int movePosX=moveList.pop();
+			//this.printmaster(board);
+		
 			//System.out.println(xPos+""+yPos+""+movePosY+""+movePosX);
 			/*
 			if(master[movePosY][movePosX]!=null)
@@ -784,27 +814,35 @@ public class miniMaxTree
 				pieceWasInSpot=true;
 			}
 			*/
-			master[movePosY][movePosX]=master[yPos][xPos];
-			master[yPos][xPos]=null;
+			board[movePosY][movePosX]=board[yPos][xPos];
+			board[yPos][xPos]=null;
+		
+			//this.printmaster(board);
+			//this.printmaster(master);
+			//this.printmaster(board);
+			//this.printmaster(master);
+			//gb2.updateBoard(master);
+			//this.printmaster(master);
 			//gb3=new board();
 			//gb3.updateBoard(master);
 			
 		//	this.printmaster(master);
 
-			int temp= getmasterEvaluation( master,  play,  enemy);
+			int temp= getmasterEvaluation( board,  play,  enemy);
 			//System.out.println("temp"+temp);
 			
 			if (temp>best)
 			{
+				
 				//this.printmaster(master);
 				System.out.println("temp"+temp);
 				//remove any move that is worse than the current move
 				
-				//fill best 
-				bestMove.push(movePosX);
-				bestMove.push(movePosY);
-				bestMove.push(xPos);
-				bestMove.push(yPos);
+				this.yPos=yPos;
+				this.xPos=xPos;
+				this.movePosY=movePosY;
+				this.movePosX=movePosX;
+			
 			
 				//System.out.println("LLLLLLLLLLLLLLLL");
 				//fill best master
@@ -812,12 +850,17 @@ public class miniMaxTree
 				{
 					for(int j=0; j<8; j++)
 					{
-						lmaster[w][j]=master[w][j];
+						lmaster[w][j]=board[w][j];
 						
 					}
 				}
+				
+				//check
+				//lmaster[this.movePosY][this.movePosX]=lmaster[this.yPos][this.xPos];
+				//lmaster[this.yPos][this.xPos]=null;
 				//master[yPos][xPos]=null;
-			//	this.printmaster(master);
+				//System.out.println("HEEEERRE");
+			//this.printmaster(lmaster);
 		
 				
 				//set best value
@@ -829,24 +872,28 @@ public class miniMaxTree
 			{
 				//remove any move that is worse than the current move
 				
-				scndBestMove.push(movePosX);
-				scndBestMove.push(movePosY);
-				scndBestMove.push(xPos);
-				scndBestMove.push(yPos);
+				this.yPos2=yPos;
+				this.xPos2=xPos;
+				this.movePosY2=movePosY;
+				this.movePosX2=movePosX;
 				calc+=4;
 				//fill second best master
 				for(int w=0; w<8; w++)
 				{
 					for(int j=0; j<8; j++)
 					{
-						rmaster[w][j]=master[w][j];
+						rmaster[w][j]=board[w][j];
 					}
 				}
 			
+				//good
+				rmaster[movePosY2][movePosX2]=rmaster[yPos2][xPos2];
+				//master[yPos2][xPos2]=null;
 				//fill scndbest
 				scndBest=temp;
 				currentScndBest=temp;
 			}
+		
 			/*
 			if(pieceWasInSpot)
 			{
@@ -860,15 +907,21 @@ public class miniMaxTree
 			master[movePosY][movePosX]=null;
 			}
 			*/
+			board[yPos][xPos]=board[movePosY][movePosX];
+			board[movePosY][movePosX]=null;
+			//this.printmaster(board);
 		}
 		//System.out.println("KKKKKKKKKKKKKKKKKKKKKK"+calc);
-		gb2.copyBoard(master);
+		//gb2.copyBoard(master);
+		//this.printmaster(rmaster);
 	}
+
 
 	/*
 	 * Creates a mock move in order to calculate the value
 	 */
-												//where the piece is	//where the piece is going
+	
+	/*//where the piece is	//where the piece is going
 	public void doMockMove( int xPos,int  yPos, int movePosY, int movePosX)
 	{
 		
@@ -893,7 +946,8 @@ public class miniMaxTree
 	/*
 	 *Undo the previous mock move 
 	 */
-													//where the piece is 	//where the piece is going
+		
+	/*//where the piece is 	//where the piece is going
 	public void revertMockMove( int xPos,int  yPos, int movePosY, int movePosX)
 	{
 		
@@ -1002,4 +1056,47 @@ public class miniMaxTree
 	{
 		
 	}
+	void printLevelOrder()
+    {
+        int h = height(root);
+        int i;
+        for (i=1; i<=h; i++)
+            printGivenLevel(root, i);
+    }
+ 
+    /* Compute the "height" of a tree -- the number of
+    nodes along the longest path from the root node
+    down to the farthest leaf node.*/
+    int height(node root)
+    {
+        if (root == null)
+           return 0;
+        else
+        {
+            /* compute  height of each subtree */
+            int lheight = height(root.left);
+            int rheight = height(root.right);
+             
+            /* use the larger one */
+            if (lheight > rheight)
+                return(lheight+1);
+            else return(rheight+1); 
+        }
+    }
+ 
+    /* Print nodes at the given level */
+    void printGivenLevel (node root ,int level)
+    {
+        if (root == null)
+            return;
+        if (level == 1)
+            System.out.print(root.getPlayer().toString()+" "+root.getSide() + " ");
+       
+        else if (level > 1)
+        {
+            printGivenLevel(root.left, level-1);
+            printGivenLevel(root.right, level-1);
+        }
+        System.out.println();
+    }
 }
