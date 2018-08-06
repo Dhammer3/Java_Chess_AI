@@ -4,8 +4,9 @@ import java.util.*;
 public class chess 
 {
 
-	moveList ml;
+	//moveList ml;
 	static board gameBoard;
+	
 	//
 
 	//local history
@@ -23,22 +24,53 @@ public class chess
 		Player black=new Black();
 		black.addPieces(gameBoard.getBlackPieces());
 		gameBoard.printBoard();
+		boolean whiteTurn=true;
 		
 	
 		
 		while(true)
 		{
-		boolean whiteTurn=true;
+		
 	
 	
 		 Stack<Integer> sugstMove=new Stack<Integer>();
-		//sugstMove=white.move(board, black);
 	
+		 
+		 if(whiteTurn)
+		 {
+			 System.out.println("Computer Moving..");
 		miniMaxTree tree= new miniMaxTree(gameBoard.getBoard(),9, white, black);
+		node optimumMove=tree.calculateMove();
+		int cXPos=optimumMove.getxPos();
+		int cYPos=optimumMove.getyPos();
+		int cMovePosX=optimumMove.getMovePosX();
+		int cMovePosY=optimumMove.getMovePosY();
+		
+		board[cMovePosY][cMovePosX]=board[cYPos][cXPos];
+		board[cYPos][cXPos]=null;
+		
+		gameBoard.updateBoard(board);
+		 board[cMovePosY][cMovePosX].updatePos(cMovePosX, cMovePosY);
+		 board[cMovePosY][cMovePosX].moveCounter();
+		 System.out.println(board[cMovePosY][cMovePosX].toString());
+		  System.out.print(revLocParserX(cMovePosX));
+		  System.out.print(cMovePosY+1);
+		 gameBoard.printBoard();
+		 whiteTurn=!whiteTurn;
+		 }
+		 
+		 else
+		 {
+			// whiteTurn=!whiteTurn;
+		//optimumMove.get
 		// tree.printPostorder(tree.getRoot());
 		 //System.out.println("Suggested Move: "+"Piece "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop()+" "+ revLocParserX(sugstMove.pop())+""+sugstMove.pop() );
 		//gameBoard.setPrev(board);
 		String temp="";
+		
+			
+		
+		System.out.println("Player Black's Turn.");
 		System.out.println("Enter the coordinates for the piece to select ");
 		temp=scan.next();
 		
@@ -46,10 +78,28 @@ public class chess
 		String xPos1=temp.substring(0, 1);
 		String yPos1=temp.substring(1);
 
+		
 		int xPos=locParserX(xPos1);
 		int yPos=locParserY(yPos1);
+		if(board[yPos][xPos]==null)	
+		{
+			System.out.println("YOU DID NOT SELECT A PIECE!!");
+			System.out.println("Enter the coordinates for the piece to select ");
+		temp=scan.next();
+		
+		
+		 xPos1=temp.substring(0, 1);
+		 yPos1=temp.substring(1);
+
+		
+		 xPos=locParserX(xPos1);
+		 yPos=locParserY(yPos1);
+			
+		}
+		
 	    System.out.println(gameBoard.getPiece(xPos, yPos)+gameBoard.getPiece(xPos, yPos).getPlayer().toString());
 
+	    
 	    while(gameBoard.getPiece(xPos, yPos)==null)
 	    {
 	    	System.out.println("Enter the x pos, ex:'D' ");
@@ -75,6 +125,7 @@ public class chess
 
 	    if(gameBoard.getPiece(xPos, yPos).move(gameBoard.getBoard(), xMove, yMove)==true)
 	    {
+	    	//System.out.println("KKKKKKKKKKKKKKKKKKKKK");
 	    	Queue<Piece> prevPiece = new LinkedList<Piece>();
 	    	
 	    	if(board[yMove][xMove]!=null)
@@ -138,14 +189,18 @@ public class chess
 
 	   
 		
-		System.out.println("moveCount"+board[yMove][xMove].getMoveCount());
+		//System.out.println("moveCount"+board[yMove][xMove].getMoveCount());
 	    board[yMove][xMove].updatePos(xMove, yMove);
+	    /*
 		System.out.println(xMove);
 		System.out.println("xPos"+board[yMove][xMove].getX());
 		System.out.println("yPos"+board[yMove][xMove].getY());
 		System.out.println("xPos"+board[yMove][xMove].getX(board[yMove][xMove], board));
 		System.out.println("yPos"+board[yMove][xMove].getY(board[yMove][xMove], board));
+		*/
 	    gameBoard.printBoard();
+	    whiteTurn=true;
+		 }
 		}
 
 	}
@@ -181,7 +236,7 @@ public class chess
 				{
 					if (move[i].equals(currentLocation))
 					{
-						System.out.println(i);
+						//System.out.println(i);
 						moveLocationY=i;
 						return moveLocationY;
 					}

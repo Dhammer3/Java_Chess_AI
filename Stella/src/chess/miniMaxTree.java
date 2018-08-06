@@ -1,6 +1,8 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class miniMaxTree 
@@ -16,7 +18,8 @@ public class miniMaxTree
 	Piece[][] lmaster= new Piece[8][8];
 	Piece[][] master=new Piece[8][8];
 	Piece[][] rmaster=new Piece[8][8];
-	Piece[][] tempBrd= new Piece[8][8];
+	Piece[][] masterLeft= new Piece[8][8];
+	Piece[][] masterRight= new Piece[8][8];
 	int currentBest;
 	int currentScndBest;
 	int value;
@@ -34,7 +37,7 @@ public class miniMaxTree
 	node root;
 	node left;
 	node right;
-	Piece[][] savePiece= new Piece[8][8];
+	//Piece[][] savePiece= new Piece[8][8];
 	boolean pieceWasInSpot=false;
 	board gb2;
 	board gb3;
@@ -52,41 +55,298 @@ public class miniMaxTree
 				
 			}
 		}
-	
 		
-		//fill the moveList
+		//getting the moveList for enemy player, left side 
 		fillMoveList( board, play,  enemy  );
-		System.out.println(availMoveCount);
 		//get the current master value
 		 int rootValue=getmasterEvaluation( board, play,  enemy);
-		// find best and second best move
+		//finding best and second best moves, filling all values for upcoming nodes
 		getBestMoves( board, play,  enemy);
 		//fill the root node
+		
 	
-	
-		this.printmaster(board);
+		Piece[][] tempL = new Piece[8][8];
+		Piece[][] tempR= new Piece[8][8];
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0;j<8; j++)
+			{
+				tempL[i][j]=lmaster[i][j];
+			}
+		}
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0;j<8; j++)
+			{
+				tempR[i][j]=rmaster[i][j];
+			}
+		}
+		int tlValue=getmasterEvaluation( tempL, play,  enemy);
+    	int trValue=getmasterEvaluation(   tempR, play,  enemy);
 
-		
-		lValue=getmasterEvaluation( master, play,  enemy);
-		rValue=getmasterEvaluation(   master, play,  enemy);
-		
-	
-		
-		node left = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
-		node right = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		node left = new node(play, xPos, yPos, movePosX, movePosY, tempL, tlValue);
+		node right = new node(play, xPos2, yPos2, movePosX2, movePosY2, tempR, trValue);
 		root = new node( play, master, rootValue, left, right);
-		System.out.println("HEERERERERe");
 		
-
 		
-
-		fillMoveList( root.left.getBoard(), enemy,  play);		
+		//getting the moveList for enemy player, left side 
+		fillMoveList( root.left.getBoard(), enemy,  play);	
+		
+		//finding best and second best moves, filling all values for upcoming nodes
 		getBestMoves( root.left.getBoard(), enemy,  play);	
-		node eLeft = new node(play, xPos, yPos, movePosX, movePosY, lmaster, lValue);
-		node eRight = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
+		//System.out.println("aaaaaa"+root.left.getMovePosX());
+		
+		Piece[][] tempL2 = new Piece[8][8];
+		Piece[][] tempR2= new Piece[8][8];
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0;j<8; j++)
+			{
+				tempL2[i][j]=lmaster[i][j];
+			}
+		}
+		for(int i=0; i<8; i++)
+		{
+			for(int j=0;j<8; j++)
+			{
+				tempR2[i][j]=rmaster[i][j];
+			}
+		}
+		int tlValue2=getmasterEvaluation( tempL2, enemy,  play);
+		int trValue2=getmasterEvaluation(   tempR2, enemy,  play);
+
+		//System.out.println("aaaaaa"+root.left.getMovePosX());
+		//filling respective nodes
+		node eLeft = new node(enemy, xPos, yPos, movePosX, movePosY, tempL2, tlValue2*-1);
+		node eRight = new node(enemy, xPos2, yPos2, movePosX2, movePosY2, tempR2, trValue2*-1);
+		//System.out.println("aaaaaa"+root.left.getMovePosX());
+		
+		//placing nodes in the tree
 		left.setLeft(eLeft);
 		left.setRight(eRight);
+		
+		//getting the moveList for enemy player, left side 
+		fillMoveList( root.right.getBoard(), enemy,  play);	
+				
+		//finding best and second best moves, filling all values for upcoming nodes
+		getBestMoves( root.right.getBoard(), enemy,  play);	
+				//System.out.println("aaaaaa"+root.left.getMovePosX());
+				
+				Piece[][] tempL3 = new Piece[8][8];
+				Piece[][] tempR3= new Piece[8][8];
+				for(int i=0; i<8; i++)
+				{
+					for(int j=0;j<8; j++)
+					{
+						tempL3[i][j]=lmaster[i][j];
+					}
+				}
+				for(int i=0; i<8; i++)
+				{
+					for(int j=0;j<8; j++)
+					{
+						tempR3[i][j]=rmaster[i][j];
+					}
+				}
+				int tlValue3=getmasterEvaluation( tempL3, enemy,  play);
+				int trValue3=getmasterEvaluation(   tempR3, enemy,  play);
 
+				//System.out.println("aaaaaa"+root.left.getMovePosX());
+				//filling respective nodes
+				node eLeft2 = new node(enemy, xPos, yPos, movePosX, movePosY, tempL3, tlValue3*-1);
+				node eRight2 = new node(enemy, xPos2, yPos2, movePosX2, movePosY2, tempR3, trValue3*-1);
+				
+				//System.out.println("aaaaaa"+root.left.getMovePosX());
+				
+				//placing nodes in the tree
+				right.setLeft(eLeft2);
+				right.setRight(eRight2);
+				
+				//getting the moveList for enemy player, left side 
+				fillMoveList( root.left.left.getBoard(), play,  enemy);	
+						
+				//finding best and second best moves, filling all values for upcoming nodes
+				getBestMoves( root.left.left.getBoard(), play,  enemy);	
+						//System.out.println("aaaaaa"+root.left.getMovePosX());
+						
+						Piece[][] tempL4 = new Piece[8][8];
+						Piece[][] tempR4= new Piece[8][8];
+						for(int i=0; i<8; i++)
+						{
+							for(int j=0;j<8; j++)
+							{
+								tempL4[i][j]=lmaster[i][j];
+							}
+						}
+						for(int i=0; i<8; i++)
+						{
+							for(int j=0;j<8; j++)
+							{
+								tempR4[i][j]=rmaster[i][j];
+							}
+						}
+						int tlValue4=getmasterEvaluation( tempL4, play,  enemy);
+						int trValue4=getmasterEvaluation(   tempR4, play,  enemy);
+
+						//System.out.println("aaaaaa"+root.left.getMovePosX());
+						//filling respective nodes
+						node fLeft= new node(play, xPos, yPos, movePosX, movePosY, tempL4, tlValue4);
+						node fRight = new node(play, xPos2, yPos2, movePosX2, movePosY2, tempR4, trValue4);
+						
+						//System.out.println("aaaaaa"+root.left.getMovePosX());
+						
+						//placing nodes in the tree
+						root.left.left.setLeft(fLeft);
+						root.left.left.setRight(fRight);
+						
+			
+						
+						//getting the moveList for enemy player, left side 
+						fillMoveList( root.left.right.getBoard(), play,  enemy);	
+								
+						//finding best and second best moves, filling all values for upcoming nodes
+						getBestMoves( root.left.right.getBoard(), play,  enemy);	
+								//System.out.println("aaaaaa"+root.left.getMovePosX());
+								
+								Piece[][] tempL5 = new Piece[8][8];
+								Piece[][] tempR5= new Piece[8][8];
+								for(int i=0; i<8; i++)
+								{
+									for(int j=0;j<8; j++)
+									{
+										tempL5[i][j]=lmaster[i][j];
+									}
+								}
+								for(int i=0; i<8; i++)
+								{
+									for(int j=0;j<8; j++)
+									{
+										tempR5[i][j]=rmaster[i][j];
+									}
+								}
+								int tlValue5=getmasterEvaluation( tempL5, play,  enemy);
+								int trValue5=getmasterEvaluation(   tempR5, play,  enemy);
+
+								//System.out.println("aaaaaa"+root.left.getMovePosX());
+								//filling respective nodes
+								node fLeft2= new node(play, xPos, yPos, movePosX, movePosY, tempL5, tlValue5);
+								node fRight2 = new node(play, xPos2, yPos2, movePosX2, movePosY2, tempR5, trValue5);
+								
+								//System.out.println("aaaaaa"+root.left.getMovePosX());
+								
+								//placing nodes in the tree
+								root.left.right.setLeft(fLeft2);
+								root.left.right.setRight(fRight2);
+								//getting the moveList for enemy player, left side 
+								fillMoveList( root.right.left.getBoard(), play,  enemy);	
+										
+								//finding best and second best moves, filling all values for upcoming nodes
+								getBestMoves( root.right.left.getBoard(),play,  enemy);	
+										//System.out.println("aaaaaa"+root.left.getMovePosX());
+										
+										Piece[][] tempL6 = new Piece[8][8];
+										Piece[][] tempR6= new Piece[8][8];
+										for(int i=0; i<8; i++)
+										{
+											for(int j=0;j<8; j++)
+											{
+												tempL6[i][j]=lmaster[i][j];
+											}
+										}
+										for(int i=0; i<8; i++)
+										{
+											for(int j=0;j<8; j++)
+											{
+												tempR6[i][j]=rmaster[i][j];
+											}
+										}
+										int tlValue6=getmasterEvaluation( tempL6, play,  enemy);
+										int trValue6=getmasterEvaluation(   tempR6, play,  enemy);
+
+										//System.out.println("aaaaaa"+root.left.getMovePosX());
+										//filling respective nodes
+										node fLeft3= new node(play, xPos, yPos, movePosX, movePosY, tempL6, tlValue6);
+										node fRight3 = new node(play, xPos2, yPos2, movePosX2, movePosY2, tempR6, trValue6);
+										
+										//System.out.println("aaaaaa"+root.left.getMovePosX());
+										
+										//placing nodes in the tree
+										root.right.left.setLeft(fLeft3);
+										root.right.left.setRight(fRight3);
+										
+										fillMoveList( root.right.right.getBoard(), play,  enemy);	
+										
+										//finding best and second best moves, filling all values for upcoming nodes
+										getBestMoves( root.right.right.getBoard(), play,  enemy);	
+												//System.out.println("aaaaaa"+root.left.getMovePosX());
+												
+												Piece[][] tempL7 = new Piece[8][8];
+												Piece[][] tempR7= new Piece[8][8];
+												for(int i=0; i<8; i++)
+												{
+													for(int j=0;j<8; j++)
+													{
+														tempL7[i][j]=lmaster[i][j];
+													}
+												}
+												for(int i=0; i<8; i++)
+												{
+													for(int j=0;j<8; j++)
+													{
+														tempR7[i][j]=rmaster[i][j];
+													}
+												}
+												int tlValue7=getmasterEvaluation( tempL7, play,  enemy);
+												int trValue7=getmasterEvaluation(   tempR7, play,  enemy);
+
+												//System.out.println("aaaaaa"+root.left.getMovePosX());
+												//filling respective nodes
+												node fLeft4= new node(play, xPos, yPos, movePosX, movePosY, tempL7, tlValue7);
+												node fRight4 = new node(play, xPos2, yPos2, movePosX2, movePosY2, tempR7, trValue7);
+												
+												//System.out.println("aaaaaa"+root.left.getMovePosX());
+												
+												//placing nodes in the tree
+												root.right.right.setLeft(fLeft4);
+												root.right.right.setRight(fRight4);
+				
+				
+				
+				
+				
+				
+				
+			/*	
+		this.printmaster(root.getBoard());
+		this.printmaster(root.left.getBoard());
+		this.printmaster(root.left.left.getBoard());
+		this.printmaster(root.left.left.left.getBoard());
+		this.printmaster(root.left.left.right.getBoard());
+		System.out.println("------------------------");
+		this.printmaster(root.left.right.getBoard());
+		this.printmaster(root.left.right.left.getBoard());
+		this.printmaster(root.left.right.right.getBoard());
+		
+		
+		this.printmaster(root.right.getBoard());
+		this.printmaster(root.right.left.getBoard());
+		this.printmaster(root.right.left.left.getBoard());
+		this.printmaster(root.right.left.right.getBoard());
+		this.printmaster(root.right.right.getBoard());
+		this.printmaster(root.right.right.left.getBoard());
+		this.printmaster(root.right.right.right.getBoard());
+		*/
+		//this.calculateMove();
+		
+		
+		
+		
+		//System.out.println("aaaaaa"+root.left.getMovePosX());
+	
+		
+		/*
+		//this.printmaster(root.left.left.getBoard());
+		//this.printmaster(lmaster);
 		
 		fillMoveList( root.right.getBoard(), enemy,  play);		
 		getBestMoves(root.right.getBoard(), enemy,  play);	
@@ -94,8 +354,8 @@ public class miniMaxTree
 		node eRight2 = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
 		root.right.setLeft(eLeft2);
 		root.right.setRight(eRight2);
-		this.printmaster(board);
-		this.printmaster(root.left.getBoard());
+		//this.printmaster(board);
+		//this.printmaster(root.left.getBoard());
 
 		/*
 		fillMoveList( root.left.left.getBoard(), play,  enemy);		
@@ -111,7 +371,6 @@ public class miniMaxTree
 		node fRight2 = new node(play, xPos2, yPos2, movePosX2, movePosY2, rmaster, rValue);
 		root.left.right.setLeft(eLeft);
 		root.left.left.setRight(eRight);
-
 		*/
 	//this.printLevelOrder();
 	
@@ -380,7 +639,6 @@ public class miniMaxTree
 		}
 		
 		return moveList;
-
 	}
 	
 	/*
@@ -389,8 +647,10 @@ public class miniMaxTree
 	 */
   	public int getmasterEvaluation( Piece[][] board, Player play, Player enemy) {
 		Piece[][] temp = new Piece[8][8];
-		ArrayList<Piece> plays= new ArrayList<Piece>();
-		ArrayList<Piece> enemys= new ArrayList<Piece>();
+		Queue<Piece> friendly= new LinkedList<Piece>();
+		Queue<Piece> enemys= new LinkedList<Piece>();
+		ArrayList<Integer> eCoordinates = new ArrayList<Integer>();
+		ArrayList<Integer> fCoordinates = new ArrayList<Integer>();
 		//temp = master;
 		int piecesThreatened = 0;
 		int piecesGuarded = 0;
@@ -407,18 +667,65 @@ public class miniMaxTree
 					{
 						if(board[i][j].getPlayer().toString().equals(play.toString()))
 						{
-							//piecesThreatened++;	
-						//System.out.println(master[i][j].getValue());
-							plays.add(board[i][j]);
-						friendlyTotalValue+=board[i][j].getValue();
+							friendly.add(board[i][j]);
+							fCoordinates.add(i);
+							fCoordinates.add(j);
+						    friendlyTotalValue+=board[i][j].getValue();
+						
 						}
 						else if(board[i][j].getPlayer().toString().equals(enemy.toString()))
 						{
 							//System.out.println(master[i][j].getValue());
 							enemys.add(board[i][j]);
+							eCoordinates.add(i);
+							eCoordinates.add(j);
 							enemyTotalValue+=board[i][j].getValue();
 						}
+						
+						
 					}
+			}
+		}
+		//good
+			while(friendly.peek()!=null)
+			{
+				int count =eCoordinates.size();
+				while(count!=0)
+				{
+					count--;
+					int xPos=eCoordinates.get(count);
+					count--;
+					int yPos= eCoordinates.get(count);
+					//count--;
+					if(friendly.peek().move(board, xPos, yPos)==true)
+					{
+						piecesThreatened+=board[yPos][xPos].getValue();
+					}
+				}
+				friendly.remove();
+			
+			}
+			while(enemys.peek()!=null)
+			{
+				//System.out.println("HHERRREE");
+				int count =fCoordinates.size();
+				while(count!=0)
+				{
+					count--;
+					int xPos=fCoordinates.get(count);
+					count--;
+					int yPos= fCoordinates.get(count);
+					//count--;
+					if(enemys.peek().move(board, xPos, yPos)==true)
+					{
+						piecesVulnerable+=board[yPos][xPos].getValue();
+						
+					}
+				
+				}
+				enemys.remove();
+			}
+		
 				/*
 				//System.out.println(play.getPiece(i).toString()+""+play.getPiece(i).getX());
 	
@@ -434,7 +741,6 @@ public class miniMaxTree
 				int guardedPieceY = play.getPiece(i+1).getY();
 				int guardedPieceX = play.getPiece(i+1).getX();
 				master[guardedPieceY][guardedPieceX]=null;
-
 				if (play.getPiece(i).move(master, guardedPieceX, guardedPieceY) == true)
 						 {
 					piecesGuarded += play.getPiece(i+1).getValue();
@@ -442,36 +748,77 @@ public class miniMaxTree
 				master[guardedPieceY][guardedPieceX]=play.getPiece(i+1);
 				
 */
-			}
-		}
 		/*
 		for (int y = 0; y < enemy.getPieceList().size(); y++) {
 			for (int c = 0; c < play.getPieceList().size(); c++) {
 				if (enemy.getPiece(y).move(master, play.getPiece(c).getX(), play.getPiece(c).getY()) == true) {
 					piecesVulnerable += play.getPiece(c).getValue();
-
 				}
 			}
 		}
 		//System.out.println("piecesThreatened " + piecesThreatened);
 		//System.out.println("piecesGuarded " + piecesGuarded);
 		//System.out.println("piecesVulnerable " + piecesVulnerable);
-
-
 */
-		return (piecesThreatened + piecesGuarded + friendlyTotalValue) - (piecesVulnerable + enemyTotalValue);
+			//System.out.println();
+			//System.out.print("piecesThreatened "+piecesThreatened+"piecesGuarded "+piecesGuarded+"friendlyTotalValue "+friendlyTotalValue+"piecesVulnerable "+piecesVulnerable+"enemyTotalValue "+enemyTotalValue);
+	
+			//System.out.print("EVAL:");
+			//System.out.println((piecesThreatened + piecesGuarded + friendlyTotalValue) - (piecesVulnerable + enemyTotalValue));
+			
+			return (piecesThreatened + piecesGuarded + friendlyTotalValue) - (piecesVulnerable + enemyTotalValue);
 			
 		
 		//return 0;
 	}
 
+  	public node calculateMove()
+  	{
+  		int left=this.root.left.getValue();
+  		int right=this.root.right.getValue();
+  		
+  		left+=this.root.left.left.getValue();
+  		left+=this.root.left.right.getValue();
+  		left+=this.root.left.left.left.getValue();
+  		left+=this.root.left.left.right.getValue();
+  		left+=this.root.left.right.left.getValue();
+  		left+=this.root.left.right.right.getValue();
+  		
+  		right+=this.root.right.left.getValue();
+  		right+=this.root.right.right.getValue();
+  		right+=this.root.right.left.left.getValue();
+  		right+=this.root.right.left.right.getValue();
+  		right+=this.root.right.right.right.getValue();
+  		right+=this.root.right.right.left.getValue();
+  		
+  		System.out.println("Left: "+left);
+  		System.out.println("Right: "+right);
+  		System.out.println();
+
+  			if(left>right)
+  			{
+  				System.out.println("Left: "+left);
+  				return this.root.left;
+  			}
+  			else
+  			{
+  				System.out.println("Right: "+right);
+  				return this.root.right;
+  			}
+  			
+  		
+  		
+  		
+  	}
 	/*
 	 * fill the moveList, which is an integer stack that contains current and move
 	 * position coordinates.
 	 */
 	public void fillMoveList(Piece[][] board, Player play, Player enemy)
 	{
+	
 		availMoveCount=0;
+		moveList.clear();
 		for(int i=0; i<8; i++)
 		{
 			for(int j=0; j<8; j++)
@@ -480,6 +827,7 @@ public class miniMaxTree
 				//fill non attack moves first
 				
 					//a loop for each possible move direction starting at 12 o'clock position and moving clockwise
+				
 				
 					
 					if(board[i][j]!=null)
@@ -496,6 +844,7 @@ public class miniMaxTree
 							
 							int x=j;
 							int y =i;
+							//System.out.println();
 							
 							if(board[i][j].move(board, x-1, y-2)==true)
 							{
@@ -508,6 +857,7 @@ public class miniMaxTree
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+								
 							}
 							
 							if(board[i][j].move(board, x-1, y+2)==true)
@@ -516,11 +866,14 @@ public class miniMaxTree
 								{
 									break;
 								}
+								
+					
 								moveList.push(x-1);
 								moveList.push(y+2);
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+						
 								
 							}
 							
@@ -535,6 +888,7 @@ public class miniMaxTree
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+							
 								
 							}
 							
@@ -550,6 +904,7 @@ public class miniMaxTree
 								moveList.push(i);
 								availMoveCount++;
 							
+							
 							}
 							
 							if(board[i][j].move(board, x-2, y-1)==true)
@@ -563,6 +918,7 @@ public class miniMaxTree
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+							
 							
 							}
 							
@@ -578,11 +934,12 @@ public class miniMaxTree
 								moveList.push(i);
 								availMoveCount++;
 							
+							
 							}
 							
 							if(board[i][j].move(board, x+2, y-1)==true)
 							{
-								if((x>7)||(x<0)||(y>7)|(y<0))
+								if((x>7)||(x<0)||(y>7)||(y<0))
 								{
 									break;
 								}
@@ -591,12 +948,13 @@ public class miniMaxTree
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+							
 								
 							}
 							
 							if(board[i][j].move(board, x+2, y+1)==true)
 							{
-								if((x>7)||(x<0)||(y>7)|(y<0))
+								if((x>7)||(x<0)||(y>7)||(y<0))
 								{
 									break;
 								}
@@ -605,6 +963,8 @@ public class miniMaxTree
 								moveList.push(j);
 								moveList.push(i);
 								availMoveCount++;
+								
+								//System.out.println("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHasldflasdjflasjf");
 								
 								
 							}
@@ -620,10 +980,11 @@ public class miniMaxTree
 						
 						
 						iteratorY--;
-						if((iteratorX>7)||(iteratorX<0)||(iteratorY>7)|(iteratorY<0))
+						if((iteratorX>7)||(iteratorX<0)||(iteratorY>7)||(iteratorY<0))
 						{
 							break;
 						}
+					
 					
 					}
 					iteratorX=j-1;
@@ -733,8 +1094,8 @@ public class miniMaxTree
 					{
 						moveList.push(iteratorX);
 						moveList.push(iteratorY);
-						moveList.push(i);
 						moveList.push(j);
+						moveList.push(i);
 						availMoveCount++;
 						
 						
@@ -770,6 +1131,7 @@ public class miniMaxTree
 			}
 		}
 		}
+		
 	
 
 	}
@@ -786,66 +1148,60 @@ public class miniMaxTree
 		//
 		int best=-100;
 		int scndBest=-100;
-		int calc=0; 
+		int calc=0;
+		int count=moveList.size();
+		boolean pieceWasInSpot=false;
+		Stack<Piece> savePiece= new Stack<Piece>();
 	
 		bestMove.empty();
 		scndBestMove.empty();
+		savePiece.empty();
 		
-		for(int i=0; i<moveList.size(); i+=4)
+		while(count!=0)
 		{
-		//gb2.copyBoard(master);
 		
-		//this.printmaster(master);
 		
-			//create mock move here
 			int yPos=moveList.pop();
 			int xPos=moveList.pop();
 			int movePosY=moveList.pop();
 			int movePosX=moveList.pop();
-			//this.printmaster(board);
-		
-			//System.out.println(xPos+""+yPos+""+movePosY+""+movePosX);
-			/*
-			if(master[movePosY][movePosX]!=null)
-			{
-				savePiece[movePosY][movePosX]=master[movePosY][movePosX];	
 			
-				//set the boolean
-				pieceWasInSpot=true;
-			}
-			*/
+
+			
+			
+			//create mock move here
+			 
+
+		
+		if(board[movePosY][movePosX]!=null)
+		{
+			pieceWasInSpot=true;
+			savePiece.push(board[movePosY][movePosX]);
+		}
+			
 			board[movePosY][movePosX]=board[yPos][xPos];
 			board[yPos][xPos]=null;
 		
-			//this.printmaster(board);
-			//this.printmaster(master);
-			//this.printmaster(board);
-			//this.printmaster(master);
-			//gb2.updateBoard(master);
-			//this.printmaster(master);
-			//gb3=new board();
-			//gb3.updateBoard(master);
 			
-		//	this.printmaster(master);
+			
+		
 
 			int temp= getmasterEvaluation( board,  play,  enemy);
-			//System.out.println("temp"+temp);
-			
+		
+			if(play.toString().equals("Black"))
+			{
+			//	System.out.println("JJJJJJ");
+				//this.printmaster(board);
+				//System.out.println(temp);
+			}
 			if (temp>best)
 			{
-				
-				//this.printmaster(master);
-				System.out.println("temp"+temp);
-				//remove any move that is worse than the current move
-				
+	
 				this.yPos=yPos;
 				this.xPos=xPos;
 				this.movePosY=movePosY;
 				this.movePosX=movePosX;
-			
-			
-				//System.out.println("LLLLLLLLLLLLLLLL");
-				//fill best master
+	
 				for(int w=0; w<8; w++)
 				{
 					for(int j=0; j<8; j++)
@@ -854,21 +1210,20 @@ public class miniMaxTree
 						
 					}
 				}
-				
-				//check
-				//lmaster[this.movePosY][this.movePosX]=lmaster[this.yPos][this.xPos];
-				//lmaster[this.yPos][this.xPos]=null;
-				//master[yPos][xPos]=null;
-				//System.out.println("HEEEERRE");
-			//this.printmaster(lmaster);
-		
+				//System.out.println("HHHHHERERERWFSDGDSAG");
+		//	this.printmaster(lmaster);
+		setMasterLeft(lmaster);
+		//printmaster(getMasterLeft());
+		//this.set
 				
 				//set best value
 				best=temp;
+				temp=best;
 				currentBest=temp;
+				lValue=temp;
 				
 			}
-			else
+			else if(temp>scndBest)
 			{
 				//remove any move that is worse than the current move
 				
@@ -880,40 +1235,44 @@ public class miniMaxTree
 				//fill second best master
 				for(int w=0; w<8; w++)
 				{
-					for(int j=0; j<8; j++)
+					for(int l=0; l<8; l++)
 					{
-						rmaster[w][j]=board[w][j];
+						rmaster[w][l]=board[w][l];
 					}
 				}
+				this.setMasterRight(rmaster);
+				//System.out.println("JJJJJJJJakjsdflkajsdlfjas");
+		//	this.printmaster(this.getMasterRight());
 			
-				//good
-				rmaster[movePosY2][movePosX2]=rmaster[yPos2][xPos2];
-				//master[yPos2][xPos2]=null;
+			
 				//fill scndbest
 				scndBest=temp;
 				currentScndBest=temp;
+				rValue=temp;
 			}
-		
-			/*
+
+			
+			
+			board[yPos][xPos]=board[movePosY][movePosX];
 			if(pieceWasInSpot)
 			{
-				master[yPos][xPos]=master[movePosY][movePosX];
-				master[movePosY][movePosX]=savePiece[movePosY][movePosX];
+				board[movePosY][movePosX]=savePiece.pop();
+				pieceWasInSpot=false;
 			}
 			else
 			{
-			//this.printmaster(tempBrd);
-			master[yPos][xPos]=master[movePosY][movePosX];
-			master[movePosY][movePosX]=null;
-			}
-			*/
-			board[yPos][xPos]=board[movePosY][movePosX];
 			board[movePosY][movePosX]=null;
-			//this.printmaster(board);
+			}
+			
+			//this.printmaster(lmaster);
+		
+	
+			 count=count-4;
 		}
-		//System.out.println("KKKKKKKKKKKKKKKKKKKKKK"+calc);
-		//gb2.copyBoard(master);
-		//this.printmaster(rmaster);
+		moveList.empty();
+
+		//printmaster(getMasterLeft());
+		
 	}
 
 
@@ -940,7 +1299,6 @@ public class miniMaxTree
 			master[movePosY][movePosX]=master[yPos][xPos];
 			master[yPos][xPos]=null;
 			//this.printmaster(tempBrd);
-
 	}
 		
 	/*
@@ -951,7 +1309,6 @@ public class miniMaxTree
 	public void revertMockMove( int xPos,int  yPos, int movePosY, int movePosX)
 	{
 		
-
 		//1: fill a temp master
 		for(int i=0; i<8; i++)
 		{
@@ -985,7 +1342,7 @@ public class miniMaxTree
 	
 	  /* Given a binary tree, print its nodes according to the
     "bottom-up" postorder traversal. */
-	
+	/*
 	 public void printPostorder(node node)
   {
       if (node == null)
@@ -1000,7 +1357,7 @@ public class miniMaxTree
 
       // now deal with the node
       System.out.print(node.value + " "); 
-  }
+  }*/
 	
 	public void setMax(int a)
 	{
@@ -1052,51 +1409,37 @@ public class miniMaxTree
 		
 	}
 	
-	public void setMaster(Piece[][] master)
-	{
-		
+	public void setMasterLeft(Piece[][] master)
+	{ 
+		Piece[][] temp= new Piece[8][8];
+		for(int u=0;u<8; u++)
+		{
+			for(int h=0; h<8; h++)
+			{
+				masterLeft[u][h]=master[u][h];
+			}
+		}
+		//masterLeft=master;
+		//this.tempBrd=master;
 	}
-	void printLevelOrder()
-    {
-        int h = height(root);
-        int i;
-        for (i=1; i<=h; i++)
-            printGivenLevel(root, i);
-    }
- 
-    /* Compute the "height" of a tree -- the number of
-    nodes along the longest path from the root node
-    down to the farthest leaf node.*/
-    int height(node root)
-    {
-        if (root == null)
-           return 0;
-        else
-        {
-            /* compute  height of each subtree */
-            int lheight = height(root.left);
-            int rheight = height(root.right);
-             
-            /* use the larger one */
-            if (lheight > rheight)
-                return(lheight+1);
-            else return(rheight+1); 
-        }
-    }
- 
-    /* Print nodes at the given level */
-    void printGivenLevel (node root ,int level)
-    {
-        if (root == null)
-            return;
-        if (level == 1)
-            System.out.print(root.getPlayer().toString()+" "+root.getSide() + " ");
-       
-        else if (level > 1)
-        {
-            printGivenLevel(root.left, level-1);
-            printGivenLevel(root.right, level-1);
-        }
-        System.out.println();
-    }
+	public Piece[][] getMasterLeft()
+	{
+		return masterLeft;
+	}
+	public void setMasterRight(Piece[][] master)
+	{ 
+		Piece[][] temp= new Piece[8][8];
+		for(int u=0;u<8; u++)
+		{
+			for(int h=0; h<8; h++)
+			{
+				masterRight[u][h]=master[u][h];
+			}
+		}
+		//this.tempBrd=master;
+	}
+	public Piece[][] getMasterRight()
+	{
+		return rmaster;
+	}
 }

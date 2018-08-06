@@ -84,7 +84,6 @@ public abstract class Player
 	
 		inOrder.add(queenQ.peek());
 		postOrder.push(queenQ.remove());
-
 		inOrder.add(kingQ.peek());
 		postOrder.push(queenQ.remove());
 		
@@ -409,4 +408,3 @@ public abstract class Player
 	
 
 }
-

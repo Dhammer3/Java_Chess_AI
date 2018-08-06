@@ -54,6 +54,7 @@ public class pawn extends Piece {
 		//gameBoard.copyBoard(board);
 		//board[movePosY][movePosX]=this;
 		//System.out.println(moveCount);
+		
 
 		int xPos = getX();
 
@@ -69,6 +70,18 @@ public class pawn extends Piece {
 			
 			return false;
 		}
+		if(board[movePosY][movePosX]!=null)
+		{
+			
+			if (board[movePosY][movePosX] == this) {
+				return false;
+			}
+			if(board[movePosY][movePosX].getPlayer().toString().equals(this.getPlayer().toString()))
+			{
+				return false;
+			}
+		}
+		
 
 		// start off with some error handling
 

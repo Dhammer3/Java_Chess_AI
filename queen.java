@@ -54,6 +54,14 @@ public class queen extends Piece {
 		{
 			return false;
 		}
+		if(board[movePosY][movePosX]!=null)
+		{
+		if(this.getPlayer().toString().equals(board[movePosY][movePosX].getPlayer().toString()))
+	
+		{
+			return false;
+		}
+		}
 
 		int xPos = getX();
 
@@ -195,7 +203,12 @@ public class queen extends Piece {
 	// returns false
 	// if the player is trying to capture the enemy king, returns false
 	/*
-	 * Quadrant Diagram -,- +,- [2][5][1] [7][Q][8] [3][6][4] -,+ +,+
+	 * Quadrant Diagram 
+	 * -,- 
+	 * +,- 
+	 * [2][5][1] 
+	 * [7][Q][8] 
+	 * [3][6][4] -,+ +,+
 	 * 
 	 */
 	public boolean piecesInWay(int quadrant, Piece[][] board, int movePosX, int movePosY) {

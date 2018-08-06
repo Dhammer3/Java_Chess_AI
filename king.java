@@ -54,6 +54,14 @@ public class king extends Piece {
 		{
 			return false;
 		}
+		if(board[movePosY][movePosX]!=null)
+		{
+		if(this.getPlayer().toString().equals(board[movePosY][movePosX].getPlayer().toString()))
+	
+		{
+			return false;
+		}
+		}
 		
 
 		int xPos = getX();

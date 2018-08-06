@@ -169,8 +169,8 @@ public class bishop extends Piece {
 
 				// if there is a piece in the way and we have not reached move position
 
-				System.out.println(checkX);
-				System.out.println(checkY);
+				//System.out.println(checkX);
+				//System.out.println(checkY);
 				if ((board[checkY][checkX] != null) && (checkX != movePosX)) {
 
 					return true;

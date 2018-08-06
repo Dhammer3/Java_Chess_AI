@@ -128,6 +128,8 @@ public class node
 	public Piece[][] getBoard() {
 		return board;
 	}
+	
+
 
 	public void setBoard(Piece[][] board) {
 		this.board = board;
@@ -155,3 +157,6 @@ public class node
 	}
 
 }
+
+
+

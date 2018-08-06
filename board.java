@@ -164,10 +164,10 @@ public  class  board
 					board[i][j]=bb;
 					board[i][j].updatePos(j, i);
 					j++;
-					board[i][j]=bk;
+					board[i][j]=bq;
 					board[i][j].updatePos(j, i);
 					j++;
-					board[i][j]=bq;
+					board[i][j]=bk;
 					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=bb2;
@@ -221,10 +221,10 @@ public  class  board
 					board[i][j]=wb;
 					board[i][j].updatePos(j, i);
 					j++;
-					board[i][j]=wk;
+					board[i][j]=wq;
 					board[i][j].updatePos(j, i);
 					j++;
-					board[i][j]=wq;
+					board[i][j]=wk;
 					board[i][j].updatePos(j, i);
 					j++;
 					board[i][j]=wb2;
@@ -417,6 +417,7 @@ public  class  board
 				for (int j=0; j<8; j++)
 				{
 					board[i][j]=arr[i][j];
+					//board[i][j].updatePos(i, j);
 				}
 			}
 	}
@@ -1072,5 +1073,3 @@ public ArrayList<Piece> getBlackPieces()
 	return blackPieces;
 }
 }
-	
-
